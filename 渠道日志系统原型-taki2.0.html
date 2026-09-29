@@ -12,16 +12,15 @@
         }
 
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
-            background: #f5f6f7;
-            color: #1f2329;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', sans-serif;
+            background: #F2F4F7;
+            color: #1F2329;
             font-size: 14px;
         }
 
-        /* 顶部导航 */
         .header {
             background: #fff;
-            border-bottom: 1px solid #e5e6eb;
+            border-bottom: 1px solid #E8EAEF;
             padding: 0 20px;
             height: 60px;
             display: flex;
@@ -38,49 +37,29 @@
         .logo {
             font-size: 18px;
             font-weight: 600;
-            color: #3370ff;
+            color: #2E5BE6;
         }
 
         .breadcrumb {
             display: flex;
             align-items: center;
             gap: 8px;
-            color: #86909c;
+            color: #8F959E;
         }
 
         .breadcrumb-separator {
-            color: #c9cdd4;
+            color: #D8DBE1;
         }
 
-        .header-right {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
-
-        .user-avatar {
-            width: 32px;
-            height: 32px;
-            border-radius: 50%;
-            background: #3370ff;
-            color: #fff;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 14px;
-        }
-
-        /* 主体内容 */
         .main-container {
             display: flex;
             min-height: calc(100vh - 60px);
         }
 
-        /* 左侧导航 */
         .sidebar {
             width: 220px;
             background: #fff;
-            border-right: 1px solid #e5e6eb;
+            border-right: 1px solid #E8EAEF;
             padding: 16px 0;
         }
 
@@ -90,53 +69,40 @@
             display: flex;
             align-items: center;
             gap: 8px;
-            color: #4e5969;
-            transition: all 0.2s;
-        }
-
-        .nav-item:hover {
-            background: #f2f3f5;
+            color: #646A73;
         }
 
         .nav-item.active {
-            background: #e8f3ff;
-            color: #3370ff;
-            border-right: 2px solid #3370ff;
+            background: #EEF3FE;
+            color: #2E5BE6;
+            border-right: 2px solid #2E5BE6;
         }
 
-        .nav-icon {
-            width: 16px;
-            height: 16px;
-        }
-
-        /* 右侧内容区 */
         .content {
             flex: 1;
             padding: 20px;
         }
 
-        /* 查询条件区域 */
         .search-panel {
             background: #fff;
-            border-radius: 4px;
+            border-radius: 6px;
             padding: 20px;
             margin-bottom: 16px;
-            border: 1px solid #e5e6eb;
+            border: 1px solid #E8EAEF;
+            overflow: visible;
         }
 
         .search-title {
             font-size: 16px;
             font-weight: 600;
             margin-bottom: 16px;
-            display: flex;
-            align-items: center;
-            gap: 8px;
         }
 
         .search-form {
             display: grid;
-            grid-template-columns: repeat(4, 1fr);
+            grid-template-columns: repeat(6, 1fr);
             gap: 16px;
+            overflow: visible;
         }
 
         .form-row {
@@ -145,106 +111,400 @@
             gap: 6px;
         }
 
-        .form-label {
-            font-size: 13px;
-            color: #4e5969;
+        .form-row.span-2 {
+            grid-column: span 2;
         }
 
-        .form-label.required::after {
-            content: '*';
-            color: #f53f3f;
+        .form-row.span-3 {
+            grid-column: span 3;
+        }
+
+        .form-row.span-6 {
+            grid-column: 1 / -1;
+        }
+
+        /* 日志类型多选下拉框 */
+        .multi-select {
+            position: relative;
+            height: 32px;
+        }
+
+        .multi-select-trigger {
+            height: 32px;
+            border: 1px solid #D8DBE1;
+            border-radius: 6px;
+            padding: 0 28px 0 10px;
+            font-size: 13px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            background: #fff;
+            position: relative;
+            width: 100%;
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+            transition: border-color 0.2s;
+        }
+
+        .multi-select-trigger:hover {
+            border-color: #2E5BE6;
+        }
+
+        .multi-select-trigger::after {
+            content: '';
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            border-left: 4px solid transparent;
+            border-right: 4px solid transparent;
+            border-top: 5px solid #8F959E;
+        }
+
+        .multi-select-dropdown {
+            display: none;
+            position: absolute;
+            top: 36px;
+            left: 0;
+            background: #fff;
+            border: 1px solid #E8EAEF;
+            border-radius: 6px;
+            box-shadow: 0 4px 12px rgba(31,35,41,0.08);
+            padding: 8px 0;
+            z-index: 100;
+            min-width: 160px;
+        }
+
+        .multi-select-dropdown.show {
+            display: block;
+        }
+
+        .multi-select-dropdown label {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            padding: 6px 14px;
+            font-size: 13px;
+            color: #1F2329;
+            cursor: pointer;
+            user-select: none;
+        }
+
+        .multi-select-dropdown label:hover {
+            background: #F2F4F7;
+        }
+
+        .multi-select-dropdown label input[type="checkbox"] {
+            accent-color: #2E5BE6;
+            width: 14px;
+            height: 14px;
+        }
+
+        .multi-select-dropdown .ms-divider {
+            border-top: 1px solid #E8EAEF;
+            margin: 4px 0;
+        }
+
+        .advanced-filters {
+            display: none;
+        }
+
+        .advanced-filters.show {
+            display: contents;
+        }
+
+        .toggle-advanced {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 8px 0 4px;
+            cursor: pointer;
+            color: #2E5BE6;
+            font-size: 13px;
+            user-select: none;
+            margin-top: -8px;
+        }
+
+        .toggle-advanced:hover {
+            color: #1F48C4;
+        }
+
+        .toggle-advanced .arrow {
+            display: inline-block;
+            transition: transform 0.2s;
             margin-left: 4px;
         }
 
-        .form-input {
+        .toggle-advanced.open .arrow {
+            transform: rotate(180deg);
+        }
+
+        .form-label {
+            font-size: 13px;
+            color: #646A73;
+        }
+
+        .form-input,
+        .form-select {
             height: 32px;
-            border: 1px solid #c9cdd4;
-            border-radius: 4px;
+            border: 1px solid #D8DBE1;
+            border-radius: 6px;
             padding: 0 12px;
             font-size: 14px;
-            transition: all 0.2s;
+            width: 100%;
         }
 
         .form-input:focus {
-            border-color: #3370ff;
+            border-color: #2E5BE6;
             outline: none;
-            box-shadow: 0 0 0 2px rgba(51, 112, 255, 0.1);
         }
 
         .form-select {
             height: 32px;
-            border: 1px solid #c9cdd4;
-            border-radius: 4px;
+            border: 1px solid #D8DBE1;
+            border-radius: 6px;
             padding: 0 12px;
             font-size: 14px;
             background: #fff;
-            cursor: pointer;
+            width: 100%;
         }
 
-        .date-range-picker {
+        /* 日期范围选择器 - Ant Design 风格 */
+        .date-range-container {
+            position: relative;
+        }
+
+        .date-range-input {
+            height: 32px;
+            border: 1px solid #D8DBE1;
+            border-radius: 6px;
+            padding: 0 32px 0 12px;
+            cursor: pointer;
             display: flex;
             align-items: center;
-            gap: 8px;
+            width: 100%;
+            background: #fff;
+            position: relative;
+            transition: border-color 0.2s;
         }
 
-        .date-range-picker .form-input {
+        .date-range-input:hover, .date-range-input.focused {
+            border-color: #2E5BE6;
+        }
+
+        .date-range-input .range-input {
             flex: 1;
+            border: none;
+            outline: none;
+            background: transparent;
+            font-size: 13px;
+            color: #1F2329;
+            height: 100%;
+            width: 0;
+            padding: 0;
         }
 
-        .date-range-separator {
-            color: #86909c;
+        .date-range-input .range-input::placeholder {
+            color: #D8DBE1;
+        }
+
+        .date-range-input .range-input.active {
+            color: #2E5BE6;
+        }
+
+        .date-range-input .range-separator {
+            display: flex;
+            align-items: center;
+            padding: 0 8px;
+            color: #D8DBE1;
+            flex-shrink: 0;
+        }
+
+        .date-range-input .range-separator svg {
+            width: 14px;
+            height: 14px;
+            fill: currentColor;
+        }
+
+        .date-range-input .range-calendar-icon {
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            display: flex;
+            align-items: center;
+            color: #8F959E;
+            pointer-events: none;
+        }
+
+        .date-range-input .range-calendar-icon svg {
+            width: 16px;
+            height: 16px;
+            fill: currentColor;
+        }
+
+        .date-picker-panel {
+            display: none;
+            position: absolute;
+            top: 38px;
+            left: 0;
+            background: #fff;
+            border: 1px solid #E8EAEF;
+            border-radius: 8px;
+            box-shadow: 0 4px 16px rgba(31,35,41,0.1);
+            padding: 12px 16px 16px;
+            z-index: 100;
+            min-width: 640px;
+        }
+
+        .date-picker-panel.show {
+            display: block;
         }
 
         .quick-date-options {
             display: flex;
             gap: 8px;
-            margin-top: 8px;
+            margin-bottom: 12px;
+            padding-bottom: 12px;
+            border-bottom: 1px solid #E8EAEF;
         }
 
         .quick-date-btn {
             padding: 4px 12px;
-            font-size: 12px;
-            border: 1px solid #c9cdd4;
-            border-radius: 4px;
+            border: 1px solid #E8EAEF;
+            border-radius: 6px;
             background: #fff;
             cursor: pointer;
+            font-size: 12px;
+            color: #646A73;
             transition: all 0.2s;
         }
 
         .quick-date-btn:hover {
-            border-color: #3370ff;
-            color: #3370ff;
+            color: #2E5BE6;
+            border-color: #2E5BE6;
         }
 
         .quick-date-btn.active {
-            background: #3370ff;
-            border-color: #3370ff;
+            background: #2E5BE6;
             color: #fff;
+            border-color: #2E5BE6;
         }
 
-        /* 查询方式选择 */
-        .query-mode {
+        .calendar-container {
             display: flex;
             gap: 16px;
-            margin-bottom: 16px;
-            padding: 12px 16px;
-            background: #f7f8fa;
-            border-radius: 4px;
         }
 
-        .query-mode-item {
+        .calendar-month {
+            flex: 1;
+            min-width: 240px;
+        }
+
+        .calendar-header {
             display: flex;
             align-items: center;
-            gap: 6px;
+            justify-content: space-between;
+            margin-bottom: 16px;
+            padding: 8px 12px;
+            background: #f7f8fa;
+            border-radius: 6px;
+        }
+
+        .calendar-header-title {
+            font-size: 14px;
+            font-weight: 600;
+            color: #1F2329;
+            min-width: 100px;
+            text-align: center;
+        }
+
+        .calendar-nav {
+            display: flex;
+            gap: 4px;
+        }
+
+        .calendar-nav-btn {
+            width: 28px;
+            height: 28px;
+            border: 1px solid #E8EAEF;
+            border-radius: 6px;
+            background: #fff;
             cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            color: #646A73;
         }
 
-        .query-mode-item input[type="radio"] {
-            width: 14px;
-            height: 14px;
+        .calendar-nav-btn:hover {
+            border-color: #2E5BE6;
+            color: #2E5BE6;
         }
 
-        /* 按钮组 */
+        .calendar-weekdays {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 4px;
+            margin-bottom: 8px;
+        }
+
+        .calendar-weekday {
+            text-align: center;
+            font-size: 12px;
+            color: #8F959E;
+            padding: 8px 0;
+        }
+
+        .calendar-days {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 4px;
+        }
+
+        .calendar-day {
+            aspect-ratio: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 13px;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.2s;
+            height: 36px;
+        }
+
+        .calendar-day:hover {
+            background: #F2F4F7;
+        }
+
+        .calendar-day.other-month {
+            color: #D8DBE1;
+        }
+
+        .calendar-day.today {
+            border: 1px solid #2E5BE6;
+            color: #2E5BE6;
+            font-weight: 600;
+        }
+
+        .calendar-day.selected {
+            background: #2E5BE6;
+            color: #fff;
+            font-weight: 500;
+        }
+
+        .calendar-day.in-range {
+            background: #EEF3FE;
+        }
+
+        .calendar-day.weekend {
+            color: #CF3A31;
+        }
+
+        /* 按钮 */
         .btn-group {
             display: flex;
             gap: 8px;
@@ -253,61 +513,51 @@
         }
 
         .btn {
-            height: 32px;
-            padding: 0 16px;
-            border-radius: 4px;
+            height: 36px;
+            padding: 0 24px;
+            border-radius: 7px;
             font-size: 14px;
             cursor: pointer;
             transition: all 0.2s;
-            border: 1px solid transparent;
+            border: 1px solid #E8EAEF;
             display: flex;
             align-items: center;
             gap: 6px;
+            font-weight: 500;
         }
 
         .btn-primary {
-            background: #3370ff;
+            background: #2E5BE6;
             color: #fff;
-            border-color: #3370ff;
+            border-color: #2E5BE6;
         }
 
         .btn-primary:hover {
-            background: #2860e1;
+            background: #1F48C4;
         }
 
         .btn-default {
             background: #fff;
-            color: #4e5969;
-            border-color: #c9cdd4;
+            color: #2E5BE6;
+            border-color: #E8EAEF;
         }
 
         .btn-default:hover {
-            border-color: #3370ff;
-            color: #3370ff;
-        }
-
-        .btn-danger {
-            background: #fff;
-            color: #f53f3f;
-            border-color: #f7caca;
-        }
-
-        .btn-danger:hover {
-            background: #f53f3f;
-            color: #fff;
+            border-color: #2E5BE6;
+            background: #f7f8fa;
         }
 
         /* 结果表格 */
         .result-panel {
             background: #fff;
-            border-radius: 4px;
-            border: 1px solid #e5e6eb;
+            border-radius: 6px;
+            border: 1px solid #E8EAEF;
             overflow: hidden;
         }
 
         .result-header {
             padding: 16px 20px;
-            border-bottom: 1px solid #e5e6eb;
+            border-bottom: 1px solid #E8EAEF;
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -316,11 +566,6 @@
         .result-title {
             font-size: 16px;
             font-weight: 600;
-        }
-
-        .result-actions {
-            display: flex;
-            gap: 8px;
         }
 
         .table-container {
@@ -337,15 +582,13 @@
             padding: 12px 16px;
             text-align: left;
             font-weight: 500;
-            color: #4e5969;
-            border-bottom: 1px solid #e5e6eb;
-            font-size: 13px;
+            color: #646A73;
+            border-bottom: 1px solid #E8EAEF;
         }
 
         .data-table td {
             padding: 12px 16px;
-            border-bottom: 1px solid #e5e6eb;
-            vertical-align: top;
+            border-bottom: 1px solid #E8EAEF;
         }
 
         .data-table tr:hover {
@@ -354,69 +597,42 @@
 
         .log-type-badge {
             display: inline-block;
-            padding: 2px 8px;
-            border-radius: 2px;
+            padding: 1px 8px;
+            border-radius: 10px;
             font-size: 12px;
-            font-weight: 500;
+            margin-right: 4px;
+            border: 1px solid;
         }
 
-        .log-type-verify {
-            background: #e8f3ff;
-            color: #3370ff;
-        }
+        .log-type-verify { background: #EEF3FE; color: #2E5BE6; border-color: #BFD4F5; }
+        .log-type-order { background: #E8F6ED; color: #16A34A; border-color: #C7E8D2; }
+        .log-type-cancel { background: #FEF4E6; color: #D97706; border-color: #F0DCBB; }
+        .log-type-query { background: #F2F4F7; color: #8F959E; border-color: #E8EAEF; }
 
-        .log-type-order {
-            background: #e3f9e5;
-            color: #00b42a;
-        }
-
-        .log-type-cancel {
-            background: #ffe4e1;
-            color: #f53f3f;
-        }
-
-        .log-type-query {
-            background: #fff7e8;
-            color: #ff7d00;
-        }
-
-        .status-badge {
+        .order-status {
             display: inline-block;
-            padding: 2px 8px;
-            border-radius: 2px;
+            padding: 2px 10px;
+            border-radius: 10px;
             font-size: 12px;
         }
 
-        .status-success {
-            background: #e3f9e5;
-            color: #00b42a;
-        }
-
-        .status-error {
-            background: #ffe4e1;
-            color: #f53f3f;
-        }
-
-        .status-warning {
-            background: #fff7e8;
-            color: #ff7d00;
-        }
+        .order-status-cancelled { background: #FEF4E6; color: #D97706; border: 1px solid #F0DCBB; }
+        .order-status-confirmed { background: #E8F6ED; color: #16A34A; border: 1px solid #C7E8D2; }
+        .order-status-failed { background: #FDECEA; color: #CF3A31; border: 1px solid #EFB9B5; }
 
         .log-content {
-            font-family: 'Courier New', monospace;
+            font-family: ui-monospace, 'SF Mono', 'JetBrains Mono', Menlo, Consolas, monospace;
             font-size: 12px;
             background: #f7f8fa;
             padding: 8px;
-            border-radius: 4px;
+            border-radius: 6px;
             max-width: 400px;
-            max-height: 100px;
+            max-height: 80px;
             overflow-y: auto;
-            white-space: pre-wrap;
-            word-break: break-all;
         }
 
         .action-link {
-            color: #3370ff;
+            color: #2E5BE6;
             cursor: pointer;
             text-decoration: none;
         }
@@ -425,59 +641,51 @@
             text-decoration: underline;
         }
 
-        /* 分页 */
         .pagination {
             display: flex;
             justify-content: flex-end;
             align-items: center;
             gap: 8px;
             padding: 16px 20px;
-            border-top: 1px solid #e5e6eb;
-        }
-
-        .pagination-info {
-            color: #86909c;
-            font-size: 13px;
+            border-top: 1px solid #E8EAEF;
         }
 
         .pagination-btn {
             width: 28px;
             height: 28px;
-            border: 1px solid #c9cdd4;
-            border-radius: 4px;
+            border: 1px solid #D8DBE1;
+            border-radius: 6px;
             background: #fff;
             cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 13px;
-        }
-
-        .pagination-btn:hover {
-            border-color: #3370ff;
-            color: #3370ff;
         }
 
         .pagination-btn.active {
-            background: #3370ff;
-            border-color: #3370ff;
+            background: #2E5BE6;
+            border-color: #2E5BE6;
             color: #fff;
         }
 
-        .pagination-btn:disabled {
-            background: #f2f3f5;
-            color: #c9cdd4;
-            cursor: not-allowed;
+        .page-size-select {
+            height: 28px;
+            border: 1px solid #D8DBE1;
+            border-radius: 6px;
+            background: #fff;
+            font-size: 13px;
+            color: #646A73;
+            cursor: pointer;
+            outline: none;
+            padding: 0 6px;
         }
 
-        /* 日志详情弹窗 */
+        /* 链路追踪 */
+        /* 弹窗 */
         .modal-overlay {
             position: fixed;
             top: 0;
             left: 0;
             right: 0;
             bottom: 0;
-            background: rgba(0, 0, 0, 0.5);
+            background: rgba(31,35,41,0.45);
             display: none;
             align-items: center;
             justify-content: center;
@@ -490,9 +698,10 @@
 
         .modal {
             background: #fff;
-            border-radius: 8px;
-            width: 800px;
-            max-height: 80vh;
+            border-radius: 12px;
+            width: 95vw;
+            max-width: 1600px;
+            height: 88vh;
             overflow: hidden;
             display: flex;
             flex-direction: column;
@@ -500,15 +709,10 @@
 
         .modal-header {
             padding: 16px 20px;
-            border-bottom: 1px solid #e5e6eb;
+            border-bottom: 1px solid #E8EAEF;
             display: flex;
             justify-content: space-between;
             align-items: center;
-        }
-
-        .modal-title {
-            font-size: 16px;
-            font-weight: 600;
         }
 
         .modal-close {
@@ -517,74 +721,252 @@
             border: none;
             background: transparent;
             cursor: pointer;
-            color: #86909c;
             font-size: 18px;
         }
 
-        .modal-close:hover {
-            color: #4e5969;
-        }
-
         .modal-body {
-            padding: 20px;
-            overflow-y: auto;
+            padding: 0;
+            overflow: hidden;
             flex: 1;
-        }
-
-        .log-detail-section {
-            margin-bottom: 20px;
-        }
-
-        .log-detail-label {
-            font-size: 13px;
-            color: #86909c;
-            margin-bottom: 8px;
-        }
-
-        .log-detail-content {
-            font-family: 'Courier New', monospace;
-            font-size: 12px;
-            background: #f7f8fa;
-            padding: 12px;
-            border-radius: 4px;
-            white-space: pre-wrap;
-            word-break: break-all;
-            max-height: 300px;
-            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
         }
 
         .modal-footer {
-            padding: 16px 20px;
-            border-top: 1px solid #e5e6eb;
+            padding: 12px 20px;
+            border-top: 1px solid #E8EAEF;
             display: flex;
             justify-content: flex-end;
             gap: 8px;
         }
 
-        /* 空状态 */
-        .empty-state {
-            padding: 60px 20px;
-            text-align: center;
-            color: #86909c;
+        /* 详情弹窗 - 基本信息区 */
+        .detail-info-bar {
+            display: flex;
+            align-items: center;
+            gap: 24px;
+            padding: 16px 20px;
+            background: #f7f8fa;
+            border-bottom: 1px solid #E8EAEF;
+            flex-wrap: wrap;
         }
-
-        .empty-state-icon {
-            font-size: 48px;
-            margin-bottom: 16px;
+        .detail-info-item {
+            display: flex;
+            align-items: center;
+            gap: 6px;
         }
-
-        .empty-state-text {
-            font-size: 14px;
+        .detail-info-label {
+            font-size: 12px;
+            color: #8F959E;
         }
-
-        /* 错误提示 */
-        .error-message {
-            background: #fff2f0;
-            border: 1px solid #ffccc7;
-            border-radius: 4px;
-            padding: 12px 16px;
-            color: #f53f3f;
+        .detail-info-value {
             font-size: 13px;
+            color: #1F2329;
+            font-weight: 500;
+            font-family: ui-monospace, 'SF Mono', 'JetBrains Mono', Menlo, Consolas, monospace;
+        }
+        .detail-info-value.status-confirmed {
+            color: #16A34A;
+            background: #E8F6ED;
+            padding: 2px 8px;
+            border-radius: 4px;
+        }
+        .detail-info-value.status-cancelled {
+            color: #CF3A31;
+            background: #FDECEA;
+            padding: 2px 8px;
+            border-radius: 4px;
+        }
+        .detail-info-value.status-failed {
+            color: #D97706;
+            background: #FEF4E6;
+            padding: 2px 8px;
+            border-radius: 4px;
+        }
+        .detail-info-value.status-verifying {
+            color: #2E5BE6;
+            background: #EEF3FE;
+            padding: 2px 8px;
+            border-radius: 4px;
+        }
+
+        /* 详情弹窗 - 双栏布局 */
+        .detail-columns {
+            display: flex;
+            flex: 1;
+            min-height: 0;
+        }
+        .detail-column {
+            flex: 1;
+            border-right: 1px solid #E8EAEF;
+            display: flex;
+            flex-direction: column;
+            min-height: 0;
+        }
+        .detail-column:last-child {
+            border-right: none;
+        }
+        .detail-column-header {
+            padding: 12px 16px;
+            font-size: 13px;
+            font-weight: 600;
+            color: #1F2329;
+            background: #F7F8FA;
+            border-bottom: 1px solid #E8EAEF;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            flex-shrink: 0;
+        }
+        .detail-column-header .col-icon {
+            font-size: 15px;
+        }
+        .detail-column-body {
+            padding: 12px;
+            flex: 1;
+            overflow-y: auto;
+            min-height: 0;
+        }
+
+        /* 详情弹窗 - 日志卡片 */
+        .log-card {
+            border: 1px solid #E8EAEF;
+            border-radius: 8px;
+            margin-bottom: 10px;
+            overflow: hidden;
+            transition: box-shadow 0.15s;
+        }
+        .log-card:hover {
+            box-shadow: 0 2px 8px rgba(31,35,41,0.06);
+        }
+        .log-card-header {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 12px;
+            cursor: pointer;
+            user-select: none;
+            background: #fff;
+            transition: background 0.15s;
+        }
+        .log-card-header:hover {
+            background: #f7f8fa;
+        }
+        .log-card-toggle {
+            font-size: 10px;
+            color: #8F959E;
+            transition: transform 0.2s;
+            width: 14px;
+            text-align: center;
+        }
+        .log-card.expanded .log-card-toggle {
+            transform: rotate(90deg);
+        }
+        .log-card-type {
+            font-size: 11px;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-weight: 500;
+        }
+        .log-card-type.verify { background: #EEF3FE; color: #2E5BE6; }
+        .log-card-type.order { background: #E8F6ED; color: #16A34A; }
+        .log-card-type.cancel { background: #FDECEA; color: #CF3A31; }
+        .log-card-type.query { background: #FEF4E6; color: #D97706; }
+        .log-card-status {
+            font-size: 11px;
+            padding: 1px 5px;
+            border-radius: 4px;
+        }
+        .log-card-status.success { background: #E8F6ED; color: #16A34A; }
+        .log-card-status.fail { background: #FDECEA; color: #CF3A31; }
+        .log-card-time {
+            font-size: 11px;
+            color: #8F959E;
+            margin-left: auto;
+            font-family: ui-monospace, 'SF Mono', 'JetBrains Mono', Menlo, Consolas, monospace;
+        }
+        .log-card-body {
+            display: none;
+            border-top: 1px solid #E8EAEF;
+            background: #F7F8FA;
+        }
+        .log-card.expanded .log-card-body {
+            display: block;
+        }
+        .log-card-section {
+            padding: 10px 12px;
+        }
+        .log-card-section + .log-card-section {
+            border-top: 1px solid #E8EAEF;
+        }
+        .log-card-section-title {
+            font-size: 11px;
+            color: #8F959E;
+            margin-bottom: 6px;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .log-card-section-title .copy-btn {
+            font-size: 11px;
+            color: #2E5BE6;
+            cursor: pointer;
+            text-transform: none;
+            letter-spacing: 0;
+            padding: 1px 6px;
+            border: 1px solid #E8EAEF;
+            border-radius: 4px;
+            background: #fff;
+            transition: all 0.15s;
+        }
+        .log-card-section-title .copy-btn:hover {
+            background: #EEF3FE;
+            border-color: #2E5BE6;
+        }
+        .log-card-section-title .copy-btn.copied {
+            color: #16A34A;
+            border-color: #16A34A;
+        }
+        .log-card-json {
+            font-family: ui-monospace, 'SF Mono', 'JetBrains Mono', Menlo, Consolas, monospace;
+            font-size: 11px;
+            color: #1F2329;
+            background: #fff;
+            border: 1px solid #E8EAEF;
+            border-radius: 6px;
+            padding: 8px 10px;
+            white-space: pre-wrap;
+            word-break: break-all;
+            min-height: 120px;
+            max-height: 350px;
+            overflow-y: auto;
+            line-height: 1.5;
+        }
+        .log-card-session {
+            font-family: ui-monospace, 'SF Mono', 'JetBrains Mono', Menlo, Consolas, monospace;
+            font-size: 11px;
+            color: #2E5BE6;
+            background: #EEF3FE;
+            padding: 4px 8px;
+            border-radius: 4px;
+            display: inline-block;
+        }
+        .log-card-empty {
+            padding: 24px;
+            text-align: center;
+            color: #D8DBE1;
+            font-size: 13px;
+        }
+
+        .error-message {
+            background: #FDECEA;
+            border: 1px solid #F2C6C2;
+            border-radius: 6px;
+            padding: 12px 16px;
+            color: #CF3A31;
             display: none;
             margin-bottom: 16px;
         }
@@ -593,557 +975,1624 @@
             display: block;
         }
 
-        /* 链路追踪 */
-        .chain-trace {
+        /* Toast 提示 */
+        .toast {
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%) translateY(-10px);
+            background: #1F2329;
+            color: #fff;
+            padding: 10px 24px;
+            border-radius: 6px;
+            font-size: 13px;
+            z-index: 2000;
+            opacity: 0;
+            transition: all 0.3s ease;
+            pointer-events: none;
+            white-space: nowrap;
+        }
+        .toast.show {
+            opacity: 1;
+            transform: translateX(-50%) translateY(0);
+        }
+        .toast.warn {
+            background: #D97706;
+        }
+
+        .search-hint {
+            font-size: 12px;
+            color: #CF3A31;
+            margin-left: 8px;
+        }
+
+        /* 批量选择相关样式 */
+        .batch-toolbar {
             display: flex;
             align-items: center;
-            gap: 8px;
-            padding: 12px;
-            background: #f7f8fa;
-            border-radius: 4px;
-            margin-bottom: 16px;
-        }
-
-        .chain-node {
-            padding: 6px 12px;
+            justify-content: space-between;
+            padding: 12px 20px;
+            border-bottom: 1px solid #E8EAEF;
             background: #fff;
-            border: 1px solid #c9cdd4;
-            border-radius: 4px;
-            font-size: 12px;
         }
 
-        .chain-node.active {
-            background: #e8f3ff;
-            border-color: #3370ff;
-            color: #3370ff;
+        .batch-toolbar-left {
+            display: flex;
+            align-items: center;
+            gap: 12px;
         }
 
-        .chain-arrow {
-            color: #86909c;
+        .batch-toolbar .selection-info {
+            font-size: 13px;
+            color: #8F959E;
         }
 
-        .chain-status {
-            margin-left: auto;
-            font-size: 12px;
+        .batch-toolbar .selection-info .count {
+            color: #2E5BE6;
+            font-weight: 600;
+        }
+
+        .btn-batch-export {
+            height: 32px;
+            padding: 0 16px;
+            border-radius: 6px;
+            font-size: 13px;
+            cursor: pointer;
+            border: 1px solid #2E5BE6;
+            background: #2E5BE6;
+            color: #fff;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-weight: 500;
+            transition: all 0.2s;
+        }
+
+        .btn-batch-export:hover {
+            background: #1F48C4;
+            border-color: #1F48C4;
+        }
+
+        .btn-batch-export:disabled {
+            background: #D8DBE1;
+            border-color: #D8DBE1;
+            cursor: not-allowed;
+        }
+
+        .data-table th.col-checkbox,
+        .data-table td.col-checkbox {
+            width: 40px;
+            text-align: center;
+            padding: 12px 8px;
+        }
+
+        .data-table input[type="checkbox"] {
+            accent-color: #2E5BE6;
+            width: 15px;
+            height: 15px;
+            cursor: pointer;
         }
     </style>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
 </head>
 <body>
-    <!-- 顶部导航 -->
+    <div class="toast" id="toast"></div>
     <header class="header">
         <div class="header-left">
-            <div class="logo">🐬 道旅</div>
+            <img src="logo.png" alt="道旅" class="logo" style="height: 36px;">
             <div class="breadcrumb">
                 <span>运营工具</span>
                 <span class="breadcrumb-separator">/</span>
                 <span>渠道日志系统</span>
             </div>
         </div>
-        <div class="header-right">
-            <div class="user-avatar">T</div>
-        </div>
     </header>
 
-    <!-- 主体内容 -->
     <div class="main-container">
-        <!-- 左侧导航 -->
         <aside class="sidebar">
-            <div class="nav-item">
-                <span>📊</span>
-                <span>通用调价</span>
-            </div>
-            <div class="nav-item">
-                <span>🏷️</span>
-                <span>资源包配置</span>
-            </div>
-            <div class="nav-item">
-                <span>💰</span>
-                <span>特殊调价</span>
-            </div>
-            <div class="nav-item">
-                <span>🔍</span>
-                <span>调价查询</span>
-            </div>
-            <div class="nav-item active">
-                <span>📝</span>
-                <span>渠道日志</span>
-            </div>
-            <div class="nav-item">
-                <span>⚙️</span>
-                <span>运营工具</span>
-            </div>
+            <div class="nav-item active">🔍 渠道日志查询</div>
         </aside>
 
-        <!-- 右侧内容区 -->
         <main class="content">
-            <!-- 查询条件面板 -->
             <div class="search-panel">
-                <div class="search-title">
-                    <span></span>
-                    <span>查询条件</span>
-                </div>
+                <div class="error-message" id="errorMessage">️ 订单号不存在，请检查后重试</div>
 
-                <!-- 错误提示 -->
-                <div class="error-message" id="errorMessage">
-                    ️ 订单号不存在，请检查后重试
-                </div>
-
-                <!-- 查询方式选择 -->
-                <div class="query-mode">
-                    <label class="query-mode-item">
-                        <input type="radio" name="queryMode" value="orderNumber" checked>
-                        <span>按订单号查询</span>
-                    </label>
-                    <label class="query-mode-item">
-                        <input type="radio" name="queryMode" value="dateRange">
-                        <span>按日期范围查询</span>
-                    </label>
-                    <label class="query-mode-item">
-                        <input type="radio" name="queryMode" value="advanced">
-                        <span>高级筛选</span>
-                    </label>
-                </div>
-
-                <!-- 查询表单 -->
                 <div class="search-form">
-                    <div class="form-row">
-                        <label class="form-label">订单号</label>
-                        <input type="text" class="form-input" placeholder="请输入订单号" id="orderNumber">
+                    <div class="form-row span-2">
+                        <label class="form-label">订单号 <span class="search-hint">输入订单号或选择日期范围后点击查询</span></label>
+                        <input type="text" class="form-input" placeholder="渠道/道旅/供应商订单号" id="orderNumber">
                     </div>
 
-                    <div class="form-row">
-                        <label class="form-label required">日期范围</label>
-                        <div class="date-range-picker">
-                            <input type="date" class="form-input" id="startDate" value="2026-09-22">
-                            <span class="date-range-separator">至</span>
-                            <input type="date" class="form-input" id="endDate" value="2026-09-29">
-                        </div>
-                        <div class="quick-date-options">
-                            <button class="quick-date-btn" onclick="setDateRange(7)">近 7 天</button>
-                            <button class="quick-date-btn" onclick="setDateRange(30)">近 30 天</button>
-                            <button class="quick-date-btn active" onclick="setDateRange(60)">近 60 天</button>
-                            <button class="quick-date-btn" onclick="setDateRange(90)">近 90 天</button>
+                    <div class="form-row span-2">
+                        <label class="form-label">日期范围</label>
+                        <div class="date-range-container">
+                            <div class="date-range-input" id="dateRangeWrapper">
+                                <input type="text" class="range-input" id="dateInputStart" placeholder="开始日期" readonly>
+                                <span class="range-separator">
+                                    <svg viewBox="0 0 1024 1024" width="14" height="14"><path d="M256 512a32 32 0 0 1 55.4-21.7l160 176a32 32 0 0 1 0 43.4l-160 176A32 32 0 0 1 264 864V512z" fill="currentColor"/></svg>
+                                </span>
+                                <input type="text" class="range-input" id="dateInputEnd" placeholder="结束日期" readonly>
+                                <span class="range-calendar-icon" onclick="toggleDatePanel()">
+                                    <svg viewBox="0 0 1024 1024" width="16" height="16"><path d="M880 184H712v-64c0-4.4-3.6-8-8-8h-56c-4.4 0-8 3.6-8 8v64H384v-64c0-4.4-3.6-8-8-8h-56c-4.4 0-8 3.6-8 8v64H144c-17.7 0-32 14.3-32 32v664c0 17.7 14.3 32 32 32h736c17.7 0 32-14.3 32-32V216c0-17.7-14.3-32-32-32zm-40 656H184V460h656v380zM184 392V256h128v48c0 4.4 3.6 8 8 8h56c4.4 0 8-3.6 8-8v-48h256v48c0 4.4 3.6 8 8 8h56c4.4 0 8-3.6 8-8v-48h128v136H184z"/></svg>
+                                </span>
+                            </div>
+
+                            <div class="date-picker-panel" id="datePickerPanel">
+                                <div class="quick-date-options">
+                                    <button class="quick-date-btn" onclick="setDateRange(7)">近 7 天</button>
+                                    <button class="quick-date-btn" onclick="setDateRange(30)">近 30 天</button>
+                                    <button class="quick-date-btn active" onclick="setDateRange(60)">近 60 天</button>
+                                    <button class="quick-date-btn" onclick="setDateRange(90)">近 90 天</button>
+                                </div>
+
+                                <div class="calendar-container">
+                                    <div class="calendar-month">
+                                        <div class="calendar-header">
+                                            <div class="calendar-nav">
+                                                <button class="calendar-nav-btn" onclick="navMonth(-12)">«</button>
+                                                <button class="calendar-nav-btn" onclick="navMonth(-1)">‹</button>
+                                            </div>
+                                            <span class="calendar-header-title" id="leftMonthTitle">2026 年 10 月</span>
+                                            <div class="calendar-nav"></div>
+                                        </div>
+                                        <div class="calendar-weekdays">
+                                            <div class="calendar-weekday">一</div>
+                                            <div class="calendar-weekday">二</div>
+                                            <div class="calendar-weekday">三</div>
+                                            <div class="calendar-weekday">四</div>
+                                            <div class="calendar-weekday">五</div>
+                                            <div class="calendar-weekday">六</div>
+                                            <div class="calendar-weekday">日</div>
+                                        </div>
+                                        <div class="calendar-days" id="leftMonthDays"></div>
+                                    </div>
+
+                                    <div class="calendar-month">
+                                        <div class="calendar-header">
+                                            <div class="calendar-nav"></div>
+                                            <span class="calendar-header-title" id="rightMonthTitle">2026 年 11 月</span>
+                                            <div class="calendar-nav">
+                                                <button class="calendar-nav-btn" onclick="navMonth(1)">›</button>
+                                                <button class="calendar-nav-btn" onclick="navMonth(12)">»</button>
+                                            </div>
+                                        </div>
+                                        <div class="calendar-weekdays">
+                                            <div class="calendar-weekday">一</div>
+                                            <div class="calendar-weekday">二</div>
+                                            <div class="calendar-weekday">三</div>
+                                            <div class="calendar-weekday">四</div>
+                                            <div class="calendar-weekday">五</div>
+                                            <div class="calendar-weekday">六</div>
+                                            <div class="calendar-weekday">日</div>
+                                        </div>
+                                        <div class="calendar-days" id="rightMonthDays"></div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
 
-                    <div class="form-row">
+                    <div class="form-row span-2">
                         <label class="form-label">日志类型</label>
-                        <select class="form-select" id="logType">
-                            <option value="">全部</option>
-                            <option value="verify">验价</option>
-                            <option value="order">下单</option>
-                            <option value="cancel">取消</option>
-                            <option value="query">查单</option>
-                        </select>
+                        <div class="multi-select" id="logTypeMultiSelect">
+                            <div class="multi-select-trigger" id="logTypeTrigger" onclick="toggleLogTypeDropdown()">全部</div>
+                            <div class="multi-select-dropdown" id="logTypeDropdown">
+                                <label><input type="checkbox" id="logTypeAllCheck" checked onchange="toggleAllLogTypes(this.checked)"> 全选</label>
+                                <div class="ms-divider"></div>
+                                <label><input type="checkbox" name="logType" value="verify" checked onchange="updateLogTypeDisplay()"> 验价</label>
+                                <label><input type="checkbox" name="logType" value="order" checked onchange="updateLogTypeDisplay()"> 下单</label>
+                                <label><input type="checkbox" name="logType" value="cancel" checked onchange="updateLogTypeDisplay()"> 取消</label>
+                                <label><input type="checkbox" name="logType" value="query" checked onchange="updateLogTypeDisplay()"> 查单</label>
+                            </div>
+                        </div>
                     </div>
 
-                    <div class="form-row">
-                        <label class="form-label">错误码 (errorCode)</label>
-                        <input type="text" class="form-input" placeholder="可选">
+                    <div class="advanced-filters" id="advancedFilters">
+                        <div class="form-row span-2">
+                            <label class="form-label">错误码 (errorCode)</label>
+                            <input type="text" class="form-input" placeholder="可选" id="errorCode">
+                        </div>
+
+                        <div class="form-row span-2">
+                            <label class="form-label">ClientID</label>
+                            <input type="text" class="form-input" placeholder="可选" id="clientId">
+                        </div>
+
+                        <div class="form-row span-2">
+                            <label class="form-label">SupplierID</label>
+                            <input type="text" class="form-input" placeholder="可选" id="supplierId">
+                        </div>
+
+                        <div class="form-row span-2">
+                            <label class="form-label">DidaHotelID</label>
+                            <input type="text" class="form-input" placeholder="可选" id="didaHotelId">
+                        </div>
+
+                        <div class="form-row span-2">
+                            <label class="form-label">RatePlanID</label>
+                            <input type="text" class="form-input" placeholder="可选" id="ratePlanId">
+                        </div>
                     </div>
 
-                    <div class="form-row">
-                        <label class="form-label">ClientID</label>
-                        <input type="text" class="form-input" placeholder="可选">
-                    </div>
-
-                    <div class="form-row">
-                        <label class="form-label">SupplierID</label>
-                        <input type="text" class="form-input" placeholder="可选">
-                    </div>
-
-                    <div class="form-row">
-                        <label class="form-label">DidaHotelID</label>
-                        <input type="text" class="form-input" placeholder="可选">
-                    </div>
-
-                    <div class="form-row">
-                        <label class="form-label">RatePlanID</label>
-                        <input type="text" class="form-input" placeholder="可选">
-                    </div>
                 </div>
 
-                <!-- 按钮组 -->
+                <div class="toggle-advanced" id="toggleAdvanced" onclick="toggleAdvancedFilters()">
+                    展开更多筛选条件 <span class="arrow">▼</span>
+                </div>
+
                 <div class="btn-group">
-                    <button class="btn btn-default" onclick="resetForm()">
-                        <span>🔄</span>
-                        <span>重置</span>
-                    </button>
-                    <button class="btn btn-default" onclick="shareLink()">
-                        <span>🔗</span>
-                        <span>分享链接</span>
-                    </button>
-                    <button class="btn btn-primary" onclick="searchLogs()">
-                        <span>🔍</span>
-                        <span>搜索</span>
-                    </button>
+                    <button class="btn btn-primary" onclick="searchLogs()">🔍 查询</button>
+                    <button class="btn btn-default" onclick="resetForm()">🔄 重置</button>
+                    <button class="btn btn-default" onclick="shareLink()">🔗 分享链接</button>
                 </div>
             </div>
 
-            <!-- 结果面板 -->
             <div class="result-panel">
-                <div class="result-header">
-                    <div class="result-title">
-                        查询结果
-                        <span style="font-size: 13px; color: #86909c; font-weight: normal; margin-left: 8px;">
-                            共找到 156 条日志
-                        </span>
+                <div class="batch-toolbar">
+                    <div class="batch-toolbar-left">
+                        <span class="selection-info">已选择 <span class="count" id="selectedCount">0</span> 条</span>
+                        <a class="action-link" id="clearSelectionLink" onclick="clearSelection()" style="display:none;">取消选择</a>
                     </div>
-                    <div class="result-actions">
-                        <button class="btn btn-default" onclick="exportLogs('single')">
-                            <span></span>
-                            <span>导出选中</span>
-                        </button>
-                        <button class="btn btn-default" onclick="exportLogs('batch')">
-                            <span></span>
-                            <span>批量导出</span>
-                        </button>
-                    </div>
+                    <button class="btn-batch-export" id="batchExportBtn" onclick="exportSelectedOrders()" disabled>📦 批量导出</button>
                 </div>
-
-                <!-- 链路追踪示意 -->
-                <div class="chain-trace">
-                    <span style="font-size: 13px; color: #86909c;">链路追踪:</span>
-                    <div class="chain-node active">渠道</div>
-                    <span class="chain-arrow">→</span>
-                    <div class="chain-node active">SS</div>
-                    <span class="chain-arrow">→</span>
-                    <div class="chain-node active">供应商</div>
-                    <span class="chain-status">
-                        <span class="status-badge status-success">✓ 链路完整</span>
-                    </span>
-                </div>
-
-                <!-- 数据表格 -->
                 <div class="table-container">
                     <table class="data-table">
                         <thead>
                             <tr>
-                                <th width="60">选择</th>
-                                <th width="100">日志类型</th>
-                                <th width="180">订单号</th>
+                                <th class="col-checkbox"><input type="checkbox" id="selectAllCheckbox" onchange="toggleSelectAll(this.checked)"></th>
+                                <th width="180">渠道订单号</th>
+                                <th width="140">道旅订单号</th>
+                                <th width="140">供应商订单号</th>
+                                <th width="100">订单状态</th>
+                                <th width="240">日志类型</th>
+                                <th width="160">时间</th>
                                 <th width="120">ClientID</th>
                                 <th width="120">SupplierID</th>
-                                <th width="180">时间</th>
-                                <th width="100">状态</th>
-                                <th>日志内容</th>
                                 <th width="120">操作</th>
                             </tr>
                         </thead>
-                        <tbody>
-                            <tr>
-                                <td><input type="checkbox"></td>
-                                <td><span class="log-type-badge log-type-order">下单</span></td>
-                                <td>18851164372</td>
-                                <td>PhoentrixTPX</td>
-                                <td>DCTLLincoln</td>
-                                <td>2026-09-29 09:59:54</td>
-                                <td><span class="status-badge status-success">成功</span></td>
-                                <td>
-                                    <div class="log-content">Request: {"bookingNumber":"18851164372","action":"confirm"}
-Response: {"success":true,"confirmationNumber":"DEB260929095952750"}</div>
-                                </td>
-                                <td>
-                                    <div style="display: flex; flex-direction: column; gap: 4px;">
-                                        <a class="action-link" onclick="viewDetail(1)">查看详情</a>
-                                        <a class="action-link" onclick="copyLink()">复制链接</a>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td><input type="checkbox"></td>
-                                <td><span class="log-type-badge log-type-verify">验价</span></td>
-                                <td>18851164371</td>
-                                <td>PhoentrixTPX</td>
-                                <td>DCTLLincoln</td>
-                                <td>2026-09-29 09:58:32</td>
-                                <td><span class="status-badge status-success">成功</span></td>
-                                <td>
-                                    <div class="log-content">Request: {"hotelId":"H123456","checkIn":"2026-10-01"}
-Response: {"price":500,"currency":"USD","available":true}</div>
-                                </td>
-                                <td>
-                                    <div style="display: flex; flex-direction: column; gap: 4px;">
-                                        <a class="action-link" onclick="viewDetail(2)">查看详情</a>
-                                        <a class="action-link" onclick="copyLink()">复制链接</a>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td><input type="checkbox"></td>
-                                <td><span class="log-type-badge log-type-cancel">取消</span></td>
-                                <td>18851164370</td>
-                                <td>PhoentrixTPX</td>
-                                <td>DCTLLincoln</td>
-                                <td>2026-09-29 09:55:18</td>
-                                <td><span class="status-badge status-error">失败</span></td>
-                                <td>
-                                    <div class="log-content">Request: {"bookingNumber":"18851164370","action":"cancel"}
-Response: {"success":false,"errorCode":"CANCEL_NOT_ALLOWED","message":"Cannot cancel after check-in"}</div>
-                                </td>
-                                <td>
-                                    <div style="display: flex; flex-direction: column; gap: 4px;">
-                                        <a class="action-link" onclick="viewDetail(3)">查看详情</a>
-                                        <a class="action-link" onclick="copyLink()">复制链接</a>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td><input type="checkbox"></td>
-                                <td><span class="log-type-badge log-type-query">查单</span></td>
-                                <td>18851164369</td>
-                                <td>PhoentrixTPX</td>
-                                <td>DCTLLincoln</td>
-                                <td>2026-09-29 09:52:05</td>
-                                <td><span class="status-badge status-warning">超时</span></td>
-                                <td>
-                                    <div class="log-content">Request: {"bookingNumber":"18851164369"}
-Response: {"timeout":true,"message":"Request timeout after 30s"}</div>
-                                </td>
-                                <td>
-                                    <div style="display: flex; flex-direction: column; gap: 4px;">
-                                        <a class="action-link" onclick="viewDetail(4)">查看详情</a>
-                                        <a class="action-link" onclick="copyLink()">复制链接</a>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td><input type="checkbox"></td>
-                                <td><span class="log-type-badge log-type-order">下单</span></td>
-                                <td>18851164368</td>
-                                <td>PhoentrixTPX</td>
-                                <td>DCTLLincoln</td>
-                                <td>2026-09-29 09:48:42</td>
-                                <td><span class="status-badge status-success">成功</span></td>
-                                <td>
-                                    <div class="log-content">Request: {"hotelId":"H123456","roomType":"RT1","checkIn":"2026-10-01"}
-Response: {"success":true,"bookingNumber":"2104752975137345536"}</div>
-                                </td>
-                                <td>
-                                    <div style="display: flex; flex-direction: column; gap: 4px;">
-                                        <a class="action-link" onclick="viewDetail(5)">查看详情</a>
-                                        <a class="action-link" onclick="copyLink()">复制链接</a>
-                                    </div>
-                                </td>
-                            </tr>
+                        <tbody id="orderTableBody">
                         </tbody>
                     </table>
                 </div>
 
-                <!-- 分页 -->
-                <div class="pagination">
-                    <span class="pagination-info">共 156 条，每页 10 条，共 16 页</span>
-                    <button class="pagination-btn" disabled>&lt;</button>
-                    <button class="pagination-btn active">1</button>
-                    <button class="pagination-btn">2</button>
-                    <button class="pagination-btn">3</button>
-                    <button class="pagination-btn">4</button>
-                    <button class="pagination-btn">5</button>
-                    <button class="pagination-btn">...</button>
-                    <button class="pagination-btn">16</button>
-                    <button class="pagination-btn">&gt;</button>
+                <div id="pagination" class="pagination">
                 </div>
             </div>
         </main>
     </div>
 
-    <!-- 日志详情弹窗 -->
+    <!-- 详情弹窗 -->
     <div class="modal-overlay" id="detailModal">
         <div class="modal">
             <div class="modal-header">
-                <div class="modal-title">📋 日志详情 - 订单号：<span id="modalOrderNumber">18851164372</span></div>
+                <div class="modal-title">📋 日志详情</div>
                 <button class="modal-close" onclick="closeModal()">×</button>
             </div>
             <div class="modal-body">
-                <!-- 链路追踪 -->
-                <div class="chain-trace">
-                    <span style="font-size: 13px; color: #86909c;">完整链路:</span>
-                    <div class="chain-node active">渠道 (PhoentrixTPX)</div>
-                    <span class="chain-arrow">→</span>
-                    <div class="chain-node active">SS</div>
-                    <span class="chain-arrow">→</span>
-                    <div class="chain-node active">供应商 (DCTLLincoln)</div>
-                    <span class="chain-status">
-                        <span class="status-badge status-success">✓ 链路完整</span>
-                    </span>
-                </div>
-
-                <div class="log-detail-section">
-                    <div class="log-detail-label">Request 原始报文</div>
-                    <div class="log-detail-content">{
-  "bookingNumber": "18851164372",
-  "action": "confirm",
-  "hotelId": "H123456",
-  "roomType": "RT1",
-  "checkIn": "2026-10-01",
-  "checkOut": "2026-10-03",
-  "guests": 2,
-  "clientID": "PhoentrixTPX",
-  "timestamp": "2026-09-29T09:59:50+08:00"
-}</div>
-                </div>
-
-                <div class="log-detail-section">
-                    <div class="log-detail-label">Response 原始报文</div>
-                    <div class="log-detail-content">{
-  "success": true,
-  "confirmationNumber": "DEB260929095952750",
-  "supplierID": "749",
-  "supplierName": "DCTLLincoln",
-  "status": "Confirmed",
-  "timestamp": "2026-09-29T09:59:54+08:00",
-  "processingTime": "6.13s"
-}</div>
-                </div>
-
-                <div class="log-detail-section">
-                    <div class="log-detail-label">核心字段</div>
-                    <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px;">
-                        <div>
-                            <div class="log-detail-label">ClientID</div>
-                            <div style="font-family: monospace; font-size: 13px;">PhoentrixTPX</div>
+                <!-- 基本信息区 -->
+                <div class="detail-info-bar" id="detailInfoBar"></div>
+                <!-- 双栏日志区 -->
+                <div class="detail-columns">
+                    <div class="detail-column">
+                        <div class="detail-column-header">
+                            <span class="col-icon">📤</span> 机构客户 → Dida
                         </div>
-                        <div>
-                            <div class="log-detail-label">SupplierID</div>
-                            <div style="font-family: monospace; font-size: 13px;">749 (DCTLLincoln)</div>
-                        </div>
-                        <div>
-                            <div class="log-detail-label">SessionID</div>
-                            <div style="font-family: monospace; font-size: 13px;">sess_abc123def456</div>
-                        </div>
-                        <div>
-                            <div class="log-detail-label">处理时长</div>
-                            <div style="font-family: monospace; font-size: 13px;">6.13 秒</div>
-                        </div>
+                        <div class="detail-column-body" id="clientLogs"></div>
                     </div>
-                </div>
-
-                <div class="log-detail-section">
-                    <div class="log-detail-label">AI 分析结论</div>
-                    <div style="background: #e8f3ff; border: 1px solid #3370ff; border-radius: 4px; padding: 12px;">
-                        <div style="font-size: 13px; line-height: 1.6;">
-                            <strong>【订单概述】</strong> 订单已正常确认，没有发现异常。<br>
-                            <strong>【链路状态】</strong> 渠道→SS→供应商 链路完整，各环节处理正常。<br>
-                            <strong>【处理建议】</strong> 当前没有待办事项，无需继续跟进。
+                    <div class="detail-column">
+                        <div class="detail-column-header">
+                            <span class="col-icon">📤</span> Dida → 供应商
                         </div>
+                        <div class="detail-column-body" id="supplierLogs"></div>
                     </div>
                 </div>
             </div>
             <div class="modal-footer">
-                <button class="btn btn-default" onclick="copyLink()"> 复制链接</button>
-                <button class="btn btn-default" onclick="exportLogs('single')">📦 导出日志</button>
+                <button class="btn btn-default" onclick="exportLogs()">📦 导出日志</button>
                 <button class="btn btn-primary" onclick="closeModal()">关闭</button>
             </div>
         </div>
     </div>
 
     <script>
-        // 设置日期范围
-        function setDateRange(days) {
-            const today = new Date();
-            const startDate = new Date(today.getTime() - days * 24 * 60 * 60 * 1000);
-            
-            document.getElementById('startDate').value = startDate.toISOString().split('T')[0];
-            document.getElementById('endDate').value = today.toISOString().split('T')[0];
-            
-            // 更新按钮状态
-            document.querySelectorAll('.quick-date-btn').forEach(btn => {
-                btn.classList.remove('active');
-            });
-            event.target.classList.add('active');
+        // Mock log data (410 entries from real order data)
+        const MOCK_LOGS = [{"id":1,"oid":"187910588628","coid":"T-260923-06583418376384942336","soid":"322405002","lt":"verify","st":"success","cid":"OzonTravelDirect","sid":"52","sup":"Ostrovok","ss":"sess_zpqk51fpkh1dnmmj","dhid":"1671296","shid":"10950839","rpid":"","ec":"","t":"2026-09-29 09:40:00"},{"id":2,"oid":"187910588628","coid":"T-260923-06583418376384942336","soid":"322405002","lt":"order","st":"success","cid":"OzonTravelDirect","sid":"52","sup":"Ostrovok","ss":"sess_bqe7ckw5ngcx1945","dhid":"1671296","shid":"10950839","rpid":"","ec":"","t":"2026-09-29 09:45:00"},{"id":3,"oid":"187910588534","coid":"YA-3095-6109-9543:0","soid":"148-6161460","lt":"verify","st":"success","cid":"YandexTravel2C","sid":"95","sup":"HBG","ss":"sess_wnnhj7xvg0fn9xuy","dhid":"7095","shid":"7656","rpid":"","ec":"","t":"2026-09-29 09:34:00"},{"id":4,"oid":"187910588534","coid":"YA-3095-6109-9543:0","soid":"148-6161460","lt":"order","st":"success","cid":"YandexTravel2C","sid":"95","sup":"HBG","ss":"sess_41ibljh75lxo6qji","dhid":"7095","shid":"7656","rpid":"","ec":"","t":"2026-09-29 09:39:00"},{"id":5,"oid":"187910588534","coid":"YA-3095-6109-9543:0","soid":"148-6161460","lt":"cancel","st":"success","cid":"YandexTravel2C","sid":"95","sup":"HBG","ss":"sess_jv6oh9sdbdw2pcn9","dhid":"7095","shid":"7656","rpid":"","ec":"","t":"2026-09-29 09:44:00"},{"id":6,"oid":"187910588361","coid":"c361aaa6-783b-4911-95c5-81ddd2fc6466","soid":"dqp1y7x7","lt":"verify","st":"success","cid":"ostrovokloyaltyCUG","sid":"594","sup":"Rakuten_Japan","ss":"sess_t7ye511mkfazz81s","dhid":"1548826","shid":"wdTD:63606047B43EF9DB","rpid":"","ec":"","t":"2026-09-29 09:28:00"},{"id":7,"oid":"187910588361","coid":"c361aaa6-783b-4911-95c5-81ddd2fc6466","soid":"dqp1y7x7","lt":"order","st":"success","cid":"ostrovokloyaltyCUG","sid":"594","sup":"Rakuten_Japan","ss":"sess_dw4shnf877vren93","dhid":"1548826","shid":"wdTD:63606047B43EF9DB","rpid":"","ec":"","t":"2026-09-29 09:33:00"},{"id":8,"oid":"187910588207","coid":"1057775018","soid":"296-3329167","lt":"verify","st":"fail","cid":"DidaOpaq","sid":"95","sup":"HBG","ss":"sess_8drc11ertj5pht0h","dhid":"58998","shid":"361864","rpid":"","ec":"ERR_TIMEOUT","t":"2026-09-29 09:25:00"},{"id":9,"oid":"187910588207","coid":"1057775018","soid":"296-3329167","lt":"order","st":"success","cid":"DidaOpaq","sid":"95","sup":"HBG","ss":"sess_l9xpseimvihcwi64","dhid":"58998","shid":"361864","rpid":"","ec":"","t":"2026-09-29 09:30:00"},{"id":10,"oid":"187910588207","coid":"1057775018","soid":"296-3329167","lt":"query","st":"success","cid":"DidaOpaq","sid":"95","sup":"HBG","ss":"sess_ciyhe7ur23gdppq0","dhid":"58998","shid":"361864","rpid":"","ec":"","t":"2026-09-29 09:40:00"},{"id":11,"oid":"187910587709","coid":"WS34082440","soid":"1778062389","lt":"verify","st":"success","cid":"goglobalCUG","sid":"26","sup":"Agoda","ss":"sess_xc02dgtfgq5c34dx","dhid":"106100","shid":"299080","rpid":"","ec":"","t":"2026-09-29 09:18:00"},{"id":12,"oid":"187910587709","coid":"WS34082440","soid":"1778062389","lt":"order","st":"success","cid":"goglobalCUG","sid":"26","sup":"Agoda","ss":"sess_tad1ior56fao72kz","dhid":"106100","shid":"299080","rpid":"","ec":"","t":"2026-09-29 09:23:00"},{"id":13,"oid":"187910587709","coid":"WS34082440","soid":"1778062389","lt":"query","st":"success","cid":"goglobalCUG","sid":"26","sup":"Agoda","ss":"sess_02xrghc0clbr7tcs","dhid":"106100","shid":"299080","rpid":"","ec":"","t":"2026-09-29 09:33:00"},{"id":14,"oid":"187910587287","coid":"6ab3f76feed42dabd445006c","soid":"1394847172","lt":"verify","st":"fail","cid":"TiketCorp","sid":"131","sup":"Traveloka","ss":"sess_yie6ivwpvs7hzioy","dhid":"84215","shid":"621268","rpid":"","ec":"ERR_2345","t":"2026-09-29 09:15:00"},{"id":15,"oid":"187910587287","coid":"6ab3f76feed42dabd445006c","soid":"1394847172","lt":"order","st":"success","cid":"TiketCorp","sid":"131","sup":"Traveloka","ss":"sess_kl1cq99chj755nf4","dhid":"84215","shid":"621268","rpid":"","ec":"","t":"2026-09-29 09:20:00"},{"id":16,"oid":"187910586924","coid":"4TSNWVL5CC9X","soid":"9105419862668:DV:283","lt":"verify","st":"success","cid":"HopperNUBANK","sid":"116","sup":"EPS","ss":"sess_93tyt7d5j60fkhmy","dhid":"88302","shid":"63064","rpid":"","ec":"","t":"2026-09-29 09:08:00"},{"id":17,"oid":"187910586924","coid":"4TSNWVL5CC9X","soid":"9105419862668:DV:283","lt":"order","st":"success","cid":"HopperNUBANK","sid":"116","sup":"EPS","ss":"sess_4sj6bw3bme9fpzue","dhid":"88302","shid":"63064","rpid":"","ec":"","t":"2026-09-29 09:13:00"},{"id":18,"oid":"187910586642","coid":"YA-6000-1625-5291:0","soid":"1058792755","lt":"verify","st":"success","cid":"YandexTravel2C","sid":"61","sup":"DOTW5","ss":"sess_t4ufel6246hid25o","dhid":"853376","shid":"2278495","rpid":"","ec":"","t":"2026-09-29 09:03:00"},{"id":19,"oid":"187910586642","coid":"YA-6000-1625-5291:0","soid":"1058792755","lt":"order","st":"success","cid":"YandexTravel2C","sid":"61","sup":"DOTW5","ss":"sess_wf75935a0l7253j2","dhid":"853376","shid":"2278495","rpid":"","ec":"","t":"2026-09-29 09:08:00"},{"id":20,"oid":"187910586312","coid":"ARI-260909854","soid":"21510214","lt":"verify","st":"success","cid":"ariconnect01","sid":"193","sup":"Rezen_Retail","ss":"sess_bqh7m35ixokc1msy","dhid":"1672900","shid":"1000000870","rpid":"","ec":"","t":"2026-09-29 09:00:00"},{"id":21,"oid":"187910586312","coid":"ARI-260909854","soid":"21510214","lt":"order","st":"success","cid":"ariconnect01","sid":"193","sup":"Rezen_Retail","ss":"sess_4la5ju9bvm2p9e6g","dhid":"1672900","shid":"1000000870","rpid":"","ec":"","t":"2026-09-29 09:05:00"},{"id":22,"oid":"187910586246","coid":"345213433-0","soid":"1778062675","lt":"verify","st":"success","cid":"Traveloka2b","sid":"26","sup":"Agoda","ss":"sess_a7tz0yncxll4zklo","dhid":"436363","shid":"263028","rpid":"","ec":"","t":"2026-09-29 08:55:00"},{"id":23,"oid":"187910586246","coid":"345213433-0","soid":"1778062675","lt":"order","st":"success","cid":"Traveloka2b","sid":"26","sup":"Agoda","ss":"sess_okep7y6wktakpuxq","dhid":"436363","shid":"263028","rpid":"","ec":"","t":"2026-09-29 09:00:00"},{"id":24,"oid":"187910586218","coid":"None","soid":"C05590357:ZRV004:Dida","lt":"verify","st":"success","cid":"SmartwayB2B","sid":"1568","sup":"MikinetV2","ss":"sess_s280xkxwd8il3fb9","dhid":"195853","shid":"CAY230000","rpid":"","ec":"","t":"2026-09-29 08:49:00"},{"id":25,"oid":"187910586218","coid":"None","soid":"C05590357:ZRV004:Dida","lt":"order","st":"success","cid":"SmartwayB2B","sid":"1568","sup":"MikinetV2","ss":"sess_w1q5uznofy6452h2","dhid":"195853","shid":"CAY230000","rpid":"","ec":"","t":"2026-09-29 08:54:00"},{"id":26,"oid":"187910586218","coid":"None","soid":"None","lt":"verify","st":"success","cid":"SmartwayB2B","sid":"266","sup":"CosmoBeds","ss":"sess_bi4q2y9v86wzs3t6","dhid":"195853","shid":"OT-PROP-A-146882","rpid":"","ec":"","t":"2026-09-29 08:43:00"},{"id":27,"oid":"187910586218","coid":"None","soid":"None","lt":"order","st":"success","cid":"SmartwayB2B","sid":"266","sup":"CosmoBeds","ss":"sess_0rjiw1swjckjltei","dhid":"195853","shid":"OT-PROP-A-146882","rpid":"","ec":"","t":"2026-09-29 08:48:00"},{"id":28,"oid":"187910586218","coid":"None","soid":"None","lt":"query","st":"success","cid":"SmartwayB2B","sid":"266","sup":"CosmoBeds","ss":"sess_yzcotohp6vz41nam","dhid":"195853","shid":"OT-PROP-A-146882","rpid":"","ec":"","t":"2026-09-29 08:58:00"},{"id":29,"oid":"187910586120","coid":"2052798038","soid":"117480489","lt":"verify","st":"success","cid":"AgodaEBK","sid":"1943","sup":"Etstur","ss":"sess_8p0tvhhpbmyofqew","dhid":"916769","shid":"sxk97qmfz8py","rpid":"","ec":"","t":"2026-09-29 08:39:00"},{"id":30,"oid":"187910586120","coid":"2052798038","soid":"117480489","lt":"order","st":"success","cid":"AgodaEBK","sid":"1943","sup":"Etstur","ss":"sess_aouaxeqbnhl1n13j","dhid":"916769","shid":"sxk97qmfz8py","rpid":"","ec":"","t":"2026-09-29 08:44:00"},{"id":31,"oid":"187910586120","coid":"2052798038","soid":"117480489","lt":"cancel","st":"fail","cid":"AgodaEBK","sid":"1943","sup":"Etstur","ss":"sess_0b8ic8bbi4wire8q","dhid":"916769","shid":"sxk97qmfz8py","rpid":"","ec":"ERR_1234","t":"2026-09-29 08:49:00"},{"id":32,"oid":"187910586018","coid":"814598968652","soid":"YD09029260923235938691","lt":"verify","st":"success","cid":"qunarcn_yun","sid":"614","sup":"SunMeiV3","ss":"sess_gv0e38daly8ozcyw","dhid":"2389461","shid":"09029","rpid":"","ec":"","t":"2026-09-29 08:34:00"},{"id":33,"oid":"187910586018","coid":"814598968652","soid":"YD09029260923235938691","lt":"order","st":"success","cid":"qunarcn_yun","sid":"614","sup":"SunMeiV3","ss":"sess_d14ve92mpnsm43d8","dhid":"2389461","shid":"09029","rpid":"","ec":"","t":"2026-09-29 08:39:00"},{"id":34,"oid":"187910586018","coid":"814598968652","soid":"YD09029260923235938691","lt":"query","st":"success","cid":"qunarcn_yun","sid":"614","sup":"SunMeiV3","ss":"sess_w3zp08j3trp0j43d","dhid":"2389461","shid":"09029","rpid":"","ec":"","t":"2026-09-29 08:49:00"},{"id":35,"oid":"187910585965","coid":"1688901426370714","soid":"9103684432713:DV:77","lt":"verify","st":"success","cid":"ctrip2024","sid":"116","sup":"EPS","ss":"sess_qvnb4gh2m5zja8dz","dhid":"57229","shid":"9013577","rpid":"","ec":"","t":"2026-09-29 08:29:00"},{"id":36,"oid":"187910585965","coid":"1688901426370714","soid":"9103684432713:DV:77","lt":"order","st":"success","cid":"ctrip2024","sid":"116","sup":"EPS","ss":"sess_r1yxr2dhylurtp0l","dhid":"57229","shid":"9013577","rpid":"","ec":"","t":"2026-09-29 08:34:00"},{"id":37,"oid":"187910585965","coid":"1688901426370714","soid":"9103684432713:DV:77","lt":"query","st":"success","cid":"ctrip2024","sid":"116","sup":"EPS","ss":"sess_zjjeget1ghr09skd","dhid":"57229","shid":"9013577","rpid":"","ec":"","t":"2026-09-29 08:44:00"},{"id":38,"oid":"S222910585798","coid":"None","soid":"9105419853409:DV:2230","lt":"verify","st":"success","cid":"Luyou2025","sid":"116","sup":"EPS","ss":"sess_mkzebbk7w1dakrm8","dhid":"36235","shid":"8741","rpid":"","ec":"","t":"2026-09-29 08:25:00"},{"id":39,"oid":"S222910585798","coid":"None","soid":"9105419853409:DV:2230","lt":"order","st":"success","cid":"Luyou2025","sid":"116","sup":"EPS","ss":"sess_j5ecruyf38diuovw","dhid":"36235","shid":"8741","rpid":"","ec":"","t":"2026-09-29 08:30:00"},{"id":40,"oid":"187910585645","coid":"be22776868","soid":"None","lt":"verify","st":"success","cid":"SuperPlus","sid":"116","sup":"EPS","ss":"sess_6kvpuc8d1wjcitfo","dhid":"64592","shid":"291","rpid":"","ec":"","t":"2026-09-29 08:18:00"},{"id":41,"oid":"187910585645","coid":"be22776868","soid":"None","lt":"order","st":"fail","cid":"SuperPlus","sid":"116","sup":"EPS","ss":"sess_yqbkk4cij2v2heif","dhid":"64592","shid":"291","rpid":"","ec":"ERR_5678","t":"2026-09-29 08:23:00"},{"id":42,"oid":"187910585203","coid":"1128151117567061","soid":"9105419850372:DV:77","lt":"verify","st":"fail","cid":"ctrip2024","sid":"116","sup":"EPS","ss":"sess_2v37pqkojtpv60va","dhid":"984415","shid":"1768447","rpid":"","ec":"ERR_3456","t":"2026-09-29 08:15:00"},{"id":43,"oid":"187910585203","coid":"1128151117567061","soid":"9105419850372:DV:77","lt":"order","st":"success","cid":"ctrip2024","sid":"116","sup":"EPS","ss":"sess_iy4va13u1gspk9p3","dhid":"984415","shid":"1768447","rpid":"","ec":"","t":"2026-09-29 08:20:00"},{"id":44,"oid":"187910585203","coid":"1128151117567061","soid":"9105419850372:DV:77","lt":"query","st":"success","cid":"ctrip2024","sid":"116","sup":"EPS","ss":"sess_8qoldforxo1bdje1","dhid":"984415","shid":"1768447","rpid":"","ec":"","t":"2026-09-29 08:30:00"},{"id":45,"oid":"187910585140","coid":"1057774910","soid":"9103684432300:DV:77","lt":"verify","st":"success","cid":"AgodaUK","sid":"116","sup":"EPS","ss":"sess_a5qbswrpbjek5rbw","dhid":"1241","shid":"6879976","rpid":"","ec":"","t":"2026-09-29 08:08:00"},{"id":46,"oid":"187910585140","coid":"1057774910","soid":"9103684432300:DV:77","lt":"order","st":"success","cid":"AgodaUK","sid":"116","sup":"EPS","ss":"sess_2zlaoi4e8xf7kzor","dhid":"1241","shid":"6879976","rpid":"","ec":"","t":"2026-09-29 08:13:00"},{"id":47,"oid":"187910584517","coid":"2052792487","soid":"DEB260923235926012","lt":"verify","st":"success","cid":"DidaOpaq","sid":"1835","sup":"DCshareIND(DCshareIND)","ss":"sess_tn7s55j2o7s3kkv9","dhid":"1412941","shid":"1412941","rpid":"","ec":"","t":"2026-09-29 08:04:00"},{"id":48,"oid":"187910584517","coid":"2052792487","soid":"DEB260923235926012","lt":"order","st":"success","cid":"DidaOpaq","sid":"1835","sup":"DCshareIND(DCshareIND)","ss":"sess_rftmttqlgzui1b0z","dhid":"1412941","shid":"1412941","rpid":"","ec":"","t":"2026-09-29 08:09:00"},{"id":49,"oid":"187910584351","coid":"T-260923-05892678704449227520","soid":"9105419847955:DV:2230","lt":"verify","st":"success","cid":"OzonTravelDirect","sid":"116","sup":"EPS","ss":"sess_x39rbsv55psq0oxf","dhid":"1621623","shid":"92929700","rpid":"","ec":"","t":"2026-09-29 07:59:00"},{"id":50,"oid":"187910584351","coid":"T-260923-05892678704449227520","soid":"9105419847955:DV:2230","lt":"order","st":"success","cid":"OzonTravelDirect","sid":"116","sup":"EPS","ss":"sess_q8myx444nlz15bcw","dhid":"1621623","shid":"92929700","rpid":"","ec":"","t":"2026-09-29 08:04:00"},{"id":51,"oid":"187910584089","coid":"2025460","soid":"241-3199732","lt":"verify","st":"success","cid":"BookandGoDirect","sid":"95","sup":"HBG","ss":"sess_0pdw5py6b2knftu2","dhid":"1432938","shid":"935011","rpid":"","ec":"","t":"2026-09-29 07:54:00"},{"id":52,"oid":"187910584089","coid":"2025460","soid":"241-3199732","lt":"order","st":"success","cid":"BookandGoDirect","sid":"95","sup":"HBG","ss":"sess_gc5wi6fqjja26yfp","dhid":"1432938","shid":"935011","rpid":"","ec":"","t":"2026-09-29 07:59:00"},{"id":53,"oid":"187910584089","coid":"2025460","soid":"241-3199732","lt":"cancel","st":"success","cid":"BookandGoDirect","sid":"95","sup":"HBG","ss":"sess_vxpj4hnriuu9k9xj","dhid":"1432938","shid":"935011","rpid":"","ec":"","t":"2026-09-29 08:04:00"},{"id":54,"oid":"187910584089","coid":"2025460","soid":"241-3199624","lt":"verify","st":"success","cid":"BookandGoDirect","sid":"95","sup":"HBG","ss":"sess_2960361i2hgj11ye","dhid":"1432938","shid":"935011","rpid":"","ec":"","t":"2026-09-29 07:48:00"},{"id":55,"oid":"187910584089","coid":"2025460","soid":"241-3199624","lt":"order","st":"success","cid":"BookandGoDirect","sid":"95","sup":"HBG","ss":"sess_dwb2bne6loh25nsj","dhid":"1432938","shid":"935011","rpid":"","ec":"","t":"2026-09-29 07:53:00"},{"id":56,"oid":"187910584089","coid":"2025460","soid":"241-3199624","lt":"cancel","st":"success","cid":"BookandGoDirect","sid":"95","sup":"HBG","ss":"sess_678k52qc1iyyo4ud","dhid":"1432938","shid":"935011","rpid":"","ec":"","t":"2026-09-29 07:58:00"},{"id":57,"oid":"187910584034","coid":"M260923901717-01","soid":"1292103","lt":"verify","st":"fail","cid":"maiqi01","sid":"138","sup":"CJ","ss":"sess_en0jnwnyqw7lvxwq","dhid":"206019","shid":"265852","rpid":"","ec":"ERR_9012","t":"2026-09-29 07:44:00"},{"id":58,"oid":"187910584034","coid":"M260923901717-01","soid":"1292103","lt":"order","st":"success","cid":"maiqi01","sid":"138","sup":"CJ","ss":"sess_zxebb9eitnn8ztv0","dhid":"206019","shid":"265852","rpid":"","ec":"","t":"2026-09-29 07:49:00"},{"id":59,"oid":"187910583753","coid":"345213399-0","soid":"DEB260923235934022","lt":"verify","st":"success","cid":"Traveloka","sid":"1570","sup":"EBookingSupplier_HKGlory(HKGlory)","ss":"sess_4w7kyhqin9n6xcj8","dhid":"1578638","shid":"1578638","rpid":"","ec":"","t":"2026-09-29 07:39:00"},{"id":60,"oid":"187910583753","coid":"345213399-0","soid":"DEB260923235934022","lt":"order","st":"success","cid":"Traveloka","sid":"1570","sup":"EBookingSupplier_HKGlory(HKGlory)","ss":"sess_83dhx8bm92h3tv3i","dhid":"1578638","shid":"1578638","rpid":"","ec":"","t":"2026-09-29 07:44:00"},{"id":61,"oid":"187910582863","coid":"T2K5SF~38142373","soid":"NH16144519114044","lt":"verify","st":"success","cid":"W2MPKG","sid":"1924","sup":"MakeMyTrip","ss":"sess_vj99t2d5em2vajep","dhid":"1041777","shid":"201812271742528552","rpid":"","ec":"","t":"2026-09-29 07:35:00"},{"id":62,"oid":"187910582863","coid":"T2K5SF~38142373","soid":"NH16144519114044","lt":"order","st":"success","cid":"W2MPKG","sid":"1924","sup":"MakeMyTrip","ss":"sess_ecqnvqhw06xkxb94","dhid":"1041777","shid":"201812271742528552","rpid":"","ec":"","t":"2026-09-29 07:40:00"},{"id":63,"oid":"187910582804","coid":"YA-8488-7909-9732:0","soid":"117480487","lt":"verify","st":"success","cid":"YandexTravel2B","sid":"1943","sup":"Etstur","ss":"sess_r6ccvcjwtl9tqvdz","dhid":"2444417","shid":"sxk3k406kcdu","rpid":"","ec":"","t":"2026-09-29 07:29:00"},{"id":64,"oid":"187910582804","coid":"YA-8488-7909-9732:0","soid":"117480487","lt":"order","st":"success","cid":"YandexTravel2B","sid":"1943","sup":"Etstur","ss":"sess_4x1zhqimqodpxnf7","dhid":"2444417","shid":"sxk3k406kcdu","rpid":"","ec":"","t":"2026-09-29 07:34:00"},{"id":65,"oid":"187910582653","coid":"2052797748","soid":"DEB260923235905989","lt":"verify","st":"success","cid":"DidaOpaq","sid":"1835","sup":"DCshareIND(DCshareIND)","ss":"sess_dp0nec8uyo57p6bk","dhid":"2275683","shid":"2275683","rpid":"","ec":"","t":"2026-09-29 07:25:00"},{"id":66,"oid":"187910582653","coid":"2052797748","soid":"DEB260923235905989","lt":"order","st":"success","cid":"DidaOpaq","sid":"1835","sup":"DCshareIND(DCshareIND)","ss":"sess_ldsfr4muekipu1wy","dhid":"2275683","shid":"2275683","rpid":"","ec":"","t":"2026-09-29 07:30:00"},{"id":67,"oid":"187910582653","coid":"2052797748","soid":"DEB260923235905989","lt":"query","st":"success","cid":"DidaOpaq","sid":"1835","sup":"DCshareIND(DCshareIND)","ss":"sess_uvxybj17mgfxc08d","dhid":"2275683","shid":"2275683","rpid":"","ec":"","t":"2026-09-29 07:40:00"},{"id":68,"oid":"187910582245","coid":"01a0cefd-beaf-700f-9eaa-62e2e0a7a903","soid":"56237894/Offline2","lt":"verify","st":"success","cid":"Check24GoldClub","sid":"17","sup":"Restel","ss":"sess_pmnz1udbfwyjxrpj","dhid":"12254","shid":"ALBER-988110","rpid":"","ec":"","t":"2026-09-29 07:18:00"},{"id":69,"oid":"187910582245","coid":"01a0cefd-beaf-700f-9eaa-62e2e0a7a903","soid":"56237894/Offline2","lt":"order","st":"success","cid":"Check24GoldClub","sid":"17","sup":"Restel","ss":"sess_1epkyrybovakhejl","dhid":"12254","shid":"ALBER-988110","rpid":"","ec":"","t":"2026-09-29 07:23:00"},{"id":70,"oid":"187910582245","coid":"01a0cefd-beaf-700f-9eaa-62e2e0a7a903","soid":"56237894/Offline2","lt":"query","st":"success","cid":"Check24GoldClub","sid":"17","sup":"Restel","ss":"sess_a0gnzs43c5ba75uu","dhid":"12254","shid":"ALBER-988110","rpid":"","ec":"","t":"2026-09-29 07:33:00"},{"id":71,"oid":"187910581948","coid":"2M29MB~874315~MONAKADRY","soid":"DEB260923235921000","lt":"verify","st":"success","cid":"SmileHolidays2B","sid":"639","sup":"EBookingDirectDisneyland(DCDisneyParis)","ss":"sess_ko8g8qynpdpoc50h","dhid":"118936","shid":"118936","rpid":"","ec":"","t":"2026-09-29 07:13:00"},{"id":72,"oid":"187910581948","coid":"2M29MB~874315~MONAKADRY","soid":"DEB260923235921000","lt":"order","st":"success","cid":"SmileHolidays2B","sid":"639","sup":"EBookingDirectDisneyland(DCDisneyParis)","ss":"sess_2cwtg1m8xfdjgf1c","dhid":"118936","shid":"118936","rpid":"","ec":"","t":"2026-09-29 07:18:00"},{"id":73,"oid":"187910581948","coid":"2M29MB~874315~MONAKADRY","soid":"DEB260923235921000","lt":"query","st":"success","cid":"SmileHolidays2B","sid":"639","sup":"EBookingDirectDisneyland(DCDisneyParis)","ss":"sess_8wquuy5x9l8lpqw2","dhid":"118936","shid":"118936","rpid":"","ec":"","t":"2026-09-29 07:28:00"},{"id":74,"oid":"187910581912","coid":"5MRVR2~2563176","soid":"DEB260923235902979","lt":"verify","st":"fail","cid":"PeakpointB2B","sid":"109","sup":"EBookingDirectVCC(DidaDirectVCC)","ss":"sess_cqbnkx9dvnu80b6u","dhid":"81572","shid":"81572","rpid":"","ec":"ERR_9012","t":"2026-09-29 07:08:00"},{"id":75,"oid":"187910581912","coid":"5MRVR2~2563176","soid":"DEB260923235902979","lt":"order","st":"success","cid":"PeakpointB2B","sid":"109","sup":"EBookingDirectVCC(DidaDirectVCC)","ss":"sess_gvs8q349dxbz9svn","dhid":"81572","shid":"81572","rpid":"","ec":"","t":"2026-09-29 07:13:00"},{"id":76,"oid":"187910581268","coid":"1385436217097392","soid":"DEB260923235849960","lt":"verify","st":"success","cid":"Ctrip2025","sid":"1833","sup":"DCshareLC(DCshareLC)","ss":"sess_1ybwmlunj48vfcx7","dhid":"1600159","shid":"1600159","rpid":"","ec":"","t":"2026-09-29 07:04:00"},{"id":77,"oid":"187910581268","coid":"1385436217097392","soid":"DEB260923235849960","lt":"order","st":"success","cid":"Ctrip2025","sid":"1833","sup":"DCshareLC(DCshareLC)","ss":"sess_lxxezduxlez896dy","dhid":"1600159","shid":"1600159","rpid":"","ec":"","t":"2026-09-29 07:09:00"},{"id":78,"oid":"187910581268","coid":"1385436217097392","soid":"DEB260923235849960","lt":"query","st":"success","cid":"Ctrip2025","sid":"1833","sup":"DCshareLC(DCshareLC)","ss":"sess_sal8m1g9fk2st0sx","dhid":"1600159","shid":"1600159","rpid":"","ec":"","t":"2026-09-29 07:19:00"},{"id":79,"oid":"187910581200","coid":"None","soid":"1394845663","lt":"verify","st":"success","cid":"LuckyEmperorB2B","sid":"131","sup":"Traveloka","ss":"sess_nf313fpoyipk0qtl","dhid":"850","shid":"1000000126871","rpid":"","ec":"","t":"2026-09-29 06:58:00"},{"id":80,"oid":"187910581200","coid":"None","soid":"1394845663","lt":"order","st":"success","cid":"LuckyEmperorB2B","sid":"131","sup":"Traveloka","ss":"sess_3q4n89qkns832ejx","dhid":"850","shid":"1000000126871","rpid":"","ec":"","t":"2026-09-29 07:03:00"},{"id":81,"oid":"187910580944","coid":"1058791605","soid":"1778062090","lt":"verify","st":"success","cid":"DOTWRetail","sid":"26","sup":"Agoda","ss":"sess_d44k1j6fp8hqmabs","dhid":"13515","shid":"44525","rpid":"","ec":"","t":"2026-09-29 06:54:00"},{"id":82,"oid":"187910580944","coid":"1058791605","soid":"1778062090","lt":"order","st":"success","cid":"DOTWRetail","sid":"26","sup":"Agoda","ss":"sess_i9nb74x2ek3zezqa","dhid":"13515","shid":"44525","rpid":"","ec":"","t":"2026-09-29 06:59:00"},{"id":83,"oid":"187910580944","coid":"1058791605","soid":"1778062090","lt":"cancel","st":"fail","cid":"DOTWRetail","sid":"26","sup":"Agoda","ss":"sess_hf7vp1ieixwc4rtw","dhid":"13515","shid":"44525","rpid":"","ec":"ERR_5678","t":"2026-09-29 07:04:00"},{"id":84,"oid":"187910580866","coid":"ARI-260909853","soid":"DEB260923235848948","lt":"verify","st":"success","cid":"aripkg","sid":"652","sup":"EBookingSupplier_aiyouyou(aiyouyou)","ss":"sess_fpwioxd9css9toqw","dhid":"123640","shid":"123640","rpid":"","ec":"","t":"2026-09-29 06:48:00"},{"id":85,"oid":"187910580866","coid":"ARI-260909853","soid":"DEB260923235848948","lt":"order","st":"success","cid":"aripkg","sid":"652","sup":"EBookingSupplier_aiyouyou(aiyouyou)","ss":"sess_9ja2m0w10lbt3g2q","dhid":"123640","shid":"123640","rpid":"","ec":"","t":"2026-09-29 06:53:00"},{"id":86,"oid":"187910580793","coid":"1778062022","soid":"9103684417508:DV:283","lt":"verify","st":"success","cid":"AgodaEBK","sid":"116","sup":"EPS","ss":"sess_gez7bh25llo3rbxk","dhid":"5317","shid":"1077321","rpid":"","ec":"","t":"2026-09-29 06:43:00"},{"id":87,"oid":"187910580793","coid":"1778062022","soid":"9103684417508:DV:283","lt":"order","st":"success","cid":"AgodaEBK","sid":"116","sup":"EPS","ss":"sess_5bxj2pop8mgyn2jc","dhid":"5317","shid":"1077321","rpid":"","ec":"","t":"2026-09-29 06:48:00"},{"id":88,"oid":"187910580793","coid":"1778062022","soid":"9103684417508:DV:283","lt":"query","st":"success","cid":"AgodaEBK","sid":"116","sup":"EPS","ss":"sess_pp9gkdlkqzfpq06w","dhid":"5317","shid":"1077321","rpid":"","ec":"","t":"2026-09-29 06:58:00"},{"id":89,"oid":"187910580468","coid":"01a0cef9-98cc-71a9-beb7-4d20caad189a","soid":"9103684418950:DV:77","lt":"verify","st":"success","cid":"Check24","sid":"116","sup":"EPS","ss":"sess_98cwn2y8fv2bc2nn","dhid":"115668","shid":"7760823","rpid":"","ec":"","t":"2026-09-29 06:39:00"},{"id":90,"oid":"187910580468","coid":"01a0cef9-98cc-71a9-beb7-4d20caad189a","soid":"9103684418950:DV:77","lt":"order","st":"success","cid":"Check24","sid":"116","sup":"EPS","ss":"sess_uvy8n1utoxie0rnu","dhid":"115668","shid":"7760823","rpid":"","ec":"","t":"2026-09-29 06:44:00"},{"id":91,"oid":"187910579983","coid":"6fd45755-56df-4672-944b-46dff9ca3850","soid":"77-4558147","lt":"verify","st":"success","cid":"ostrovokloyaltyCUG","sid":"95","sup":"HBG","ss":"sess_zhwy9hecgz9389yz","dhid":"224543","shid":"709515","rpid":"","ec":"","t":"2026-09-29 06:34:00"},{"id":92,"oid":"187910579983","coid":"6fd45755-56df-4672-944b-46dff9ca3850","soid":"77-4558147","lt":"order","st":"success","cid":"ostrovokloyaltyCUG","sid":"95","sup":"HBG","ss":"sess_tkkfzzgni92irmuq","dhid":"224543","shid":"709515","rpid":"","ec":"","t":"2026-09-29 06:39:00"},{"id":93,"oid":"F260923235836225","coid":"5127476582014090233","soid":"21510181","lt":"verify","st":"success","cid":"tb_youdao","sid":"193","sup":"Rezen_Retail","ss":"sess_5cozroouelcqse3t","dhid":"1212794","shid":"1000000038","rpid":"","ec":"","t":"2026-09-29 06:28:00"},{"id":94,"oid":"F260923235836225","coid":"5127476582014090233","soid":"21510181","lt":"order","st":"success","cid":"tb_youdao","sid":"193","sup":"Rezen_Retail","ss":"sess_v1es53skf7i8skch","dhid":"1212794","shid":"1000000038","rpid":"","ec":"","t":"2026-09-29 06:33:00"},{"id":95,"oid":"187910579741","coid":"T-260923-05440067347085011712","soid":"117480482","lt":"verify","st":"success","cid":"OzonTravelDirect","sid":"1943","sup":"Etstur","ss":"sess_wwdxvugw6m7b5c81","dhid":"1671872","shid":"szk31q0fyek1","rpid":"","ec":"","t":"2026-09-29 06:23:00"},{"id":96,"oid":"187910579741","coid":"T-260923-05440067347085011712","soid":"117480482","lt":"order","st":"success","cid":"OzonTravelDirect","sid":"1943","sup":"Etstur","ss":"sess_jhuwb6txki3oqyfo","dhid":"1671872","shid":"szk31q0fyek1","rpid":"","ec":"","t":"2026-09-29 06:28:00"},{"id":97,"oid":"187910579230","coid":"D52B52~38142364","soid":"9103684414802:DV:2230","lt":"verify","st":"success","cid":"W2MFULLB2B","sid":"116","sup":"EPS","ss":"sess_vlz049enulqjidkn","dhid":"2796966","shid":"122133497","rpid":"","ec":"","t":"2026-09-29 06:19:00"},{"id":98,"oid":"187910579230","coid":"D52B52~38142364","soid":"9103684414802:DV:2230","lt":"order","st":"success","cid":"W2MFULLB2B","sid":"116","sup":"EPS","ss":"sess_wi5flul1rsrla8s8","dhid":"2796966","shid":"122133497","rpid":"","ec":"","t":"2026-09-29 06:24:00"},{"id":99,"oid":"187910579213","coid":"2052797751","soid":"1394845612","lt":"verify","st":"success","cid":"Agoda","sid":"131","sup":"Traveloka","ss":"sess_bkv4ykadejnobbun","dhid":"1615114","shid":"9000001207100","rpid":"","ec":"","t":"2026-09-29 06:15:00"},{"id":100,"oid":"187910579213","coid":"2052797751","soid":"1394845612","lt":"order","st":"success","cid":"Agoda","sid":"131","sup":"Traveloka","ss":"sess_knqt3wvedn9unfvo","dhid":"1615114","shid":"9000001207100","rpid":"","ec":"","t":"2026-09-29 06:20:00"},{"id":101,"oid":"187910578283","coid":"01a0cef4-618a-7279-9c59-b215631fd7fd","soid":"CWKXT1MY7W","lt":"verify","st":"fail","cid":"Check24App","sid":"276","sup":"G2Travel","ss":"sess_z2sf6f7low4vssru","dhid":"1668670","shid":"5f7976ad-cb60-43a2-b933-e642632fdae3","rpid":"","ec":"ERR_3456","t":"2026-09-29 06:10:00"},{"id":102,"oid":"187910578283","coid":"01a0cef4-618a-7279-9c59-b215631fd7fd","soid":"CWKXT1MY7W","lt":"order","st":"success","cid":"Check24App","sid":"276","sup":"G2Travel","ss":"sess_raldol65wvjx8uib","dhid":"1668670","shid":"5f7976ad-cb60-43a2-b933-e642632fdae3","rpid":"","ec":"","t":"2026-09-29 06:15:00"},{"id":103,"oid":"187910578248","coid":"1778061943","soid":"5035036078274321979","lt":"verify","st":"success","cid":"DidaOpaq","sid":"224","sup":"Meituan_Oversea","ss":"sess_ww4fyb8dalfyo175","dhid":"151899","shid":"119935571","rpid":"","ec":"","t":"2026-09-29 06:04:00"},{"id":104,"oid":"187910578248","coid":"1778061943","soid":"5035036078274321979","lt":"order","st":"success","cid":"DidaOpaq","sid":"224","sup":"Meituan_Oversea","ss":"sess_0cehlxslg6mm1zxy","dhid":"151899","shid":"119935571","rpid":"","ec":"","t":"2026-09-29 06:09:00"},{"id":105,"oid":"187910578232","coid":"2164901","soid":"251-2735990","lt":"verify","st":"success","cid":"RicaleB2B","sid":"95","sup":"HBG","ss":"sess_8kk791zyrru7zkut","dhid":"52451","shid":"397161","rpid":"","ec":"","t":"2026-09-29 05:58:00"},{"id":106,"oid":"187910578232","coid":"2164901","soid":"251-2735990","lt":"order","st":"success","cid":"RicaleB2B","sid":"95","sup":"HBG","ss":"sess_6om1fb8c7x0h3juj","dhid":"52451","shid":"397161","rpid":"","ec":"","t":"2026-09-29 06:03:00"},{"id":107,"oid":"187910578102","coid":"MT-260923235821057","soid":"52341866","lt":"verify","st":"success","cid":"MENGTU","sid":"2143","sup":"SZylyg(DidaTravel)","ss":"sess_viytwbozd1at7o75","dhid":"911096","shid":"YLH106015","rpid":"","ec":"","t":"2026-09-29 05:55:00"},{"id":108,"oid":"187910578102","coid":"MT-260923235821057","soid":"52341866","lt":"order","st":"success","cid":"MENGTU","sid":"2143","sup":"SZylyg(DidaTravel)","ss":"sess_rh8lx6dut076g5g7","dhid":"911096","shid":"YLH106015","rpid":"","ec":"","t":"2026-09-29 06:00:00"},{"id":109,"oid":"187910577587","coid":"230920261558173607","soid":"19985524","lt":"verify","st":"success","cid":"LeisureLoyalty","sid":"620","sup":"tourmind","ss":"sess_g05kbkv7mqxs6esj","dhid":"2310830","shid":"53845522","rpid":"","ec":"","t":"2026-09-29 05:49:00"},{"id":110,"oid":"187910577587","coid":"230920261558173607","soid":"19985524","lt":"order","st":"success","cid":"LeisureLoyalty","sid":"620","sup":"tourmind","ss":"sess_3l0xzamkygvwoplo","dhid":"2310830","shid":"53845522","rpid":"","ec":"","t":"2026-09-29 05:54:00"},{"id":111,"oid":"187910577543","coid":"1778061916","soid":"1128151117564552","lt":"verify","st":"success","cid":"DidaOpaq","sid":"565","sup":"Ctrip","ss":"sess_fliji18k0axycelo","dhid":"185770","shid":"700965","rpid":"","ec":"","t":"2026-09-29 05:45:00"},{"id":112,"oid":"187910577543","coid":"1778061916","soid":"1128151117564552","lt":"order","st":"success","cid":"DidaOpaq","sid":"565","sup":"Ctrip","ss":"sess_s6zle6kwhef0votq","dhid":"185770","shid":"700965","rpid":"","ec":"","t":"2026-09-29 05:50:00"},{"id":113,"oid":"187910576452","coid":"xks23891953","soid":"DIDAID0926150576","lt":"verify","st":"success","cid":"redstar","sid":"141","sup":"Withinearth(Technoheaven)","ss":"sess_31yv2stn7e36htf4","dhid":"52955","shid":"22910","rpid":"","ec":"","t":"2026-09-29 05:38:00"},{"id":114,"oid":"187910576452","coid":"xks23891953","soid":"DIDAID0926150576","lt":"order","st":"success","cid":"redstar","sid":"141","sup":"Withinearth(Technoheaven)","ss":"sess_pyzr6qceouuylaja","dhid":"52955","shid":"22910","rpid":"","ec":"","t":"2026-09-29 05:43:00"},{"id":115,"oid":"187910575978","coid":"2052797654","soid":"9110422965238:DV:284","lt":"verify","st":"success","cid":"AgodaEBK","sid":"116","sup":"EPS","ss":"sess_bmc97c7bo119xp9n","dhid":"1086237","shid":"33384028","rpid":"","ec":"","t":"2026-09-29 05:35:00"},{"id":116,"oid":"187910575978","coid":"2052797654","soid":"9110422965238:DV:284","lt":"order","st":"success","cid":"AgodaEBK","sid":"116","sup":"EPS","ss":"sess_56nyxtxmgtt0iaak","dhid":"1086237","shid":"33384028","rpid":"","ec":"","t":"2026-09-29 05:40:00"},{"id":117,"oid":"187910575978","coid":"2052797654","soid":"9103684385152:DV:78","lt":"verify","st":"success","cid":"AgodaEBK","sid":"116","sup":"EPS","ss":"sess_pniqfg51bxw76icv","dhid":"1086237","shid":"33384028","rpid":"","ec":"","t":"2026-09-29 05:28:00"},{"id":118,"oid":"187910575978","coid":"2052797654","soid":"9103684385152:DV:78","lt":"order","st":"success","cid":"AgodaEBK","sid":"116","sup":"EPS","ss":"sess_qy5ibpt11f9i6uu1","dhid":"1086237","shid":"33384028","rpid":"","ec":"","t":"2026-09-29 05:33:00"},{"id":119,"oid":"187910575566","coid":"5035036078425596016","soid":"DEB260923235805928","lt":"verify","st":"success","cid":"meituan","sid":"1835","sup":"DCshareIND(DCshareIND)","ss":"sess_59sojuv0gyubmxns","dhid":"2213228","shid":"2213228","rpid":"","ec":"","t":"2026-09-29 05:24:00"},{"id":120,"oid":"187910575566","coid":"5035036078425596016","soid":"DEB260923235805928","lt":"order","st":"success","cid":"meituan","sid":"1835","sup":"DCshareIND(DCshareIND)","ss":"sess_zokgtii4fqcootnj","dhid":"2213228","shid":"2213228","rpid":"","ec":"","t":"2026-09-29 05:29:00"},{"id":121,"oid":"187910575319","coid":"1778061844","soid":"9103684391317:DV:78","lt":"verify","st":"success","cid":"DidaOpaq","sid":"116","sup":"EPS","ss":"sess_74d0gjyv5g10ur5l","dhid":"514027","shid":"13137188","rpid":"","ec":"","t":"2026-09-29 05:19:00"},{"id":122,"oid":"187910575319","coid":"1778061844","soid":"9103684391317:DV:78","lt":"order","st":"success","cid":"DidaOpaq","sid":"116","sup":"EPS","ss":"sess_8a78e9rivh6t1ntm","dhid":"514027","shid":"13137188","rpid":"","ec":"","t":"2026-09-29 05:24:00"},{"id":123,"oid":"187910575200","coid":"2016252","soid":"9103684408062:DV:2230","lt":"verify","st":"success","cid":"EuroPlus","sid":"116","sup":"EPS","ss":"sess_5q201lhlb50atvzk","dhid":"299178","shid":"12280594","rpid":"","ec":"","t":"2026-09-29 05:14:00"},{"id":124,"oid":"187910575200","coid":"2016252","soid":"9103684408062:DV:2230","lt":"order","st":"success","cid":"EuroPlus","sid":"116","sup":"EPS","ss":"sess_hiuit7m1r00q0mft","dhid":"299178","shid":"12280594","rpid":"","ec":"","t":"2026-09-29 05:19:00"},{"id":125,"oid":"187910574970","coid":"YA-1418-4460-8037:0","soid":"9103684394334:DV:2230","lt":"verify","st":"success","cid":"YandexTravel2B","sid":"116","sup":"EPS","ss":"sess_txcb48y1o4izasnw","dhid":"2133600","shid":"99674577","rpid":"","ec":"","t":"2026-09-29 05:10:00"},{"id":126,"oid":"187910574970","coid":"YA-1418-4460-8037:0","soid":"9103684394334:DV:2230","lt":"order","st":"success","cid":"YandexTravel2B","sid":"116","sup":"EPS","ss":"sess_ywrratatj9a3y36d","dhid":"2133600","shid":"99674577","rpid":"","ec":"","t":"2026-09-29 05:15:00"},{"id":127,"oid":"187910574970","coid":"YA-1418-4460-8037:0","soid":"9103684394334:DV:2230","lt":"query","st":"success","cid":"YandexTravel2B","sid":"116","sup":"EPS","ss":"sess_dfgs3jonou9iy4x4","dhid":"2133600","shid":"99674577","rpid":"","ec":"","t":"2026-09-29 05:25:00"},{"id":128,"oid":"187910574715","coid":"WS34082419","soid":"1778061855","lt":"verify","st":"success","cid":"goglobalCUG","sid":"26","sup":"Agoda","ss":"sess_ntcagrp2u4dtbh55","dhid":"106100","shid":"299080","rpid":"","ec":"","t":"2026-09-29 05:05:00"},{"id":129,"oid":"187910574715","coid":"WS34082419","soid":"1778061855","lt":"order","st":"success","cid":"goglobalCUG","sid":"26","sup":"Agoda","ss":"sess_rbc76ub7l8v1zocf","dhid":"106100","shid":"299080","rpid":"","ec":"","t":"2026-09-29 05:10:00"},{"id":130,"oid":"187910574578","coid":"T-260923-04545821083746706688","soid":"1778061857","lt":"verify","st":"success","cid":"OzonTravelDirect","sid":"26","sup":"Agoda","ss":"sess_4ytn02yc0mdicvwv","dhid":"1578927","shid":"30114511","rpid":"","ec":"","t":"2026-09-29 05:00:00"},{"id":131,"oid":"187910574578","coid":"T-260923-04545821083746706688","soid":"1778061857","lt":"order","st":"success","cid":"OzonTravelDirect","sid":"26","sup":"Agoda","ss":"sess_8lw2qitngvn1kicj","dhid":"1578927","shid":"30114511","rpid":"","ec":"","t":"2026-09-29 05:05:00"},{"id":132,"oid":"187910574459","coid":"5035036078676891390","soid":"DEB260923235802918","lt":"verify","st":"success","cid":"Lynn000","sid":"1835","sup":"DCshareIND(DCshareIND)","ss":"sess_w0ldalmjegqtoamd","dhid":"904","shid":"904","rpid":"","ec":"","t":"2026-09-29 04:54:00"},{"id":133,"oid":"187910574459","coid":"5035036078676891390","soid":"DEB260923235802918","lt":"order","st":"success","cid":"Lynn000","sid":"1835","sup":"DCshareIND(DCshareIND)","ss":"sess_vlnknd669ugnekrc","dhid":"904","shid":"904","rpid":"","ec":"","t":"2026-09-29 04:59:00"},{"id":134,"oid":"187910573003","coid":"T-260923-03792312665967433472","soid":"9103684379023:DV:2230","lt":"verify","st":"success","cid":"OzonTravelDirect","sid":"116","sup":"EPS","ss":"sess_k2n7zrwqeao4n5pp","dhid":"1634507","shid":"45671919","rpid":"","ec":"","t":"2026-09-29 04:49:00"},{"id":135,"oid":"187910573003","coid":"T-260923-03792312665967433472","soid":"9103684379023:DV:2230","lt":"order","st":"success","cid":"OzonTravelDirect","sid":"116","sup":"EPS","ss":"sess_3xvkvzrgol0w82lk","dhid":"1634507","shid":"45671919","rpid":"","ec":"","t":"2026-09-29 04:54:00"},{"id":136,"oid":"187910572133","coid":"1708866","soid":"1058791045","lt":"verify","st":"success","cid":"UnitTravelB2B","sid":"61","sup":"DOTW5","ss":"sess_7h9g1a07h23c42yf","dhid":"208128","shid":"1889255","rpid":"","ec":"","t":"2026-09-29 04:44:00"},{"id":137,"oid":"187910572133","coid":"1708866","soid":"1058791045","lt":"order","st":"success","cid":"UnitTravelB2B","sid":"61","sup":"DOTW5","ss":"sess_kjfpnqvut75pb8z3","dhid":"208128","shid":"1889255","rpid":"","ec":"","t":"2026-09-29 04:49:00"},{"id":138,"oid":"187910571731","coid":"40AFB99","soid":"DEB260923235859969","lt":"verify","st":"success","cid":"HBDC2b","sid":"1403","sup":"EBookingSupplier_Utour(Utour)","ss":"sess_d1xmxb9yo18pajss","dhid":"46738","shid":"46738","rpid":"","ec":"","t":"2026-09-29 04:38:00"},{"id":139,"oid":"187910571731","coid":"40AFB99","soid":"DEB260923235859969","lt":"order","st":"success","cid":"HBDC2b","sid":"1403","sup":"EBookingSupplier_Utour(Utour)","ss":"sess_uuqo1vsmado8e7fl","dhid":"46738","shid":"46738","rpid":"","ec":"","t":"2026-09-29 04:43:00"},{"id":140,"oid":"187910571730","coid":"5739857458938","soid":"DEB260923235744885","lt":"verify","st":"success","cid":"BJDHTL","sid":"449","sup":"DCSiteMinderIntl(DCSiteMinderIntl)","ss":"sess_smdzqcbzamd270st","dhid":"2311956","shid":"2311956","rpid":"","ec":"","t":"2026-09-29 04:34:00"},{"id":141,"oid":"187910571730","coid":"5739857458938","soid":"DEB260923235744885","lt":"order","st":"success","cid":"BJDHTL","sid":"449","sup":"DCSiteMinderIntl(DCSiteMinderIntl)","ss":"sess_lpq2wgxo05qpahkz","dhid":"2311956","shid":"2311956","rpid":"","ec":"","t":"2026-09-29 04:39:00"},{"id":142,"oid":"187910571730","coid":"5739857458938","soid":"DEB260923235744885","lt":"cancel","st":"success","cid":"BJDHTL","sid":"449","sup":"DCSiteMinderIntl(DCSiteMinderIntl)","ss":"sess_u2tnheyr8lnoemqg","dhid":"2311956","shid":"2311956","rpid":"","ec":"","t":"2026-09-29 04:44:00"},{"id":143,"oid":"187910571630","coid":"705498079","soid":"DEB260923235742866","lt":"verify","st":"success","cid":"AgodaEBK","sid":"109","sup":"EBookingDirectVCC(DidaDirectVCC)","ss":"sess_kwdeekgyspengwyx","dhid":"1604764","shid":"1604764","rpid":"","ec":"","t":"2026-09-29 04:28:00"},{"id":144,"oid":"187910571630","coid":"705498079","soid":"DEB260923235742866","lt":"order","st":"success","cid":"AgodaEBK","sid":"109","sup":"EBookingDirectVCC(DidaDirectVCC)","ss":"sess_9trflqbmae38sryo","dhid":"1604764","shid":"1604764","rpid":"","ec":"","t":"2026-09-29 04:33:00"},{"id":145,"oid":"187910571237","coid":"705498055","soid":"DEB260923235741865","lt":"verify","st":"success","cid":"AgodaEBK","sid":"1678","sup":"DerbyEBKBestWestern(DerbyEBKBestWestern)","ss":"sess_cb1kjtgq01tee13n","dhid":"12632","shid":"12632","rpid":"","ec":"","t":"2026-09-29 04:24:00"},{"id":146,"oid":"187910571237","coid":"705498055","soid":"DEB260923235741865","lt":"order","st":"success","cid":"AgodaEBK","sid":"1678","sup":"DerbyEBKBestWestern(DerbyEBKBestWestern)","ss":"sess_3bzt9d31k9qm3p91","dhid":"12632","shid":"12632","rpid":"","ec":"","t":"2026-09-29 04:29:00"},{"id":147,"oid":"187910570969","coid":"814598469684","soid":"804905863294","lt":"verify","st":"success","cid":"qunarcn_msh","sid":"1556","sup":"FliggyV2","ss":"sess_0y4vpw232utvg9ku","dhid":"1348897","shid":"61169223","rpid":"","ec":"","t":"2026-09-29 04:20:00"},{"id":148,"oid":"187910570969","coid":"814598469684","soid":"804905863294","lt":"order","st":"success","cid":"qunarcn_msh","sid":"1556","sup":"FliggyV2","ss":"sess_8s63e1ocjxzefli4","dhid":"1348897","shid":"61169223","rpid":"","ec":"","t":"2026-09-29 04:25:00"},{"id":149,"oid":"187910570969","coid":"814598469684","soid":"804905863294","lt":"query","st":"success","cid":"qunarcn_msh","sid":"1556","sup":"FliggyV2","ss":"sess_ofwwnc21o0z5qru5","dhid":"1348897","shid":"61169223","rpid":"","ec":"","t":"2026-09-29 04:35:00"},{"id":150,"oid":"S222910570425","coid":"None","soid":"18786697592336","lt":"verify","st":"success","cid":"yueyue20220727","sid":"260","sup":"JLTour2","ss":"sess_8wz42o83rlkte426","dhid":"24110","shid":"35102","rpid":"","ec":"","t":"2026-09-29 04:13:00"},{"id":151,"oid":"S222910570425","coid":"None","soid":"18786697592336","lt":"order","st":"success","cid":"yueyue20220727","sid":"260","sup":"JLTour2","ss":"sess_1bw4a7fq9p965k55","dhid":"24110","shid":"35102","rpid":"","ec":"","t":"2026-09-29 04:18:00"},{"id":152,"oid":"187910570431","coid":"xks23891945","soid":"DEB260923235733856","lt":"verify","st":"success","cid":"REDSTAER","sid":"1835","sup":"DCshareIND(DCshareIND)","ss":"sess_jn6fokzixzareiya","dhid":"888070","shid":"888070","rpid":"","ec":"","t":"2026-09-29 04:10:00"},{"id":153,"oid":"187910570431","coid":"xks23891945","soid":"DEB260923235733856","lt":"order","st":"success","cid":"REDSTAER","sid":"1835","sup":"DCshareIND(DCshareIND)","ss":"sess_z39pecn0dl5e11e9","dhid":"888070","shid":"888070","rpid":"","ec":"","t":"2026-09-29 04:15:00"},{"id":154,"oid":"187910570309","coid":"Q9SK6879955G","soid":"DIDAMA0926150582","lt":"verify","st":"fail","cid":"Hopper","sid":"141","sup":"Withinearth(Technoheaven)","ss":"sess_axp0wfoy4dd1vn8l","dhid":"183785","shid":"16478","rpid":"","ec":"ERR_TIMEOUT","t":"2026-09-29 04:05:00"},{"id":155,"oid":"187910570309","coid":"Q9SK6879955G","soid":"DIDAMA0926150582","lt":"order","st":"success","cid":"Hopper","sid":"141","sup":"Withinearth(Technoheaven)","ss":"sess_fjdtvv2y4xkss0kb","dhid":"183785","shid":"16478","rpid":"","ec":"","t":"2026-09-29 04:10:00"},{"id":156,"oid":"187910569358","coid":"3477224255100","soid":"DEB260923235749895","lt":"verify","st":"success","cid":"HJHAIFEI01","sid":"606","sup":"EBookingSupplier_XIA01(XIA01)","ss":"sess_ervt997e4uny181a","dhid":"1124740","shid":"1124740","rpid":"","ec":"","t":"2026-09-29 04:00:00"},{"id":157,"oid":"187910569358","coid":"3477224255100","soid":"DEB260923235749895","lt":"order","st":"success","cid":"HJHAIFEI01","sid":"606","sup":"EBookingSupplier_XIA01(XIA01)","ss":"sess_cjbc2swsozctwjls","dhid":"1124740","shid":"1124740","rpid":"","ec":"","t":"2026-09-29 04:05:00"},{"id":158,"oid":"187910568990","coid":"1778061612","soid":"1128151117559680","lt":"verify","st":"success","cid":"AgodaEBK","sid":"565","sup":"Ctrip","ss":"sess_flv1xxlp8ii7ewbx","dhid":"19934","shid":"705366","rpid":"","ec":"","t":"2026-09-29 03:55:00"},{"id":159,"oid":"187910568990","coid":"1778061612","soid":"1128151117559680","lt":"order","st":"success","cid":"AgodaEBK","sid":"565","sup":"Ctrip","ss":"sess_xgaearms3jn050e6","dhid":"19934","shid":"705366","rpid":"","ec":"","t":"2026-09-29 04:00:00"},{"id":160,"oid":"187910568990","coid":"1778061612","soid":"1128151117559680","lt":"query","st":"success","cid":"AgodaEBK","sid":"565","sup":"Ctrip","ss":"sess_mpsj9wrsb4gf16ye","dhid":"19934","shid":"705366","rpid":"","ec":"","t":"2026-09-29 04:10:00"},{"id":161,"oid":"187910568782","coid":"2052797447","soid":"DEB260923235716837","lt":"verify","st":"success","cid":"DidaOpaq","sid":"1835","sup":"DCshareIND(DCshareIND)","ss":"sess_b5iqnf74t60plozj","dhid":"882","shid":"882","rpid":"","ec":"","t":"2026-09-29 03:48:00"},{"id":162,"oid":"187910568782","coid":"2052797447","soid":"DEB260923235716837","lt":"order","st":"success","cid":"DidaOpaq","sid":"1835","sup":"DCshareIND(DCshareIND)","ss":"sess_cns6g298cqk4ltah","dhid":"882","shid":"882","rpid":"","ec":"","t":"2026-09-29 03:53:00"},{"id":163,"oid":"187910568782","coid":"2052797447","soid":"DEB260923235716837","lt":"cancel","st":"success","cid":"DidaOpaq","sid":"1835","sup":"DCshareIND(DCshareIND)","ss":"sess_kwqvr1h61iaoim45","dhid":"882","shid":"882","rpid":"","ec":"","t":"2026-09-29 03:58:00"},{"id":164,"oid":"187910568731","coid":"705497907","soid":"102-21326422","lt":"verify","st":"fail","cid":"AgodaEBK","sid":"95","sup":"HBG","ss":"sess_n0lh9p89fkbi4o6q","dhid":"1082125","shid":"60199","rpid":"","ec":"ERR_INVENTORY","t":"2026-09-29 03:44:00"},{"id":165,"oid":"187910568731","coid":"705497907","soid":"102-21326422","lt":"order","st":"success","cid":"AgodaEBK","sid":"95","sup":"HBG","ss":"sess_0uswovcxek47o3lq","dhid":"1082125","shid":"60199","rpid":"","ec":"","t":"2026-09-29 03:49:00"},{"id":166,"oid":"187910568731","coid":"705497907","soid":"102-21326422","lt":"query","st":"success","cid":"AgodaEBK","sid":"95","sup":"HBG","ss":"sess_i7e1ddqlem1qq4d3","dhid":"1082125","shid":"60199","rpid":"","ec":"","t":"2026-09-29 03:59:00"},{"id":167,"oid":"187910568242","coid":"1057774158","soid":"9105419809194:DV:77","lt":"verify","st":"success","cid":"DidaOpaq","sid":"116","sup":"EPS","ss":"sess_zb4ldimsyj9boq0i","dhid":"1020088","shid":"118162","rpid":"","ec":"","t":"2026-09-29 03:39:00"},{"id":168,"oid":"187910568242","coid":"1057774158","soid":"9105419809194:DV:77","lt":"order","st":"success","cid":"DidaOpaq","sid":"116","sup":"EPS","ss":"sess_q2fa39e3nwxuj3ac","dhid":"1020088","shid":"118162","rpid":"","ec":"","t":"2026-09-29 03:44:00"},{"id":169,"oid":"187910568154","coid":"101208670029","soid":"DEB260923235728846","lt":"verify","st":"success","cid":"elonglive_TMC","sid":"109","sup":"EBookingDirectVCC(DidaDirectVCC)","ss":"sess_e63lbqgu3obyghgk","dhid":"2511406","shid":"2511406","rpid":"","ec":"","t":"2026-09-29 03:33:00"},{"id":170,"oid":"187910568154","coid":"101208670029","soid":"DEB260923235728846","lt":"order","st":"success","cid":"elonglive_TMC","sid":"109","sup":"EBookingDirectVCC(DidaDirectVCC)","ss":"sess_5bwikotckeh5sw22","dhid":"2511406","shid":"2511406","rpid":"","ec":"","t":"2026-09-29 03:38:00"},{"id":171,"oid":"187910567988","coid":"OTB1204609","soid":"9110418327958:DV:2230","lt":"verify","st":"success","cid":"OurTripB2B","sid":"116","sup":"EPS","ss":"sess_mtr6snglh62c9t19","dhid":"299118","shid":"12262047","rpid":"","ec":"","t":"2026-09-29 03:29:00"},{"id":172,"oid":"187910567988","coid":"OTB1204609","soid":"9110418327958:DV:2230","lt":"order","st":"success","cid":"OurTripB2B","sid":"116","sup":"EPS","ss":"sess_9dxj37c9h42m44gv","dhid":"299118","shid":"12262047","rpid":"","ec":"","t":"2026-09-29 03:34:00"},{"id":173,"oid":"187910567929","coid":"705497847","soid":"1128151117558855","lt":"verify","st":"success","cid":"AgodaEBK","sid":"565","sup":"Ctrip","ss":"sess_6bz8uug95rlrdihs","dhid":"2304434","shid":"123839844","rpid":"","ec":"","t":"2026-09-29 03:23:00"},{"id":174,"oid":"187910567929","coid":"705497847","soid":"1128151117558855","lt":"order","st":"success","cid":"AgodaEBK","sid":"565","sup":"Ctrip","ss":"sess_a7hez74lav71448n","dhid":"2304434","shid":"123839844","rpid":"","ec":"","t":"2026-09-29 03:28:00"},{"id":175,"oid":"187910567929","coid":"705497847","soid":"1128151117558855","lt":"query","st":"success","cid":"AgodaEBK","sid":"565","sup":"Ctrip","ss":"sess_7odkef828xg8y72i","dhid":"2304434","shid":"123839844","rpid":"","ec":"","t":"2026-09-29 03:38:00"},{"id":176,"oid":"187910567868","coid":"NY5P5Q~307062~26951520-1","soid":"IIZTE3S/01","lt":"verify","st":"success","cid":"PriceTravelB2B","sid":"1918","sup":"TravcoV2","ss":"sess_n0kgazu41ugl3wxd","dhid":"89854","shid":"IBDA","rpid":"","ec":"","t":"2026-09-29 03:18:00"},{"id":177,"oid":"187910567868","coid":"NY5P5Q~307062~26951520-1","soid":"IIZTE3S/01","lt":"order","st":"success","cid":"PriceTravelB2B","sid":"1918","sup":"TravcoV2","ss":"sess_rlcmlw83y0mahym2","dhid":"89854","shid":"IBDA","rpid":"","ec":"","t":"2026-09-29 03:23:00"},{"id":178,"oid":"187910567691","coid":"19985504-12790046","soid":"321-11085925","lt":"verify","st":"fail","cid":"tourmind_mobile","sid":"95","sup":"HBG","ss":"sess_ppfo5mn32u1iq2ba","dhid":"117634","shid":"441858","rpid":"","ec":"ERR_7890","t":"2026-09-29 03:13:00"},{"id":179,"oid":"187910567691","coid":"19985504-12790046","soid":"321-11085925","lt":"order","st":"success","cid":"tourmind_mobile","sid":"95","sup":"HBG","ss":"sess_jdm5fc79m96zpxvp","dhid":"117634","shid":"441858","rpid":"","ec":"","t":"2026-09-29 03:18:00"},{"id":180,"oid":"187910567691","coid":"19985504-12790046","soid":"321-11085925","lt":"cancel","st":"fail","cid":"tourmind_mobile","sid":"95","sup":"HBG","ss":"sess_hgzz0jkibu4fmpkx","dhid":"117634","shid":"441858","rpid":"","ec":"ERR_6789","t":"2026-09-29 03:23:00"},{"id":181,"oid":"187910567691","coid":"19985504-12790046","soid":"321-11085925","lt":"query","st":"success","cid":"tourmind_mobile","sid":"95","sup":"HBG","ss":"sess_vhagkc4lorxdtg5n","dhid":"117634","shid":"441858","rpid":"","ec":"","t":"2026-09-29 03:28:00"},{"id":182,"oid":"187910567512","coid":"40AFB36","soid":"DEB260923235710827","lt":"verify","st":"fail","cid":"HBGPKG","sid":"1835","sup":"DCshareIND(DCshareIND)","ss":"sess_qijc1ydmt8vt43pt","dhid":"23812","shid":"23812","rpid":"","ec":"ERR_8901","t":"2026-09-29 03:09:00"},{"id":183,"oid":"187910567512","coid":"40AFB36","soid":"DEB260923235710827","lt":"order","st":"success","cid":"HBGPKG","sid":"1835","sup":"DCshareIND(DCshareIND)","ss":"sess_5r5rc6zs62ywe1g9","dhid":"23812","shid":"23812","rpid":"","ec":"","t":"2026-09-29 03:14:00"},{"id":184,"oid":"187910567512","coid":"40AFB36","soid":"DEB260923235710827","lt":"cancel","st":"success","cid":"HBGPKG","sid":"1835","sup":"DCshareIND(DCshareIND)","ss":"sess_3ep9p9w4j66cnolj","dhid":"23812","shid":"23812","rpid":"","ec":"","t":"2026-09-29 03:19:00"},{"id":185,"oid":"187910567275","coid":"260923862213521","soid":"21510148","lt":"verify","st":"success","cid":"LEXIANGZHU_ota","sid":"165","sup":"Rezen","ss":"sess_azv2efuu8dd22555","dhid":"1159864","shid":"261179","rpid":"","ec":"","t":"2026-09-29 03:04:00"},{"id":186,"oid":"187910567275","coid":"260923862213521","soid":"21510148","lt":"order","st":"success","cid":"LEXIANGZHU_ota","sid":"165","sup":"Rezen","ss":"sess_jxurgowyoo5ybrjn","dhid":"1159864","shid":"261179","rpid":"","ec":"","t":"2026-09-29 03:09:00"},{"id":187,"oid":"187910566649","coid":"704590087693","soid":"5035036078020673756","lt":"verify","st":"success","cid":"QUNAR_QX","sid":"224","sup":"Meituan_Oversea","ss":"sess_kkrzd5e9p3jpxgh3","dhid":"2142370","shid":"125813954","rpid":"","ec":"","t":"2026-09-29 02:59:00"},{"id":188,"oid":"187910566649","coid":"704590087693","soid":"5035036078020673756","lt":"order","st":"success","cid":"QUNAR_QX","sid":"224","sup":"Meituan_Oversea","ss":"sess_0153sflse45bg34i","dhid":"2142370","shid":"125813954","rpid":"","ec":"","t":"2026-09-29 03:04:00"},{"id":189,"oid":"187910566560","coid":"3814958380","soid":"59-6040981","lt":"verify","st":"fail","cid":"TeldarEspanaTPS","sid":"95","sup":"HBG","ss":"sess_zj3swebnvg5vmf60","dhid":"1669463","shid":"1026736","rpid":"","ec":"ERR_6789","t":"2026-09-29 02:54:00"},{"id":190,"oid":"187910566560","coid":"3814958380","soid":"59-6040981","lt":"order","st":"success","cid":"TeldarEspanaTPS","sid":"95","sup":"HBG","ss":"sess_yknfu84xyjoa21a6","dhid":"1669463","shid":"1026736","rpid":"","ec":"","t":"2026-09-29 02:59:00"},{"id":191,"oid":"187910566560","coid":"3814958380","soid":"59-6040981","lt":"query","st":"success","cid":"TeldarEspanaTPS","sid":"95","sup":"HBG","ss":"sess_xvaj2k8xpnmjqy3o","dhid":"1669463","shid":"1026736","rpid":"","ec":"","t":"2026-09-29 03:09:00"},{"id":192,"oid":"187910566522","coid":"H2609231258385302","soid":"9110418324421:DV:283","lt":"verify","st":"fail","cid":"DLSGSW-03","sid":"116","sup":"EPS","ss":"sess_84uvkyrmjljx8xgs","dhid":"39676","shid":"3401042","rpid":"","ec":"ERR_INVENTORY","t":"2026-09-29 02:50:00"},{"id":193,"oid":"187910566522","coid":"H2609231258385302","soid":"9110418324421:DV:283","lt":"order","st":"success","cid":"DLSGSW-03","sid":"116","sup":"EPS","ss":"sess_ic43olfark6o0u93","dhid":"39676","shid":"3401042","rpid":"","ec":"","t":"2026-09-29 02:55:00"},{"id":194,"oid":"187910566454","coid":"6ab3f6c5e7bc4f76d74594cd","soid":"AGCN0528352609276183","lt":"verify","st":"success","cid":"TiketCorp","sid":"625","sup":"MGbedbankV2","ss":"sess_it26ys445gdej31g","dhid":"106612","shid":"ID10000094","rpid":"","ec":"","t":"2026-09-29 02:44:00"},{"id":195,"oid":"187910566454","coid":"6ab3f6c5e7bc4f76d74594cd","soid":"AGCN0528352609276183","lt":"order","st":"success","cid":"TiketCorp","sid":"625","sup":"MGbedbankV2","ss":"sess_ymdm0l2ljk4q5v7c","dhid":"106612","shid":"ID10000094","rpid":"","ec":"","t":"2026-09-29 02:49:00"},{"id":196,"oid":"187910566395","coid":"33734438","soid":"HT-2KLPXV","lt":"verify","st":"success","cid":"SplittyLMB","sid":"243","sup":"HotelTrader","ss":"sess_5nkb4ehou6qlz2rw","dhid":"28948","shid":"2279953","rpid":"","ec":"","t":"2026-09-29 02:40:00"},{"id":197,"oid":"187910566395","coid":"33734438","soid":"HT-2KLPXV","lt":"order","st":"success","cid":"SplittyLMB","sid":"243","sup":"HotelTrader","ss":"sess_gwaj1g1r1dwwo8nb","dhid":"28948","shid":"2279953","rpid":"","ec":"","t":"2026-09-29 02:45:00"},{"id":198,"oid":"187910566269","coid":"IB274716","soid":"56237951/B2B","lt":"verify","st":"success","cid":"Ibookgetway","sid":"17","sup":"Restel","ss":"sess_861taa0i5ldslcb8","dhid":"40601","shid":"TNTUN-142310","rpid":"","ec":"","t":"2026-09-29 02:35:00"},{"id":199,"oid":"187910566269","coid":"IB274716","soid":"56237951/B2B","lt":"order","st":"success","cid":"Ibookgetway","sid":"17","sup":"Restel","ss":"sess_qsspye9r1f63ai9h","dhid":"40601","shid":"TNTUN-142310","rpid":"","ec":"","t":"2026-09-29 02:40:00"},{"id":200,"oid":"187910566269","coid":"IB274716","soid":"56237951/B2B","lt":"cancel","st":"fail","cid":"Ibookgetway","sid":"17","sup":"Restel","ss":"sess_gnxb5jtb9xxaypnt","dhid":"40601","shid":"TNTUN-142310","rpid":"","ec":"ERR_9012","t":"2026-09-29 02:45:00"},{"id":201,"oid":"187910566075","coid":"40AFB2C","soid":"9105419855804:DV:77","lt":"verify","st":"success","cid":"HBG2C","sid":"116","sup":"EPS","ss":"sess_hyapdswzp6swk2rv","dhid":"18933","shid":"2767297","rpid":"","ec":"","t":"2026-09-29 02:29:00"},{"id":202,"oid":"187910566075","coid":"40AFB2C","soid":"9105419855804:DV:77","lt":"order","st":"success","cid":"HBG2C","sid":"116","sup":"EPS","ss":"sess_239moft6yriaddur","dhid":"18933","shid":"2767297","rpid":"","ec":"","t":"2026-09-29 02:34:00"},{"id":203,"oid":"187910566075","coid":"40AFB2C","soid":"9105419855804:DV:77","lt":"query","st":"success","cid":"HBG2C","sid":"116","sup":"EPS","ss":"sess_82c06xq9jb354myp","dhid":"18933","shid":"2767297","rpid":"","ec":"","t":"2026-09-29 02:44:00"},{"id":204,"oid":"187910565865","coid":"705497683","soid":"9105419793324:DV:77","lt":"verify","st":"success","cid":"AgodaEBK","sid":"116","sup":"EPS","ss":"sess_1b4xgmpw5d3go8jn","dhid":"1535215","shid":"36294897","rpid":"","ec":"","t":"2026-09-29 02:25:00"},{"id":205,"oid":"187910565865","coid":"705497683","soid":"9105419793324:DV:77","lt":"order","st":"success","cid":"AgodaEBK","sid":"116","sup":"EPS","ss":"sess_42x2ezc7fov2ygnm","dhid":"1535215","shid":"36294897","rpid":"","ec":"","t":"2026-09-29 02:30:00"},{"id":206,"oid":"187910565263","coid":"7OXTQ7OJQX","soid":"DIDAMA0926150563","lt":"verify","st":"success","cid":"VETURISLIVE","sid":"141","sup":"Withinearth(Technoheaven)","ss":"sess_506rr5pcxa5s00i8","dhid":"1810","shid":"8039","rpid":"","ec":"","t":"2026-09-29 02:20:00"},{"id":207,"oid":"187910565263","coid":"7OXTQ7OJQX","soid":"DIDAMA0926150563","lt":"order","st":"success","cid":"VETURISLIVE","sid":"141","sup":"Withinearth(Technoheaven)","ss":"sess_5sywp0rxxf36wa7s","dhid":"1810","shid":"8039","rpid":"","ec":"","t":"2026-09-29 02:25:00"},{"id":208,"oid":"187910565143","coid":"345213253-0","soid":"DEB260923235756908","lt":"verify","st":"success","cid":"Traveloka","sid":"1570","sup":"EBookingSupplier_HKGlory(HKGlory)","ss":"sess_5cri8bixoiq2q4qe","dhid":"1578638","shid":"1578638","rpid":"","ec":"","t":"2026-09-29 02:14:00"},{"id":209,"oid":"187910565143","coid":"345213253-0","soid":"DEB260923235756908","lt":"order","st":"success","cid":"Traveloka","sid":"1570","sup":"EBookingSupplier_HKGlory(HKGlory)","ss":"sess_rxdouadvwkshy8nb","dhid":"1578638","shid":"1578638","rpid":"","ec":"","t":"2026-09-29 02:19:00"},{"id":210,"oid":"187910564789","coid":"2052797284","soid":"1128151117556792","lt":"verify","st":"success","cid":"AgodaEBK","sid":"565","sup":"Ctrip","ss":"sess_l1vznqdxamw2tnd6","dhid":"66577","shid":"3032899","rpid":"","ec":"","t":"2026-09-29 02:10:00"},{"id":211,"oid":"187910564789","coid":"2052797284","soid":"1128151117556792","lt":"order","st":"success","cid":"AgodaEBK","sid":"565","sup":"Ctrip","ss":"sess_r30ojhe4h3gm1bwy","dhid":"66577","shid":"3032899","rpid":"","ec":"","t":"2026-09-29 02:15:00"},{"id":212,"oid":"187910563947","coid":"2388250","soid":"102-21326449","lt":"verify","st":"success","cid":"InterepEBK","sid":"95","sup":"HBG","ss":"sess_qx8ertb74rs7gu0e","dhid":"7765","shid":"2068","rpid":"","ec":"","t":"2026-09-29 02:05:00"},{"id":213,"oid":"187910563947","coid":"2388250","soid":"102-21326449","lt":"order","st":"success","cid":"InterepEBK","sid":"95","sup":"HBG","ss":"sess_nv5sn961j88qeoz0","dhid":"7765","shid":"2068","rpid":"","ec":"","t":"2026-09-29 02:10:00"},{"id":214,"oid":"187910563862","coid":"1128151117555081","soid":"255-17141207","lt":"verify","st":"success","cid":"ctrip2024","sid":"95","sup":"HBG","ss":"sess_tl0thhzy7ez9gtwz","dhid":"15337","shid":"71225","rpid":"","ec":"","t":"2026-09-29 01:59:00"},{"id":215,"oid":"187910563862","coid":"1128151117555081","soid":"255-17141207","lt":"order","st":"success","cid":"ctrip2024","sid":"95","sup":"HBG","ss":"sess_1uu7zy6t5padnbcj","dhid":"15337","shid":"71225","rpid":"","ec":"","t":"2026-09-29 02:04:00"},{"id":216,"oid":"187910563742","coid":"Q3Q9M3BNX2JQ","soid":"1778061636","lt":"verify","st":"success","cid":"HopperCap1TPS","sid":"26","sup":"Agoda","ss":"sess_yfc2htmqwyuixns2","dhid":"2814660","shid":"37342019","rpid":"","ec":"","t":"2026-09-29 01:55:00"},{"id":217,"oid":"187910563742","coid":"Q3Q9M3BNX2JQ","soid":"1778061636","lt":"order","st":"success","cid":"HopperCap1TPS","sid":"26","sup":"Agoda","ss":"sess_zybno2y8b0h54piw","dhid":"2814660","shid":"37342019","rpid":"","ec":"","t":"2026-09-29 02:00:00"},{"id":218,"oid":"187910563708","coid":"705497527","soid":"1128151117555406","lt":"verify","st":"success","cid":"AgodaEBK","sid":"565","sup":"Ctrip","ss":"sess_1tv18kgyggsnpuev","dhid":"40834","shid":"2108600","rpid":"","ec":"","t":"2026-09-29 01:48:00"},{"id":219,"oid":"187910563708","coid":"705497527","soid":"1128151117555406","lt":"order","st":"success","cid":"AgodaEBK","sid":"565","sup":"Ctrip","ss":"sess_jlzfflb7wxrum2lh","dhid":"40834","shid":"2108600","rpid":"","ec":"","t":"2026-09-29 01:53:00"},{"id":220,"oid":"187910563708","coid":"705497527","soid":"1128151117555406","lt":"query","st":"success","cid":"AgodaEBK","sid":"565","sup":"Ctrip","ss":"sess_gcsotdhhlmh1t939","dhid":"40834","shid":"2108600","rpid":"","ec":"","t":"2026-09-29 02:03:00"},{"id":221,"oid":"187910563658","coid":"1058790115","soid":"9103694381547:DV:2230","lt":"verify","st":"success","cid":"DOTWRetail","sid":"116","sup":"EPS","ss":"sess_mix7ib5n2ej0as1s","dhid":"1527704","shid":"18513020","rpid":"","ec":"","t":"2026-09-29 01:45:00"},{"id":222,"oid":"187910563658","coid":"1058790115","soid":"9103694381547:DV:2230","lt":"order","st":"success","cid":"DOTWRetail","sid":"116","sup":"EPS","ss":"sess_srkxlcd81twhwhy4","dhid":"1527704","shid":"18513020","rpid":"","ec":"","t":"2026-09-29 01:50:00"},{"id":223,"oid":"187910563658","coid":"1058790115","soid":"9110418314389:DV:2230","lt":"verify","st":"success","cid":"DOTWRetail","sid":"116","sup":"EPS","ss":"sess_z91x70fqldb2uuij","dhid":"1527704","shid":"18513020","rpid":"","ec":"","t":"2026-09-29 01:40:00"},{"id":224,"oid":"187910563658","coid":"1058790115","soid":"9110418314389:DV:2230","lt":"order","st":"success","cid":"DOTWRetail","sid":"116","sup":"EPS","ss":"sess_nwpaytxw1vzc7d2k","dhid":"1527704","shid":"18513020","rpid":"","ec":"","t":"2026-09-29 01:45:00"},{"id":225,"oid":"187910563513","coid":"705497211","soid":"9110418314432:DV:77","lt":"verify","st":"success","cid":"AgodaEBK","sid":"116","sup":"EPS","ss":"sess_7n3bfh024kwk585x","dhid":"7003","shid":"5406641","rpid":"","ec":"","t":"2026-09-29 01:35:00"},{"id":226,"oid":"187910563513","coid":"705497211","soid":"9110418314432:DV:77","lt":"order","st":"success","cid":"AgodaEBK","sid":"116","sup":"EPS","ss":"sess_8a5fbuotdh00h64f","dhid":"7003","shid":"5406641","rpid":"","ec":"","t":"2026-09-29 01:40:00"},{"id":227,"oid":"187910563510","coid":"HT26I23B0DETODFYT","soid":"GRN-202609-2950909/-0ir1IfZ4QG-gT9C","lt":"verify","st":"success","cid":"Aerotraveljkt","sid":"324","sup":"GRNConnect","ss":"sess_4gg24479qtkcd0rl","dhid":"319002","shid":"2664220","rpid":"","ec":"","t":"2026-09-29 01:30:00"},{"id":228,"oid":"187910563510","coid":"HT26I23B0DETODFYT","soid":"GRN-202609-2950909/-0ir1IfZ4QG-gT9C","lt":"order","st":"success","cid":"Aerotraveljkt","sid":"324","sup":"GRNConnect","ss":"sess_exdw6lqwlvunlpai","dhid":"319002","shid":"2664220","rpid":"","ec":"","t":"2026-09-29 01:35:00"},{"id":229,"oid":"187910563103","coid":"14752938","soid":"136-3846560","lt":"verify","st":"success","cid":"NuiteeNTS","sid":"95","sup":"HBG","ss":"sess_xjmylrq1rdxck36h","dhid":"78446","shid":"91488","rpid":"","ec":"","t":"2026-09-29 01:25:00"},{"id":230,"oid":"187910563103","coid":"14752938","soid":"136-3846560","lt":"order","st":"success","cid":"NuiteeNTS","sid":"95","sup":"HBG","ss":"sess_0w064w3u1hbj6txf","dhid":"78446","shid":"91488","rpid":"","ec":"","t":"2026-09-29 01:30:00"},{"id":231,"oid":"","coid":"","soid":"","lt":"verify","st":"success","cid":"LvYueV2","sid":"Movenpick","sup":"LvYueV2","ss":"sess_kqsosx43wfsqg8x8","dhid":"871667","shid":"SUP_H849","rpid":"","ec":"","t":"2026-09-29 01:40:00"},{"id":232,"oid":"","coid":"","soid":"","lt":"verify","st":"success","cid":"DidaOpaq","sid":"Agoda","sup":"EPS","ss":"sess_1ijiys2n75bxd8wj","dhid":"877948","shid":"SUP_H369","rpid":"","ec":"","t":"2026-09-29 01:37:00"},{"id":233,"oid":"","coid":"","soid":"","lt":"verify","st":"success","cid":"LvYueV2","sid":"Ostrovok","sup":"MikinetV2","ss":"sess_xnx4sn6sm5rrvsff","dhid":"180832","shid":"SUP_H626","rpid":"","ec":"","t":"2026-09-29 01:34:00"},{"id":234,"oid":"","coid":"","soid":"","lt":"verify","st":"success","cid":"ctrip2024","sid":"Ostrovok","sup":"Ostrovok","ss":"sess_fv3xoleyrvxoieve","dhid":"637544","shid":"SUP_H140","rpid":"","ec":"","t":"2026-09-29 01:31:00"},{"id":235,"oid":"","coid":"","soid":"","lt":"verify","st":"success","cid":"TiketCorp","sid":"Agoda","sup":"Ostrovok","ss":"sess_jg8vuazxkdq95g3v","dhid":"933215","shid":"SUP_H696","rpid":"","ec":"","t":"2026-09-29 01:28:00"},{"id":236,"oid":"","coid":"","soid":"","lt":"verify","st":"success","cid":"AgodaEBK","sid":"Rakuten_Japan","sup":"HBG","ss":"sess_sgy7vcneas6y3vg6","dhid":"728950","shid":"SUP_H139","rpid":"","ec":"","t":"2026-09-29 01:25:00"},{"id":237,"oid":"","coid":"","soid":"","lt":"verify","st":"success","cid":"ariconnect01","sid":"SunMeiV3","sup":"Rezen_Retail","ss":"sess_erev361xsnbti22n","dhid":"717661","shid":"SUP_H923","rpid":"","ec":"","t":"2026-09-29 01:22:00"},{"id":238,"oid":"","coid":"","soid":"","lt":"verify","st":"success","cid":"LvYueV2","sid":"DCTLLincoln","sup":"MikinetV2","ss":"sess_eri4k5ogz2ueaxyl","dhid":"479867","shid":"SUP_H209","rpid":"","ec":"","t":"2026-09-29 01:19:00"},{"id":239,"oid":"","coid":"","soid":"","lt":"verify","st":"fail","cid":"LvYueV2","sid":"Traveloka","sup":"Traveloka","ss":"sess_4pnjy1o2rntjlmz0","dhid":"996531","shid":"SUP_H984","rpid":"","ec":"ERR_INVENTORY","t":"2026-09-29 01:16:00"},{"id":240,"oid":"","coid":"","soid":"","lt":"verify","st":"success","cid":"Luyou2025","sid":"CosmoBeds","sup":"Rezen_Retail","ss":"sess_zfhomtzzf8adf7pc","dhid":"332542","shid":"SUP_H479","rpid":"","ec":"","t":"2026-09-29 01:13:00"}];
+;
+
+        // Pagination state
+        let currentPage = 1;
+        let pageSize = 10;
+        let filteredOrders = [];
+
+        // Selection state for batch export
+        let selectedOrderIds = new Set();
+
+        // Log type labels and colors
+        const LOG_TYPE_MAP = {
+            'verify': { label: '验价', class: 'log-type-verify' },
+            'order': { label: '下单', class: 'log-type-order' },
+            'cancel': { label: '取消', class: 'log-type-cancel' },
+            'query': { label: '查单', class: 'log-type-query' }
+        };
+
+        let selectedStart = null;
+        let selectedEnd = null;
+        let calLeftYear, calLeftMonth;
+        let activeDateTarget = 'start'; // 'start' or 'end'
+
+        function formatDate(d) {
+            const y = d.getFullYear();
+            const m = String(d.getMonth() + 1).padStart(2, '0');
+            const day = String(d.getDate()).padStart(2, '0');
+            return `${y}-${m}-${day}`;
         }
 
-        // 重置表单
+        function setDateRange(days, event) {
+            const today = new Date();
+            today.setHours(0, 0, 0, 0);
+            const startDate = new Date(today);
+            startDate.setDate(startDate.getDate() - days + 1);
+
+            selectedStart = startDate;
+            selectedEnd = today;
+
+            document.getElementById('dateInputStart').value = formatDate(startDate);
+            document.getElementById('dateInputEnd').value = formatDate(today);
+
+            calLeftYear = startDate.getFullYear();
+            calLeftMonth = startDate.getMonth();
+            renderCalendar();
+
+            document.querySelectorAll('.quick-date-btn').forEach(btn => btn.classList.remove('active'));
+            if (event && event.target) {
+                event.target.classList.add('active');
+            } else {
+                // Find the button with matching days
+                document.querySelectorAll('.quick-date-btn').forEach(btn => {
+                    if (btn.textContent.includes(days)) btn.classList.add('active');
+                });
+            }
+        }
+
+        function navMonth(delta) {
+            calLeftMonth += delta;
+            if (calLeftMonth > 11) {
+                calLeftYear += Math.floor(calLeftMonth / 12);
+                calLeftMonth = calLeftMonth % 12;
+            } else if (calLeftMonth < 0) {
+                const yearsBack = Math.ceil(Math.abs(calLeftMonth) / 12);
+                calLeftYear -= yearsBack;
+                calLeftMonth = ((calLeftMonth % 12) + 12) % 12;
+            }
+            renderCalendar();
+        }
+
+        function toggleDatePanel(target) {
+            const panel = document.getElementById('datePickerPanel');
+            activeDateTarget = target || 'start';
+            panel.classList.add('show');
+            renderCalendar();
+            updateInputFocus();
+        }
+
+        function updateInputFocus() {
+            const startInput = document.getElementById('dateInputStart');
+            const endInput = document.getElementById('dateInputEnd');
+            const wrapper = document.getElementById('dateRangeWrapper');
+            startInput.classList.toggle('active', activeDateTarget === 'start');
+            endInput.classList.toggle('active', activeDateTarget === 'end');
+            wrapper.classList.add('focused');
+        }
+
+        function clearInputFocus() {
+            document.getElementById('dateInputStart').classList.remove('active');
+            document.getElementById('dateInputEnd').classList.remove('active');
+            document.getElementById('dateRangeWrapper').classList.remove('focused');
+        }
+
+        function renderCalendar() {
+            const today = new Date();
+            today.setHours(0, 0, 0, 0);
+
+            if (!selectedStart) {
+                const now = new Date();
+                calLeftYear = now.getFullYear();
+                calLeftMonth = now.getMonth();
+            }
+
+            const leftMonth = new Date(calLeftYear, calLeftMonth, 1);
+            const rightMonth = new Date(calLeftYear, calLeftMonth + 1, 1);
+
+            renderMonth('left', leftMonth, today);
+            renderMonth('right', rightMonth, today);
+        }
+
+        function renderMonth(side, monthDate, today) {
+            const year = monthDate.getFullYear();
+            const month = monthDate.getMonth();
+
+            document.getElementById(side + 'MonthTitle').textContent = year + '年 ' + (month + 1) + '月';
+
+            const firstDay = new Date(year, month, 1);
+            const lastDay = new Date(year, month + 1, 0);
+            // 周一为起始: 0=Mon ... 6=Sun
+            const startDayOfWeek = (firstDay.getDay() + 6) % 7;
+            const totalDays = lastDay.getDate();
+
+            const prevMonthLastDay = new Date(year, month, 0).getDate();
+
+            const container = document.getElementById(side + 'MonthDays');
+            container.innerHTML = '';
+
+            // 上月日期
+            for (let i = startDayOfWeek - 1; i >= 0; i--) {
+                const day = prevMonthLastDay - i;
+                const dayEl = document.createElement('div');
+                dayEl.className = 'calendar-day other-month';
+                dayEl.textContent = day;
+                container.appendChild(dayEl);
+            }
+
+            // 当月日期
+            for (let day = 1; day <= totalDays; day++) {
+                const dayEl = document.createElement('div');
+                dayEl.className = 'calendar-day';
+                dayEl.textContent = day;
+                dayEl.dataset.dateStr = new Date(year, month, day).toDateString();
+
+                const currentDate = new Date(year, month, day);
+                const dayOfWeek = currentDate.getDay();
+
+                if (dayOfWeek === 0 || dayOfWeek === 6) {
+                    dayEl.classList.add('weekend');
+                }
+
+                if (currentDate.toDateString() === today.toDateString()) {
+                    dayEl.classList.add('today');
+                }
+
+                if (selectedStart && currentDate.toDateString() === selectedStart.toDateString()) {
+                    dayEl.classList.add('selected');
+                }
+
+                if (selectedEnd && currentDate.toDateString() === selectedEnd.toDateString()) {
+                    dayEl.classList.add('selected');
+                }
+
+                if (selectedStart && selectedEnd && currentDate > selectedStart && currentDate < selectedEnd) {
+                    dayEl.classList.add('in-range');
+                }
+
+                container.appendChild(dayEl);
+            }
+
+            // 下月日期（补齐行数）
+            const totalCells = startDayOfWeek + totalDays;
+            const rows = Math.ceil(totalCells / 7);
+            const remaining = rows * 7 - totalCells;
+            for (let day = 1; day <= remaining; day++) {
+                const dayEl = document.createElement('div');
+                dayEl.className = 'calendar-day other-month';
+                dayEl.textContent = day;
+                container.appendChild(dayEl);
+            }
+        }
+
+        function handleDateClick(dateStr) {
+            const clicked = new Date(dateStr);
+            clicked.setHours(0, 0, 0, 0);
+
+            if (activeDateTarget === 'start') {
+                selectedStart = new Date(clicked);
+                selectedEnd = null;
+                activeDateTarget = 'end';
+            } else {
+                if (clicked.getTime() < selectedStart.getTime()) {
+                    selectedEnd = new Date(selectedStart);
+                    selectedStart = clicked;
+                } else {
+                    selectedEnd = clicked;
+                }
+                activeDateTarget = 'start';
+            }
+
+            document.getElementById('dateInputStart').value = selectedStart ? formatDate(selectedStart) : '';
+            document.getElementById('dateInputEnd').value = selectedEnd ? formatDate(selectedEnd) : '';
+
+            updateInputFocus();
+            renderCalendar();
+
+            if (selectedStart && selectedEnd) {
+                setTimeout(() => {
+                    document.getElementById('datePickerPanel').classList.remove('show');
+                    clearInputFocus();
+                }, 100);
+            }
+        }
+
         function resetForm() {
             document.getElementById('orderNumber').value = '';
-            document.getElementById('logType').value = '';
-            document.querySelectorAll('.form-input:not([type="date"])').forEach(input => {
-                if (input.id !== 'orderNumber') input.value = '';
+            document.querySelectorAll('.form-input').forEach(input => {
+                if (!input.readOnly) input.value = '';
             });
+            // Reset log type: select all
+            document.getElementById('logTypeAllCheck').checked = true;
+            document.querySelectorAll('input[name="logType"]').forEach(cb => { cb.checked = true; });
+            document.getElementById('logTypeTrigger').textContent = '全部';
             document.getElementById('errorMessage').classList.remove('show');
-            setDateRange(60);
+
+            const today = new Date();
+            today.setHours(0, 0, 0, 0);
+            const startDate = new Date(today);
+            startDate.setDate(startDate.getDate() - 59);
+            selectedStart = startDate;
+            selectedEnd = today;
+            document.getElementById('dateInputStart').value = formatDate(startDate);
+            document.getElementById('dateInputEnd').value = formatDate(today);
+            calLeftYear = startDate.getFullYear();
+            calLeftMonth = startDate.getMonth();
+            renderCalendar();
+            document.querySelectorAll('.quick-date-btn').forEach(btn => btn.classList.remove('active'));
+            document.querySelectorAll('.quick-date-btn')[2].classList.add('active');
         }
 
-        // 搜索日志
+        function toggleLogTypeDropdown() {
+            document.getElementById('logTypeDropdown').classList.toggle('show');
+        }
+
+        function updateLogTypeDisplay() {
+            const all = document.querySelectorAll('input[name="logType"]');
+            const checked = document.querySelectorAll('input[name="logType"]:checked');
+            document.getElementById('logTypeAllCheck').checked = all.length === checked.length;
+
+            const typeLabels = { verify: '验价', order: '下单', cancel: '取消', query: '查单' };
+            const selected = [];
+            checked.forEach(cb => { selected.push(typeLabels[cb.value]); });
+
+            const trigger = document.getElementById('logTypeTrigger');
+            if (selected.length === 0) trigger.textContent = '请选择';
+            else if (selected.length === all.length) trigger.textContent = '全部';
+            else trigger.textContent = selected.join('、');
+        }
+
+        function toggleAllLogTypes(checked) {
+            document.querySelectorAll('input[name="logType"]').forEach(cb => { cb.checked = checked; });
+            updateLogTypeDisplay();
+        }
+
+        function getSelectedLogTypes() {
+            const types = [];
+            document.querySelectorAll('input[name="logType"]:checked').forEach(cb => { types.push(cb.value); });
+            return types;
+        }
+
+        function toggleAdvancedFilters() {
+            const filters = document.getElementById('advancedFilters');
+            const toggle = document.getElementById('toggleAdvanced');
+            filters.classList.toggle('show');
+            toggle.classList.toggle('open');
+            const isOpen = filters.classList.contains('show');
+            toggle.innerHTML = (isOpen ? '收起筛选条件' : '展开更多筛选条件') + ' <span class="arrow">▼</span>';
+        }
+
+        // Date input click handlers
+        document.getElementById('dateInputStart').addEventListener('click', function() {
+            activeDateTarget = 'start';
+            toggleDatePanel('start');
+        });
+
+        document.getElementById('dateInputEnd').addEventListener('click', function() {
+            activeDateTarget = 'end';
+            toggleDatePanel('end');
+        });
+
+        // Date input change handlers (manual typing)
+        function parseDateInput(val) {
+            const match = val.match(/^(\d{4})-(\d{1,2})-(\d{1,2})$/);
+            if (!match) return null;
+            const d = new Date(+match[1], +match[2] - 1, +match[3]);
+            if (isNaN(d.getTime())) return null;
+            return d;
+        }
+
+        document.getElementById('dateInputStart').addEventListener('change', function() {
+            const d = parseDateInput(this.value);
+            if (d) {
+                selectedStart = d;
+                this.value = formatDate(d);
+                calLeftYear = d.getFullYear();
+                calLeftMonth = d.getMonth();
+            }
+        });
+
+        document.getElementById('dateInputEnd').addEventListener('change', function() {
+            const d = parseDateInput(this.value);
+            if (d) {
+                selectedEnd = d;
+                this.value = formatDate(d);
+            }
+        });
+
         function searchLogs() {
-            const orderNumber = document.getElementById('orderNumber').value;
-            const startDate = document.getElementById('startDate').value;
-            const endDate = document.getElementById('endDate').value;
-            
-            // 校验逻辑
-            if (!orderNumber && (!startDate || !endDate)) {
-                showError('请输入订单号或选择日期范围');
+            const orderId = document.getElementById('orderNumber').value.trim();
+            const startDate = document.getElementById('dateInputStart').value.trim();
+            const endDate = document.getElementById('dateInputEnd').value.trim();
+
+            const selectedLogTypes = getSelectedLogTypes();
+            const clientId = document.getElementById('clientId').value.trim();
+            const supplierId = document.getElementById('supplierId').value.trim();
+            const errorCode = document.getElementById('errorCode').value.trim();
+            const didaHotelId = document.getElementById('didaHotelId').value.trim();
+            const ratePlanId = document.getElementById('ratePlanId').value.trim();
+
+            // Filter logs first
+            const matchedLogs = MOCK_LOGS.filter(log => {
+                // Match any of the 3 order IDs
+                if (orderId) {
+                    const matchOid = log.oid && log.oid.includes(orderId);
+                    const matchCoid = log.coid && log.coid.includes(orderId);
+                    const matchSoid = log.soid && log.soid.includes(orderId);
+                    if (!matchOid && !matchCoid && !matchSoid) return false;
+                } else {
+                    // 没有订单号时，按日期范围筛选（字符串比较，YYYY-MM-DD 格式天然有序）
+                    if (startDate && endDate) {
+                        const logDate = log.t.split(' ')[0]; // 取日期部分 "2026-09-29"
+                        if (logDate < startDate || logDate > endDate) return false;
+                    }
+                }
+                if (selectedLogTypes.length > 0 && !selectedLogTypes.includes(log.lt)) return false;
+                if (clientId && !log.cid.toLowerCase().includes(clientId.toLowerCase())) return false;
+                if (supplierId && !log.sid.toLowerCase().includes(supplierId.toLowerCase())) return false;
+                if (errorCode && log.ec !== errorCode) return false;
+                if (didaHotelId && log.dhid !== didaHotelId) return false;
+                if (ratePlanId && log.rpid !== ratePlanId) return false;
+                return true;
+            });
+
+            // Group by order (use oid as primary key, fallback to coid or soid)
+            const orderMap = new Map();
+            matchedLogs.forEach(log => {
+                // Use oid as the primary key; if empty, use coid; if both empty, use soid
+                const key = log.oid || log.coid || log.soid || `verify_${log.id}`;
+                if (!orderMap.has(key)) {
+                    orderMap.set(key, { logs: [], coid: log.coid, soid: log.soid, oid: log.oid });
+                }
+                const entry = orderMap.get(key);
+                entry.logs.push(log);
+                // Keep non-empty IDs
+                if (log.coid && !entry.coid) entry.coid = log.coid;
+                if (log.soid && !entry.soid) entry.soid = log.soid;
+                if (log.oid && !entry.oid) entry.oid = log.oid;
+            });
+
+            // Build order list
+            filteredOrders = Array.from(orderMap.entries()).map(([oid, { logs, coid, soid }]) => {
+                // Determine order status
+                const hasCancel = logs.some(l => l.lt === 'cancel');
+                const hasOrder = logs.some(l => l.lt === 'order');
+                const hasFailed = logs.some(l => l.st === 'fail');
+
+                let status = '验价中';
+                if (hasCancel) status = '已取消';
+                else if (hasOrder && !hasCancel) status = '已确认';
+                else if (hasFailed) status = '失败';
+
+                // Collect unique log types
+                const logTypes = [...new Set(logs.map(l => l.lt))];
+
+                // Get latest time
+                const latestTime = logs.reduce((max, l) => l.t > max ? l.t : max, '');
+
+                // Get first clientId and supplierId
+                const clientIdVal = logs[0].cid;
+                const supplierIdVal = logs[0].sid;
+
+                return {
+                    oid: oid,
+                    coid: coid || '',
+                    soid: soid || '',
+                    status,
+                    logTypes,
+                    time: latestTime,
+                    clientId: clientIdVal,
+                    supplierId: supplierIdVal,
+                    logs
+                };
+            });
+
+            currentPage = 1;
+            selectedOrderIds.clear();
+            updateSelectionUI();
+            renderTable();
+            renderPagination();
+            updateResultCount();
+        }
+
+        function renderTable() {
+            const tbody = document.getElementById('orderTableBody');
+            const start = (currentPage - 1) * pageSize;
+            const end = start + pageSize;
+            const pageOrders = filteredOrders.slice(start, end);
+
+            tbody.innerHTML = pageOrders.map(order => {
+                // Status badge
+                let statusClass = '';
+                if (order.status === '已取消') statusClass = 'order-status-cancelled';
+                else if (order.status === '已确认') statusClass = 'order-status-confirmed';
+                else if (order.status === '失败') statusClass = 'order-status-failed';
+
+                // Log type badges
+                const logTypeBadges = order.logTypes.map(lt => {
+                    const typeInfo = LOG_TYPE_MAP[lt] || { label: lt, class: '' };
+                    return `<span class="log-type-badge ${typeInfo.class}">${typeInfo.label}</span>`;
+                }).join(' ');
+
+                const isChecked = selectedOrderIds.has(order.oid) ? 'checked' : '';
+
+                return `<tr>
+                    <td class="col-checkbox"><input type="checkbox" ${isChecked} onchange="toggleOrderSelect('${order.oid}', this.checked)"></td>
+                    <td title="${order.coid}">${order.coid || '-'}</td>
+                    <td title="${order.oid}">${order.oid || '-'}</td>
+                    <td title="${order.soid}">${order.soid || '-'}</td>
+                    <td><span class="order-status ${statusClass}">${order.status}</span></td>
+                    <td>${logTypeBadges}</td>
+                    <td>${order.time}</td>
+                    <td>${order.clientId}</td>
+                    <td>${order.supplierId}</td>
+                    <td>
+                        <div style="display: flex; gap: 8px;">
+                            <a class="action-link" onclick="viewDetail('${order.oid}')">详情</a>
+                            <a class="action-link" onclick="exportOrder('${order.oid}')">导出</a>
+                        </div>
+                    </td>
+                </tr>`;
+            }).join('');
+
+            // Update select-all checkbox state
+            updateSelectAllCheckbox();
+        }
+
+        function renderPagination() {
+            const totalPages = Math.ceil(filteredOrders.length / pageSize);
+            const pagination = document.getElementById('pagination');
+
+            let html = `<span style="color: #8F959E; font-size: 13px;">共 ${filteredOrders.length} 条，共 ${totalPages || 1} 页</span>`;
+
+            // Page size selector
+            html += `<select class="page-size-select" onchange="changePageSize(this.value)">`;
+            [10, 20, 50, 100].forEach(s => {
+                html += `<option value="${s}" ${s === pageSize ? 'selected' : ''}>${s} 条/页</option>`;
+            });
+            html += `</select>`;
+
+            if (totalPages > 1) {
+                html += `<button class="pagination-btn" ${currentPage === 1 ? 'disabled' : ''} onclick="changePage(${currentPage - 1})">&lt;</button>`;
+
+                for (let i = 1; i <= Math.min(5, totalPages); i++) {
+                    html += `<button class="pagination-btn ${currentPage === i ? 'active' : ''}" onclick="changePage(${i})">${i}</button>`;
+                }
+
+                if (totalPages > 5) {
+                    html += `<button class="pagination-btn" disabled>...</button>`;
+                    html += `<button class="pagination-btn" onclick="changePage(${totalPages})">${totalPages}</button>`;
+                }
+
+                html += `<button class="pagination-btn" ${currentPage === totalPages ? 'disabled' : ''} onclick="changePage(${currentPage + 1})">&gt;</button>`;
+            }
+
+            pagination.innerHTML = html;
+        }
+
+        function changePage(page) {
+            const totalPages = Math.ceil(filteredOrders.length / pageSize);
+            if (page < 1 || page > totalPages) return;
+            currentPage = page;
+            renderTable();
+            renderPagination();
+        }
+
+        function changePageSize(size) {
+            pageSize = parseInt(size);
+            currentPage = 1;
+            renderTable();
+            renderPagination();
+        }
+
+        function updateResultCount() {
+            // No result title anymore
+        }
+
+        function generateRequestSummary(log) {
+            if (log.lt === 'verify') return `{"hotelId":"${log.shid}","checkIn":"2026-10-15"}`;
+            if (log.lt === 'order') return `{"orderId":"${log.oid}","totalPrice":${(500 + Math.random() * 2000).toFixed(2)}}`;
+            if (log.lt === 'cancel') return `{"orderId":"${log.oid}","reason":"Customer request"}`;
+            return `{"orderId":"${log.oid}","queryType":"status"}`;
+        }
+
+        function generateResponseSummary(log) {
+            if (log.st === 'fail') return `{"success":false,"errorCode":"${log.ec}"}`;
+            if (log.lt === 'verify') return `{"success":true,"price":${(300 + Math.random() * 1500).toFixed(2)}}`;
+            if (log.lt === 'order') return `{"success":true,"confirmationNumber":"CONF${Math.floor(Math.random() * 99999999)}"}`;
+            return `{"success":true,"status":"Confirmed"}`;
+        }
+
+        function viewDetail(orderId) {
+            const order = filteredOrders.find(o => o.oid === orderId);
+            if (!order) {
+                alert('未找到该订单数据');
                 return;
             }
-            
-            // 模拟搜索
-            alert('🔍 正在搜索日志...\n\n订单号：' + (orderNumber || '未填写') + '\n日期范围：' + startDate + ' 至 ' + endDate);
+
+            // 1. 渲染基本信息
+            let statusClass = 'status-verifying';
+            if (order.status === '已确认') statusClass = 'status-confirmed';
+            else if (order.status === '已取消') statusClass = 'status-cancelled';
+            else if (order.status === '失败') statusClass = 'status-failed';
+
+            document.getElementById('detailInfoBar').innerHTML = `
+                <div class="detail-info-item">
+                    <span class="detail-info-label">单号:</span>
+                    <span class="detail-info-value">${order.coid || order.oid || '-'}</span>
+                </div>
+                <div class="detail-info-item">
+                    <span class="detail-info-label">订单状态:</span>
+                    <span class="detail-info-value ${statusClass}">${order.status}</span>
+                </div>
+                <div class="detail-info-item">
+                    <span class="detail-info-label">ClientID:</span>
+                    <span class="detail-info-value">${order.clientId || '-'}</span>
+                </div>
+                <div class="detail-info-item">
+                    <span class="detail-info-label">SupplierID:</span>
+                    <span class="detail-info-value">${order.supplierId || '-'}</span>
+                </div>
+            `;
+
+            // 2. 按日志类型分组，生成左右两栏
+            const logs = order.logs.sort((a, b) => a.t.localeCompare(b.t));
+
+            // 左栏：机构客户请求Dida（按 log type 分组）
+            const clientLogsEl = document.getElementById('clientLogs');
+            const supplierLogsEl = document.getElementById('supplierLogs');
+
+            clientLogsEl.innerHTML = logs.map(log => buildLogCard(log, 'client')).join('') || '<div class="log-card-empty">暂无日志</div>';
+            supplierLogsEl.innerHTML = logs.map(log => buildLogCard(log, 'supplier')).join('') || '<div class="log-card-empty">暂无日志</div>';
+
+            // 3. 绑定展开/折叠事件
+            document.querySelectorAll('#detailModal .log-card-header').forEach(header => {
+                header.addEventListener('click', function() {
+                    this.closest('.log-card').classList.toggle('expanded');
+                });
+            });
+
+            // 显示弹窗
+            document.getElementById('detailModal').classList.add('active');
         }
 
-        // 显示错误
-        function showError(message) {
-            const errorEl = document.getElementById('errorMessage');
-            errorEl.textContent = '⚠️ ' + message;
-            errorEl.classList.add('show');
-            setTimeout(() => {
-                errorEl.classList.remove('show');
-            }, 5000);
+        // 生成单条日志卡片HTML
+        function buildLogCard(log, side) {
+            const ltInfo = LOG_TYPE_MAP[log.lt] || { label: log.lt };
+            const statusLabel = log.st === 'success' ? 'success' : 'failed';
+            const statusCls = log.st === 'success' ? 'success' : 'fail';
+
+            // 取消类型特殊处理：展示两步流程
+            if (log.lt === 'cancel') {
+                return buildCancelCard(log, side, ltInfo, statusLabel, statusCls);
+            }
+
+            const reqJson = side === 'client' ? buildClientRequest(log) : buildSupplierRequest(log);
+            const resJson = side === 'client' ? buildClientResponse(log) : buildSupplierResponse(log);
+
+            return `
+                <div class="log-card">
+                    <div class="log-card-header">
+                        <span class="log-card-toggle">▶</span>
+                        <span class="log-card-type ${log.lt}">${ltInfo.label}</span>
+                        <span class="log-card-status ${statusCls}">${statusLabel}</span>
+                        ${log.ec ? '<span class="log-card-status fail">' + log.ec + '</span>' : ''}
+                        <span class="log-card-time">${log.t}</span>
+                    </div>
+                    <div class="log-card-body">
+                        <div class="log-card-section">
+                            <div class="log-card-section-title">Session ID</div>
+                            <span class="log-card-session">${log.ss || '-'}</span>
+                        </div>
+                        <div class="log-card-section">
+                            <div class="log-card-section-title">Request <span class="copy-btn" onclick="copyJson(this)">📋 Copy</span></div>
+                            <div class="log-card-json">${reqJson}</div>
+                        </div>
+                        <div class="log-card-section">
+                            <div class="log-card-section-title">Response <span class="copy-btn" onclick="copyJson(this)">📋 Copy</span></div>
+                            <div class="log-card-json">${resJson}</div>
+                        </div>
+                    </div>
+                </div>
+            `;
         }
 
-        // 查看详情
-        function viewDetail(rowId) {
-            const modal = document.getElementById('detailModal');
-            modal.classList.add('active');
-        }
-
-        // 关闭弹窗
-        function closeModal() {
-            const modal = document.getElementById('detailModal');
-            modal.classList.remove('active');
-        }
-
-        // 复制链接
-        function copyLink() {
-            const fakeLink = 'http://log.didaadmin.com/channel-log?order=18851164372&type=order&token=abc123';
-            navigator.clipboard.writeText(fakeLink).then(() => {
-                alert('✅ 链接已复制到剪贴板\n\n链接 1 小时后失效，请勿转发给他人');
+        // 复制JSON内容
+        function copyJson(btn) {
+            const jsonEl = btn.closest('.log-card-section').querySelector('.log-card-json');
+            if (!jsonEl) return;
+            const text = jsonEl.textContent;
+            navigator.clipboard.writeText(text).then(() => {
+                btn.textContent = '✅ Copied';
+                btn.classList.add('copied');
+                setTimeout(() => { btn.textContent = '📋 Copy'; btn.classList.remove('copied'); }, 1500);
+            }).catch(() => {
+                // Fallback for older browsers
+                const ta = document.createElement('textarea');
+                ta.value = text;
+                document.body.appendChild(ta);
+                ta.select();
+                document.execCommand('copy');
+                document.body.removeChild(ta);
+                btn.textContent = '✅ Copied';
+                btn.classList.add('copied');
+                setTimeout(() => { btn.textContent = '📋 Copy'; btn.classList.remove('copied'); }, 1500);
             });
         }
 
-        // 分享链接
-        function shareLink() {
-            const currentUrl = window.location.href + '?orderNumber=' + document.getElementById('orderNumber').value;
-            navigator.clipboard.writeText(currentUrl).then(() => {
-                alert('✅ 分享链接已复制\n\n包含当前所有查询条件');
-            });
-        }
+        // 取消类型专用卡片（两步流程）
+        function buildCancelCard(log, side, ltInfo, statusLabel, statusCls) {
+            const header = { ClientID: log.cid, LicenseKey: log.cid + "_key" };
+            const confirmId = "DCC" + log.t.replace(/[-: ]/g, '').slice(0, 15);
+            let step1Req, step1Res, step2Req, step2Res;
 
-        // 导出日志
-        function exportLogs(type) {
-            if (type === 'single') {
-                alert('📦 正在导出选中的日志...\n\n格式：订单号+Log.txt\n包含：Request/Response/ClientID/SupplierID');
+            if (side === 'client') {
+                // 第一步：HotelBookingCancel（预取消）
+                step1Req = JSON.stringify({ Header: header, BookingID: log.oid }, null, 2);
+                if (log.st === 'fail') {
+                    step1Res = JSON.stringify({ Error: { ErrorCode: log.ec || "ERR_UNKNOWN", ErrorMsg: "Cancel request failed" } }, null, 2);
+                    // 失败时第二步不会发生
+                    return `
+                        <div class="log-card">
+                            <div class="log-card-header">
+                                <span class="log-card-toggle">▶</span>
+                                <span class="log-card-type cancel">${ltInfo.label}</span>
+                                <span class="log-card-status fail">${statusLabel}</span>
+                                <span class="log-card-status fail">${log.ec}</span>
+                                <span class="log-card-time">${log.t}</span>
+                            </div>
+                            <div class="log-card-body">
+                                <div class="log-card-section"><div class="log-card-section-title">Session ID</div><span class="log-card-session">${log.ss}</span></div>
+                                <div class="log-card-section"><div class="log-card-section-title">Step 1: HotelBookingCancel — Request <span class="copy-btn" onclick="copyJson(this)">📋 Copy</span></div><div class="log-card-json">${step1Req}</div></div>
+                                <div class="log-card-section"><div class="log-card-section-title">Step 1: HotelBookingCancel — Response <span class="copy-btn" onclick="copyJson(this)">📋 Copy</span></div><div class="log-card-json">${step1Res}</div></div>
+                            </div>
+                        </div>`;
+                }
+                step1Res = JSON.stringify({ Success: { BookingID: log.oid, ConfirmID: confirmId, Currency: "USD", Amount: 0 } }, null, 2);
+                // 第二步：HotelBookingCancelConfirm（确认取消）
+                step2Req = JSON.stringify({ Header: header, BookingID: log.oid, ConfirmID: confirmId }, null, 2);
+                step2Res = JSON.stringify({ Success: {}, AuditData: { RequestClientIP: "5.255.253.34", SessionID: log.ss, RequestTime: log.t.replace(' ', 'T') + "+08:00", ResponseTime: log.t.replace(' ', 'T') + "+08:00", ProcessTime: Math.floor(2000 + Math.random() * 6000) } }, null, 2);
             } else {
-                alert('📥 正在批量导出日志...\n\n格式：多个 zip 打包\n每个订单一个 zip 文件');
+                // Dida→供应商侧的取消
+                step1Req = JSON.stringify({ action: "CancelBooking", supplierCode: log.sup, supplierBookingId: log.soid, phase: "pre-cancel" }, null, 2);
+                if (log.st === 'fail') {
+                    step1Res = JSON.stringify({ success: false, errorCode: log.ec || "SUPPLIER_ERROR", errorMsg: "Supplier cancel failed" }, null, 2);
+                    return `
+                        <div class="log-card">
+                            <div class="log-card-header">
+                                <span class="log-card-toggle">▶</span>
+                                <span class="log-card-type cancel">${ltInfo.label}</span>
+                                <span class="log-card-status fail">${statusLabel}</span>
+                                <span class="log-card-status fail">${log.ec}</span>
+                                <span class="log-card-time">${log.t}</span>
+                            </div>
+                            <div class="log-card-body">
+                                <div class="log-card-section"><div class="log-card-section-title">Session ID</div><span class="log-card-session">${log.ss}</span></div>
+                                <div class="log-card-section"><div class="log-card-section-title">Supplier Cancel — Request <span class="copy-btn" onclick="copyJson(this)">📋 Copy</span></div><div class="log-card-json">${step1Req}</div></div>
+                                <div class="log-card-section"><div class="log-card-section-title">Supplier Cancel — Response <span class="copy-btn" onclick="copyJson(this)">📋 Copy</span></div><div class="log-card-json">${step1Res}</div></div>
+                            </div>
+                        </div>`;
+                }
+                step1Res = JSON.stringify({ success: true, cancelConfirmId: "SUP_CNCL_" + Math.floor(Math.random()*99999999) }, null, 2);
+                step2Req = JSON.stringify({ action: "ConfirmCancel", supplierCode: log.sup, supplierBookingId: log.soid, confirmId: "SUP_CNCL_" + Math.floor(Math.random()*99999999) }, null, 2);
+                step2Res = JSON.stringify({ success: true, status: "Cancelled", supplierBookingId: log.soid }, null, 2);
+            }
+
+            return `
+                <div class="log-card">
+                    <div class="log-card-header">
+                        <span class="log-card-toggle">▶</span>
+                        <span class="log-card-type cancel">${ltInfo.label}</span>
+                        <span class="log-card-status ${statusCls}">${statusLabel}</span>
+                        <span class="log-card-time">${log.t}</span>
+                    </div>
+                    <div class="log-card-body">
+                        <div class="log-card-section"><div class="log-card-section-title">Session ID</div><span class="log-card-session">${log.ss}</span></div>
+                        <div class="log-card-section"><div class="log-card-section-title">Step 1: ${side === 'client' ? 'HotelBookingCancel' : 'Supplier Pre-Cancel'} — Request <span class="copy-btn" onclick="copyJson(this)">📋 Copy</span></div><div class="log-card-json">${step1Req}</div></div>
+                        <div class="log-card-section"><div class="log-card-section-title">Step 1: ${side === 'client' ? 'HotelBookingCancel' : 'Supplier Pre-Cancel'} — Response <span class="copy-btn" onclick="copyJson(this)">📋 Copy</span></div><div class="log-card-json">${step1Res}</div></div>
+                        <div class="log-card-section"><div class="log-card-section-title">Step 2: ${side === 'client' ? 'HotelBookingCancelConfirm' : 'Supplier Confirm Cancel'} — Request <span class="copy-btn" onclick="copyJson(this)">📋 Copy</span></div><div class="log-card-json">${step2Req}</div></div>
+                        <div class="log-card-section"><div class="log-card-section-title">Step 2: ${side === 'client' ? 'HotelBookingCancelConfirm' : 'Supplier Confirm Cancel'} — Response <span class="copy-btn" onclick="copyJson(this)">📋 Copy</span></div><div class="log-card-json">${step2Res}</div></div>
+                    </div>
+                </div>
+            `;
+        }
+
+        // 模拟机构客户→Dida 的 request 报文
+        // ====== 机构客户→Dida 的 request 报文（基于Dida API） ======
+        // 注意：cancel 类型由 buildCancelCard 单独处理
+        function buildClientRequest(log) {
+            const header = { ClientID: log.cid, LicenseKey: log.cid + "_key" };
+            if (log.lt === 'verify') {
+                return JSON.stringify({
+                    Header: header,
+                    PreBook: true,
+                    CheckInDate: "2026-10-19",
+                    CheckOutDate: "2026-10-23",
+                    NumOfRooms: 1,
+                    HotelID: parseInt(log.dhid) || 2067,
+                    OccupancyDetails: [{ AdultCount: 2, ChildCount: 0, ChildAgeDetails: [], RoomNum: 1 }],
+                    Currency: "USD",
+                    Nationality: "US",
+                    RatePlanID: log.rpid || "-8026641818595821663"
+                }, null, 2);
+            } else if (log.lt === 'order') {
+                return JSON.stringify({
+                    Header: header,
+                    CheckInDate: "2026-10-19",
+                    CheckOutDate: "2026-10-23",
+                    NumOfRooms: 1,
+                    ClientReference: log.coid,
+                    ReferenceNo: log.oid,
+                    Contact: { Name: { Last: "Zhang", First: "Wei" }, Email: "booking@" + log.cid.toLowerCase() + ".com", Phone: "02180636046" },
+                    GuestList: [{ RoomNum: 1, GuestInfo: [{ Name: { Last: "Zhang", First: "Wei" }, IsAdult: true }] }]
+                }, null, 2);
+            } else {
+                // 查单 - HotelBookingSearch
+                return JSON.stringify({
+                    Header: { LicenseKey: log.cid + "_key", ClientID: log.cid },
+                    SearchBy: { BookingID: log.oid }
+                }, null, 2);
             }
         }
 
-        // 点击弹窗外部关闭
-        document.getElementById('detailModal').addEventListener('click', function(e) {
-            if (e.target === this) {
-                closeModal();
+        // ====== 机构客户→Dida 的 response 报文（基于Dida API） ======
+        // 注意：cancel 类型由 buildCancelCard 单独处理
+        function buildClientResponse(log) {
+            if (log.st === 'fail') {
+                return JSON.stringify({
+                    Error: {
+                        ErrorCode: log.ec || "ERR_UNKNOWN",
+                        ErrorMsg: "Request processing failed",
+                        AuditData: {
+                            RequestClientIP: "10.0.1." + Math.floor(Math.random()*255),
+                            SessionID: log.ss,
+                            RequestTime: log.t.replace(' ', 'T') + "+08:00",
+                            ResponseTime: log.t.replace(' ', 'T') + "+08:00",
+                            ProcessTime: Math.floor(800 + Math.random() * 5000)
+                        }
+                    }
+                }, null, 2);
             }
-        });
+            const auditData = {
+                RequestClientIP: "10.0.1." + Math.floor(Math.random()*255),
+                SessionID: log.ss,
+                RequestTime: log.t.replace(' ', 'T') + "+08:00",
+                ResponseTime: log.t.replace(' ', 'T') + "+08:00",
+                ProcessTime: Math.floor(200 + Math.random() * 3000)
+            };
+            if (log.lt === 'verify') {
+                const totalPrice = (300 + Math.random() * 1500).toFixed(2);
+                const dailyPrice = (totalPrice / 4).toFixed(2);
+                return JSON.stringify({
+                    Success: {
+                        PriceDetails: {
+                            ReferenceNo: log.oid,
+                            CheckInDate: "2026-10-19 00:00:00",
+                            CheckOutDate: "2026-10-23 00:00:00",
+                            HotelList: [{
+                                HotelID: parseInt(log.dhid) || 2067,
+                                HotelName: "Sample Hotel",
+                                Destination: { CityCode: "178294" },
+                                TotalPrice: parseFloat(totalPrice),
+                                TotalSupplement: 0,
+                                TotalPriceWithoutSupplement: parseFloat(totalPrice),
+                                RatePlanList: [{
+                                    RoomOccupancy: { RoomNum: 1, AdultCount: 2, ChildCount: 0 },
+                                    RoomTypeID: Math.floor(Math.random()*99999999),
+                                    RoomName: "Standard Room, 2 Double Beds",
+                                    RatePlanID: log.rpid || "-8026641818595821663",
+                                    RatePlanName: "Standard Room, 2 Double Beds",
+                                    BedType: 6, BreakfastType: 2, MaxOccupancy: 2,
+                                    InventoryCount: 1, RoomStatus: 1, Currency: "USD",
+                                    TotalPrice: parseFloat(totalPrice),
+                                    Supplement: 0, PriceWithoutSupplement: parseFloat(totalPrice),
+                                    PriceList: [0,1,2,3].map(i => ({ Price: parseFloat(dailyPrice), StayDate: `2026-10-${19+i} 00:00:00`, MealType: 2, MealAmount: 1 }))
+                                }],
+                                CancellationPolicyList: [{ FromDate: "2026-09-27 00:00:00", Amount: parseFloat(totalPrice) }]
+                            }]
+                        },
+                        SessionID: log.ss
+                    }
+                }, null, 2);
+            } else if (log.lt === 'order') {
+                const totalPrice = (300 + Math.random() * 1500).toFixed(2);
+                return JSON.stringify({
+                    Success: {
+                        BookingDetails: {
+                            BookingID: log.oid,
+                            Status: 2,
+                            CheckInDate: "2026-10-19 00:00:00",
+                            CheckOutDate: "2026-10-23 00:00:00",
+                            OrderDate: log.t.replace(' ', ' ') + ".000",
+                            NumOfRooms: 1,
+                            TotalPrice: parseFloat(totalPrice),
+                            GuestList: [{ GuestInfo: [{ Name: { First: "Wei", Last: "Zhang" }, IsAdult: true }], RoomNum: 1 }],
+                            Contact: { Name: { First: "Wei", Last: "Zhang" }, Phone: "02180636046", Email: "booking@" + log.cid.toLowerCase() + ".com" },
+                            ClientReference: log.coid,
+                            ConfirmationCode: "DEB" + log.t.replace(/[-: ]/g, '').slice(0,15),
+                            Hotel: {
+                                HotelID: parseInt(log.dhid) || 2067,
+                                HotelName: "Sample Hotel",
+                                Destination: { CityCode: "178294" },
+                                RatePlanList: [{ RoomOccupancy: { RoomNum: 1, AdultCount: 2, ChildCount: 0 }, RoomTypeID: Math.floor(Math.random()*99999999), RoomName: "Standard Room, 2 Double Beds", RatePlanID: log.rpid || "-8026641818595821663", BedType: 6, BreakfastType: 2, RoomStatus: 1, Currency: "USD", TotalPrice: parseFloat(totalPrice), PriceList: [0,1,2,3].map(i => ({ Price: parseFloat((totalPrice/4).toFixed(2)), StayDate: `2026-10-${19+i} 00:00:00`, MealType: 2, MealAmount: 1 })) }],
+                                CancellationPolicyList: [{ FromDate: "2026-09-27T00:00:00+08:00", LocalFromDate: "2026-09-27T00:00:00+08:00", Amount: parseFloat(totalPrice) }]
+                            }
+                        }
+                    }
+                }, null, 2);
+            } else {
+                // 查单响应 - HotelBookingSearch
+                return JSON.stringify({
+                    Success: {
+                        BookingDetailsList: [{
+                            BookingID: log.oid,
+                            Status: 2,
+                            CheckInDate: "2026-10-19 00:00:00",
+                            CheckOutDate: "2026-10-23 00:00:00",
+                            OrderDate: log.t.replace(' ', ' ') + ".000",
+                            NumOfRooms: 1,
+                            TotalPrice: parseFloat((300 + Math.random() * 1500).toFixed(2)),
+                            GuestList: [{ GuestInfo: [{ Name: { First: "Wei", Last: "Zhang" }, IsAdult: true }], RoomNum: 1 }],
+                            Contact: { Name: { First: "Wei", Last: "Zhang" }, Phone: "02180636046", Email: "booking@" + log.cid.toLowerCase() + ".com" },
+                            ClientReference: log.coid,
+                            ConfirmationCode: log.soid,
+                            Hotel: {
+                                HotelID: parseInt(log.dhid) || 2067,
+                                HotelName: "Sample Hotel",
+                                Destination: { CityCode: "178294" },
+                                RatePlanList: [{ RoomOccupancy: { RoomNum: 1, AdultCount: 2, ChildCount: 0 }, RoomTypeID: Math.floor(Math.random()*99999999), RoomName: "Standard Room, 2 Double Beds", RatePlanID: log.rpid || "-8026641818595821663", BedType: 6, BreakfastType: 2, RoomStatus: 1, Currency: "USD", TotalPrice: parseFloat((300 + Math.random() * 1500).toFixed(2)) }]
+                            }
+                        }]
+                    }
+                }, null, 2);
+            }
+        }
 
-        // 查询方式切换
-        document.querySelectorAll('input[name="queryMode"]').forEach(radio => {
-            radio.addEventListener('change', function() {
-                if (this.value === 'orderNumber') {
-                    document.querySelector('.form-label[for="orderNumber"]').classList.add('required');
+        // ====== Dida→供应商 的 request 报文 ======
+        function buildSupplierRequest(log) {
+            if (log.lt === 'verify') {
+                return JSON.stringify({
+                    action: "SearchHotel",
+                    hotelId: log.shid,
+                    checkIn: "2026-10-19",
+                    checkOut: "2026-10-23",
+                    rooms: [{ adults: 2, children: 0 }],
+                    currency: "USD",
+                    supplierCode: log.sup
+                }, null, 2);
+            } else if (log.lt === 'order') {
+                return JSON.stringify({
+                    action: "BookHotel",
+                    hotelId: log.shid,
+                    roomId: log.rpid || "N/A",
+                    checkIn: "2026-10-19",
+                    checkOut: "2026-10-23",
+                    guestName: "Zhang Wei",
+                    supplierCode: log.sup,
+                    didaBookingId: log.oid,
+                    paymentType: "VCC"
+                }, null, 2);
+            } else if (log.lt === 'cancel') {
+                // 取消第二步：HotelBookingCancelConfirm（确认取消）
+                return JSON.stringify({
+                    action: "CancelBooking",
+                    supplierCode: log.sup,
+                    supplierBookingId: log.soid,
+                    confirmCancel: true
+                }, null, 2);
+            } else {
+                return JSON.stringify({
+                    action: "QueryBooking",
+                    supplierCode: log.sup,
+                    supplierBookingId: log.soid
+                }, null, 2);
+            }
+        }
+
+        // ====== Dida→供应商 的 response 报文 ======
+        function buildSupplierResponse(log) {
+            if (log.st === 'fail') {
+                return JSON.stringify({
+                    success: false,
+                    errorCode: log.ec || "SUPPLIER_ERROR",
+                    errorMsg: "Supplier returned an error",
+                    supplierCode: log.sup
+                }, null, 2);
+            }
+            if (log.lt === 'verify') {
+                const rate = (250 + Math.random() * 1200).toFixed(2);
+                return JSON.stringify({
+                    success: true,
+                    available: true,
+                    hotelId: log.shid,
+                    roomId: log.rpid || "RT" + Math.floor(Math.random()*99999),
+                    rate: { currency: "USD", totalAmount: parseFloat(rate), dailyRates: [0,1,2,3].map(i => ({ date: `2026-10-${19+i}`, amount: parseFloat((rate/4).toFixed(2)) })) },
+                    cancellationPolicy: { freeCancellationBefore: "2026-10-17", penaltyAmount: parseFloat(rate) }
+                }, null, 2);
+            } else if (log.lt === 'order') {
+                return JSON.stringify({
+                    success: true,
+                    supplierBookingId: log.soid || "SUP" + Math.floor(Math.random()*99999999),
+                    confirmationNumber: "CONF" + Math.floor(Math.random()*99999999),
+                    status: "Confirmed",
+                    hotelId: log.shid,
+                    supplierCode: log.sup
+                }, null, 2);
+            } else if (log.lt === 'cancel') {
+                return JSON.stringify({
+                    success: true,
+                    supplierBookingId: log.soid,
+                    status: "Cancelled",
+                    supplierCode: log.sup
+                }, null, 2);
+            } else {
+                return JSON.stringify({
+                    success: true,
+                    supplierBookingId: log.soid,
+                    status: "Confirmed",
+                    checkIn: "2026-10-19",
+                    checkOut: "2026-10-23",
+                    supplierCode: log.sup
+                }, null, 2);
+            }
+        }
+
+        // ============ 批量选择相关函数 ============
+
+        function toggleOrderSelect(orderId, checked) {
+            if (checked) {
+                selectedOrderIds.add(orderId);
+            } else {
+                selectedOrderIds.delete(orderId);
+            }
+            updateSelectAllCheckbox();
+            updateSelectionUI();
+        }
+
+        function toggleSelectAll(checked) {
+            const start = (currentPage - 1) * pageSize;
+            const end = start + pageSize;
+            const pageOrders = filteredOrders.slice(start, end);
+
+            pageOrders.forEach(order => {
+                if (checked) {
+                    selectedOrderIds.add(order.oid);
                 } else {
-                    // 高级筛选模式显示更多字段
+                    selectedOrderIds.delete(order.oid);
                 }
             });
+
+            renderTable();
+            updateSelectionUI();
+        }
+
+        function updateSelectAllCheckbox() {
+            const start = (currentPage - 1) * pageSize;
+            const end = start + pageSize;
+            const pageOrders = filteredOrders.slice(start, end);
+
+            if (pageOrders.length === 0) {
+                document.getElementById('selectAllCheckbox').checked = false;
+                document.getElementById('selectAllCheckbox').indeterminate = false;
+                return;
+            }
+
+            const allSelected = pageOrders.every(order => selectedOrderIds.has(order.oid));
+            const someSelected = pageOrders.some(order => selectedOrderIds.has(order.oid));
+
+            document.getElementById('selectAllCheckbox').checked = allSelected;
+            document.getElementById('selectAllCheckbox').indeterminate = someSelected && !allSelected;
+        }
+
+        function updateSelectionUI() {
+            const count = selectedOrderIds.size;
+            document.getElementById('selectedCount').textContent = count;
+            document.getElementById('batchExportBtn').disabled = count === 0;
+            document.getElementById('clearSelectionLink').style.display = count > 0 ? '' : 'none';
+        }
+
+        function clearSelection() {
+            selectedOrderIds.clear();
+            renderTable();
+            updateSelectionUI();
+        }
+
+        // ============ 批量导出函数 ============
+
+        function exportSelectedOrders() {
+            if (selectedOrderIds.size === 0) {
+                showToast('请先选择要导出的订单', 'warn');
+                return;
+            }
+
+            const selectedOrders = filteredOrders.filter(o => selectedOrderIds.has(o.oid));
+
+            if (selectedOrders.length === 0) {
+                showToast('未找到已选择的订单数据', 'warn');
+                return;
+            }
+
+            if (selectedOrders.length === 1) {
+                // 单订单直接导出 zip
+                exportSingleOrderAsZip(selectedOrders[0]);
+                return;
+            }
+
+            // 多订单：每单一个 zip，再打包为一个大 zip
+            const masterZip = new JSZip();
+            const dateStr = formatDate(new Date());
+
+            selectedOrders.forEach(order => {
+                const zipName = (order.coid || order.oid || 'unknown') + '.zip';
+                const orderZip = buildOrderZip(order);
+                masterZip.file(zipName, orderZip.generate({ type: 'blob' }));
+            });
+
+            masterZip.generateAsync({ type: 'blob' }).then(blob => {
+                downloadBlob(blob, 'channel_logs_batch_' + dateStr + '.zip');
+                showToast('✅ 已导出 ' + selectedOrders.length + ' 个订单的日志');
+            });
+        }
+
+        function exportOrder(orderId) {
+            const order = filteredOrders.find(o => o.oid === orderId);
+            if (!order) { alert('未找到该订单数据'); return; }
+            exportSingleOrderAsZip(order);
+        }
+
+        // Toast 提示
+        function showToast(msg, type) {
+            const el = document.getElementById('toast');
+            el.textContent = msg;
+            el.className = 'toast' + (type === 'warn' ? ' warn' : '');
+            el.classList.add('show');
+            setTimeout(() => el.classList.remove('show'), 2500);
+        }
+
+        function closeModal() {
+            document.getElementById('detailModal').classList.remove('active');
+        }
+
+        function shareLink() {
+            const params = new URLSearchParams();
+
+            const orderId = document.getElementById('orderNumber').value.trim();
+            const startDate = document.getElementById('dateInputStart').value.trim();
+            const endDate = document.getElementById('dateInputEnd').value.trim();
+            const logTypes = getSelectedLogTypes().join(',');
+
+            if (orderId) params.set('orderNumber', orderId);
+            if (startDate) params.set('dateStart', startDate);
+            if (endDate) params.set('dateEnd', endDate);
+            if (logTypes && logTypes !== 'verify,order,cancel,query') params.set('logTypes', logTypes);
+
+            const clientId = document.getElementById('clientId').value.trim();
+            const supplierId = document.getElementById('supplierId').value.trim();
+            const errorCode = document.getElementById('errorCode').value.trim();
+            const didaHotelId = document.getElementById('didaHotelId').value.trim();
+            const ratePlanId = document.getElementById('ratePlanId').value.trim();
+
+            if (clientId) params.set('clientId', clientId);
+            if (supplierId) params.set('supplierId', supplierId);
+            if (errorCode) params.set('errorCode', errorCode);
+            if (didaHotelId) params.set('didaHotelId', didaHotelId);
+            if (ratePlanId) params.set('ratePlanId', ratePlanId);
+
+            const url = window.location.origin + window.location.pathname + (params.toString() ? '?' + params.toString() : '');
+
+            navigator.clipboard.writeText(url).then(() => {
+                showToast('✅ 分享链接已复制');
+            }).catch(() => {
+                showToast('✅ 分享链接已复制');
+            });
+        }
+
+        function exportLogs() {
+            if (!filteredOrders || filteredOrders.length === 0) {
+                alert('没有可导出的日志数据');
+                return;
+            }
+
+            if (filteredOrders.length === 1) {
+                // 单订单：直接导出 zip
+                exportSingleOrderAsZip(filteredOrders[0]);
+                return;
+            }
+
+            // 多订单：每单一个 zip，再打包为一个大 zip
+            const masterZip = new JSZip();
+            const dateStr = formatDate(new Date());
+
+            filteredOrders.forEach(order => {
+                const zipName = (order.coid || order.oid || 'unknown') + '.zip';
+                const orderZip = buildOrderZip(order);
+                masterZip.file(zipName, orderZip.generate({ type: 'blob' }));
+            });
+
+            masterZip.generateAsync({ type: 'blob' }).then(blob => {
+                downloadBlob(blob, 'channel_logs_' + dateStr + '.zip');
+            });
+        }
+
+        // 导出单个订单为 zip（按日志类型拆分为 txt）
+        function exportSingleOrderAsZip(order) {
+            const zip = buildOrderZip(order);
+            const fileName = (order.coid || order.oid || 'unknown') + '.zip';
+            zip.generateAsync({ type: 'blob' }).then(blob => {
+                downloadBlob(blob, fileName);
+            });
+        }
+
+        // 构建单个订单的 zip（每个日志类型一个 txt）
+        function buildOrderZip(order) {
+            const zip = new JSZip();
+
+            // 添加订单元信息
+            const meta = [
+                'ClientOrderID: ' + (order.coid || '-'),
+                'DidaOrderID: ' + (order.oid || '-'),
+                'SupplierOrderID: ' + (order.soid || '-'),
+                'Status: ' + order.status,
+                'ClientID: ' + (order.clientId || '-'),
+                'SupplierID: ' + (order.supplierId || '-'),
+                'LastUpdateTime: ' + (order.time || '-'),
+                ''
+            ].join('\n');
+            zip.file('meta.txt', meta);
+
+            // 按日志类型分组
+            const groupedLogs = {};
+            order.logs.forEach(log => {
+                if (!groupedLogs[log.lt]) groupedLogs[log.lt] = [];
+                groupedLogs[log.lt].push(log);
+            });
+
+            const typeLabel = { verify: '验价', order: '下单', cancel: '取消', query: '查单' };
+
+            Object.entries(groupedLogs).forEach(([lt, logs]) => {
+                const label = typeLabel[lt] || lt;
+                let content = '';
+
+                logs.forEach((log, idx) => {
+                    content += '═══════════════════════════════════════════════════════\n';
+                    content += 'Log #' + (idx + 1) + ' | ' + label + ' | ' + log.t + '\n';
+                    content += 'Status: ' + log.st + (log.ec ? ' | ErrorCode: ' + log.ec : '') + '\n';
+                    content += 'SessionID: ' + (log.ss || '-') + '\n';
+                    content += '═══════════════════════════════════════════════════════\n\n';
+
+                    // 机构客户→Dida
+                    content += '─────── 机构客户 → Dida ───────\n\n';
+                    content += '[Request]\n';
+                    content += buildClientRequest(log) + '\n\n';
+                    content += '[Response]\n';
+                    content += buildClientResponse(log) + '\n\n';
+
+                    // Dida→供应商
+                    content += '─────── Dida → 供应商 ───────\n\n';
+                    content += '[Request]\n';
+                    content += buildSupplierRequest(log) + '\n\n';
+                    content += '[Response]\n';
+                    content += buildSupplierResponse(log) + '\n\n';
+                });
+
+                zip.file(label + '.txt', content);
+            });
+
+            return zip;
+        }
+
+        // 下载 blob 文件
+        function downloadBlob(blob, filename) {
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = filename;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+        }
+
+        document.getElementById('detailModal').addEventListener('click', function(e) {
+            if (e.target === this) closeModal();
         });
+
+        // 点击外部关闭日期面板和日志类型下拉框
+        document.addEventListener('click', function(e) {
+            const panel = document.getElementById('datePickerPanel');
+            const container = document.querySelector('.date-range-container');
+            const dayCell = e.target.closest('.calendar-day:not(.other-month)');
+            if (dayCell && dayCell.dataset.dateStr && panel && panel.classList.contains('show')) {
+                handleDateClick(dayCell.dataset.dateStr);
+                return;
+            }
+            if (panel && container && !container.contains(e.target)) {
+                panel.classList.remove('show');
+                clearInputFocus();
+            }
+
+            const msContainer = document.getElementById('logTypeMultiSelect');
+            const msDropdown = document.getElementById('logTypeDropdown');
+            if (msContainer && !msContainer.contains(e.target)) {
+                msDropdown.classList.remove('show');
+            }
+        });
+
+        // Initialize date range on page load and auto-search
+        const urlParams = new URLSearchParams(window.location.search);
+
+        const initToday = new Date();
+        initToday.setHours(0, 0, 0, 0);
+        const initStart = new Date(initToday);
+        initStart.setDate(initStart.getDate() - 59);
+        selectedStart = initStart;
+        selectedEnd = initToday;
+        calLeftYear = initStart.getFullYear();
+        calLeftMonth = initStart.getMonth();
+
+        // 从 URL 参数恢复搜索条件
+        if (urlParams.has('dateStart') && urlParams.has('dateEnd')) {
+            const urlStart = urlParams.get('dateStart');
+            const urlEnd = urlParams.get('dateEnd');
+            document.getElementById('dateInputStart').value = urlStart;
+            document.getElementById('dateInputEnd').value = urlEnd;
+            const sParts = urlStart.split('-').map(Number);
+            const eParts = urlEnd.split('-').map(Number);
+            selectedStart = new Date(sParts[0], sParts[1] - 1, sParts[2]);
+            selectedEnd = new Date(eParts[0], eParts[1] - 1, eParts[2]);
+            calLeftYear = sParts[0];
+            calLeftMonth = sParts[1] - 1;
+        } else {
+            document.getElementById('dateInputStart').value = formatDate(initStart);
+            document.getElementById('dateInputEnd').value = formatDate(initToday);
+        }
+
+        if (urlParams.has('orderNumber')) {
+            document.getElementById('orderNumber').value = urlParams.get('orderNumber');
+        }
+
+        if (urlParams.has('logTypes')) {
+            const types = urlParams.get('logTypes').split(',');
+            const allTypes = ['verify', 'order', 'cancel', 'query'];
+            document.querySelectorAll('input[name="logType"]').forEach(cb => {
+                cb.checked = types.includes(cb.value);
+            });
+            const allCb = document.getElementById('logTypeAllCheck');
+            allCb.checked = types.length === allTypes.length;
+            updateLogTypeDisplay();
+        }
+
+        if (urlParams.has('clientId')) document.getElementById('clientId').value = urlParams.get('clientId');
+        if (urlParams.has('supplierId')) document.getElementById('supplierId').value = urlParams.get('supplierId');
+        if (urlParams.has('errorCode')) document.getElementById('errorCode').value = urlParams.get('errorCode');
+        if (urlParams.has('didaHotelId')) document.getElementById('didaHotelId').value = urlParams.get('didaHotelId');
+        if (urlParams.has('ratePlanId')) document.getElementById('ratePlanId').value = urlParams.get('ratePlanId');
+
+        // 如果有高级筛选参数，自动展开
+        if (urlParams.has('clientId') || urlParams.has('supplierId') || urlParams.has('errorCode') || urlParams.has('didaHotelId') || urlParams.has('ratePlanId')) {
+            document.getElementById('advancedFilters').classList.add('show');
+            document.getElementById('toggleAdvanced').classList.add('open');
+            document.getElementById('toggleAdvanced').innerHTML = '收起更多筛选条件 <span class="arrow" style="transform:rotate(180deg)">▼</span>';
+        }
+
+        renderCalendar();
+
+        // Auto-search on page load to show initial data
+        searchLogs();
     </script>
 </body>
 </html>
