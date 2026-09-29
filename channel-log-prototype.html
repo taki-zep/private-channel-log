@@ -2347,13 +2347,17 @@
                 const masterZip = new JSZip();
                 const dateStr = formatDate(new Date());
 
-                selectedOrders.forEach(order => {
+                const zipPromises = selectedOrders.map(order => {
                     const zipName = (order.coid || order.oid || 'unknown') + '.zip';
                     const orderZip = buildOrderZip(order);
-                    masterZip.file(zipName, orderZip.generate({ type: 'blob' }));
+                    return orderZip.generateAsync({ type: 'blob' }).then(blob => {
+                        masterZip.file(zipName, blob);
+                    });
                 });
 
-                masterZip.generateAsync({ type: 'blob' }).then(blob => {
+                Promise.all(zipPromises).then(() => {
+                    return masterZip.generateAsync({ type: 'blob' });
+                }).then(blob => {
                     downloadBlob(blob, 'channel_logs_batch_' + dateStr + '.zip');
                     showToast('✅ 已导出 ' + selectedOrders.length + ' 个订单的日志');
                 }).catch(err => {
@@ -2437,13 +2441,17 @@
                 const masterZip = new JSZip();
                 const dateStr = formatDate(new Date());
 
-                filteredOrders.forEach(order => {
+                const zipPromises = filteredOrders.map(order => {
                     const zipName = (order.coid || order.oid || 'unknown') + '.zip';
                     const orderZip = buildOrderZip(order);
-                    masterZip.file(zipName, orderZip.generate({ type: 'blob' }));
+                    return orderZip.generateAsync({ type: 'blob' }).then(blob => {
+                        masterZip.file(zipName, blob);
+                    });
                 });
 
-                masterZip.generateAsync({ type: 'blob' }).then(blob => {
+                Promise.all(zipPromises).then(() => {
+                    return masterZip.generateAsync({ type: 'blob' });
+                }).then(blob => {
                     downloadBlob(blob, 'channel_logs_' + dateStr + '.zip');
                 }).catch(err => {
                     alert('❌ 导出失败: ' + err.message);
