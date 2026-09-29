@@ -1074,6 +1074,13 @@
         }
     </style>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+    <script>
+        if (typeof JSZip === 'undefined') {
+            var s = document.createElement('script');
+            s.src = 'https://cdn.jsdelivr.net/npm/jszip@3.10.1/dist/jszip.min.js';
+            document.head.appendChild(s);
+        }
+    </script>
 </head>
 <body>
     <div class="toast" id="toast"></div>
@@ -2319,6 +2326,11 @@
                 return;
             }
 
+            if (typeof JSZip === 'undefined') {
+                alert('❌ JSZip 库加载失败，请检查网络连接后刷新页面重试');
+                return;
+            }
+
             const selectedOrders = filteredOrders.filter(o => selectedOrderIds.has(o.oid));
 
             if (selectedOrders.length === 0) {
@@ -2327,25 +2339,29 @@
             }
 
             if (selectedOrders.length === 1) {
-                // 单订单直接导出 zip
                 exportSingleOrderAsZip(selectedOrders[0]);
                 return;
             }
 
-            // 多订单：每单一个 zip，再打包为一个大 zip
-            const masterZip = new JSZip();
-            const dateStr = formatDate(new Date());
+            try {
+                const masterZip = new JSZip();
+                const dateStr = formatDate(new Date());
 
-            selectedOrders.forEach(order => {
-                const zipName = (order.coid || order.oid || 'unknown') + '.zip';
-                const orderZip = buildOrderZip(order);
-                masterZip.file(zipName, orderZip.generate({ type: 'blob' }));
-            });
+                selectedOrders.forEach(order => {
+                    const zipName = (order.coid || order.oid || 'unknown') + '.zip';
+                    const orderZip = buildOrderZip(order);
+                    masterZip.file(zipName, orderZip.generate({ type: 'blob' }));
+                });
 
-            masterZip.generateAsync({ type: 'blob' }).then(blob => {
-                downloadBlob(blob, 'channel_logs_batch_' + dateStr + '.zip');
-                showToast('✅ 已导出 ' + selectedOrders.length + ' 个订单的日志');
-            });
+                masterZip.generateAsync({ type: 'blob' }).then(blob => {
+                    downloadBlob(blob, 'channel_logs_batch_' + dateStr + '.zip');
+                    showToast('✅ 已导出 ' + selectedOrders.length + ' 个订单的日志');
+                }).catch(err => {
+                    alert('❌ 导出失败: ' + err.message);
+                });
+            } catch (err) {
+                alert('❌ 导出失败: ' + err.message);
+            }
         }
 
         function exportOrder(orderId) {
@@ -2407,34 +2423,53 @@
                 return;
             }
 
+            if (typeof JSZip === 'undefined') {
+                alert('❌ JSZip 库加载失败，请检查网络连接后刷新页面重试');
+                return;
+            }
+
             if (filteredOrders.length === 1) {
-                // 单订单：直接导出 zip
                 exportSingleOrderAsZip(filteredOrders[0]);
                 return;
             }
 
-            // 多订单：每单一个 zip，再打包为一个大 zip
-            const masterZip = new JSZip();
-            const dateStr = formatDate(new Date());
+            try {
+                const masterZip = new JSZip();
+                const dateStr = formatDate(new Date());
 
-            filteredOrders.forEach(order => {
-                const zipName = (order.coid || order.oid || 'unknown') + '.zip';
-                const orderZip = buildOrderZip(order);
-                masterZip.file(zipName, orderZip.generate({ type: 'blob' }));
-            });
+                filteredOrders.forEach(order => {
+                    const zipName = (order.coid || order.oid || 'unknown') + '.zip';
+                    const orderZip = buildOrderZip(order);
+                    masterZip.file(zipName, orderZip.generate({ type: 'blob' }));
+                });
 
-            masterZip.generateAsync({ type: 'blob' }).then(blob => {
-                downloadBlob(blob, 'channel_logs_' + dateStr + '.zip');
-            });
+                masterZip.generateAsync({ type: 'blob' }).then(blob => {
+                    downloadBlob(blob, 'channel_logs_' + dateStr + '.zip');
+                }).catch(err => {
+                    alert('❌ 导出失败: ' + err.message);
+                });
+            } catch (err) {
+                alert('❌ 导出失败: ' + err.message);
+            }
         }
 
         // 导出单个订单为 zip（按日志类型拆分为 txt）
         function exportSingleOrderAsZip(order) {
-            const zip = buildOrderZip(order);
-            const fileName = (order.coid || order.oid || 'unknown') + '.zip';
-            zip.generateAsync({ type: 'blob' }).then(blob => {
-                downloadBlob(blob, fileName);
-            });
+            if (typeof JSZip === 'undefined') {
+                alert('❌ JSZip 库加载失败，请检查网络连接后刷新页面重试');
+                return;
+            }
+            try {
+                const zip = buildOrderZip(order);
+                const fileName = (order.coid || order.oid || 'unknown') + '.zip';
+                zip.generateAsync({ type: 'blob' }).then(blob => {
+                    downloadBlob(blob, fileName);
+                }).catch(err => {
+                    alert(' 导出失败: ' + err.message);
+                });
+            } catch (err) {
+                alert('❌ 导出失败: ' + err.message);
+            }
         }
 
         // 构建单个订单的 zip（每个日志类型一个 txt）
