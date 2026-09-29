@@ -1,0 +1,1149 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>渠道日志系统 - 道旅</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background: #f5f6f7;
+            color: #1f2329;
+            font-size: 14px;
+        }
+
+        /* 顶部导航 */
+        .header {
+            background: #fff;
+            border-bottom: 1px solid #e5e6eb;
+            padding: 0 20px;
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .logo {
+            font-size: 18px;
+            font-weight: 600;
+            color: #3370ff;
+        }
+
+        .breadcrumb {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: #86909c;
+        }
+
+        .breadcrumb-separator {
+            color: #c9cdd4;
+        }
+
+        .header-right {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .user-avatar {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: #3370ff;
+            color: #fff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+        }
+
+        /* 主体内容 */
+        .main-container {
+            display: flex;
+            min-height: calc(100vh - 60px);
+        }
+
+        /* 左侧导航 */
+        .sidebar {
+            width: 220px;
+            background: #fff;
+            border-right: 1px solid #e5e6eb;
+            padding: 16px 0;
+        }
+
+        .nav-item {
+            padding: 10px 20px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: #4e5969;
+            transition: all 0.2s;
+        }
+
+        .nav-item:hover {
+            background: #f2f3f5;
+        }
+
+        .nav-item.active {
+            background: #e8f3ff;
+            color: #3370ff;
+            border-right: 2px solid #3370ff;
+        }
+
+        .nav-icon {
+            width: 16px;
+            height: 16px;
+        }
+
+        /* 右侧内容区 */
+        .content {
+            flex: 1;
+            padding: 20px;
+        }
+
+        /* 查询条件区域 */
+        .search-panel {
+            background: #fff;
+            border-radius: 4px;
+            padding: 20px;
+            margin-bottom: 16px;
+            border: 1px solid #e5e6eb;
+        }
+
+        .search-title {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .search-form {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 16px;
+        }
+
+        .form-row {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .form-label {
+            font-size: 13px;
+            color: #4e5969;
+        }
+
+        .form-label.required::after {
+            content: '*';
+            color: #f53f3f;
+            margin-left: 4px;
+        }
+
+        .form-input {
+            height: 32px;
+            border: 1px solid #c9cdd4;
+            border-radius: 4px;
+            padding: 0 12px;
+            font-size: 14px;
+            transition: all 0.2s;
+        }
+
+        .form-input:focus {
+            border-color: #3370ff;
+            outline: none;
+            box-shadow: 0 0 0 2px rgba(51, 112, 255, 0.1);
+        }
+
+        .form-select {
+            height: 32px;
+            border: 1px solid #c9cdd4;
+            border-radius: 4px;
+            padding: 0 12px;
+            font-size: 14px;
+            background: #fff;
+            cursor: pointer;
+        }
+
+        .date-range-picker {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .date-range-picker .form-input {
+            flex: 1;
+        }
+
+        .date-range-separator {
+            color: #86909c;
+        }
+
+        .quick-date-options {
+            display: flex;
+            gap: 8px;
+            margin-top: 8px;
+        }
+
+        .quick-date-btn {
+            padding: 4px 12px;
+            font-size: 12px;
+            border: 1px solid #c9cdd4;
+            border-radius: 4px;
+            background: #fff;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .quick-date-btn:hover {
+            border-color: #3370ff;
+            color: #3370ff;
+        }
+
+        .quick-date-btn.active {
+            background: #3370ff;
+            border-color: #3370ff;
+            color: #fff;
+        }
+
+        /* 查询方式选择 */
+        .query-mode {
+            display: flex;
+            gap: 16px;
+            margin-bottom: 16px;
+            padding: 12px 16px;
+            background: #f7f8fa;
+            border-radius: 4px;
+        }
+
+        .query-mode-item {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            cursor: pointer;
+        }
+
+        .query-mode-item input[type="radio"] {
+            width: 14px;
+            height: 14px;
+        }
+
+        /* 按钮组 */
+        .btn-group {
+            display: flex;
+            gap: 8px;
+            justify-content: flex-end;
+            margin-top: 16px;
+        }
+
+        .btn {
+            height: 32px;
+            padding: 0 16px;
+            border-radius: 4px;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.2s;
+            border: 1px solid transparent;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .btn-primary {
+            background: #3370ff;
+            color: #fff;
+            border-color: #3370ff;
+        }
+
+        .btn-primary:hover {
+            background: #2860e1;
+        }
+
+        .btn-default {
+            background: #fff;
+            color: #4e5969;
+            border-color: #c9cdd4;
+        }
+
+        .btn-default:hover {
+            border-color: #3370ff;
+            color: #3370ff;
+        }
+
+        .btn-danger {
+            background: #fff;
+            color: #f53f3f;
+            border-color: #f7caca;
+        }
+
+        .btn-danger:hover {
+            background: #f53f3f;
+            color: #fff;
+        }
+
+        /* 结果表格 */
+        .result-panel {
+            background: #fff;
+            border-radius: 4px;
+            border: 1px solid #e5e6eb;
+            overflow: hidden;
+        }
+
+        .result-header {
+            padding: 16px 20px;
+            border-bottom: 1px solid #e5e6eb;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .result-title {
+            font-size: 16px;
+            font-weight: 600;
+        }
+
+        .result-actions {
+            display: flex;
+            gap: 8px;
+        }
+
+        .table-container {
+            overflow-x: auto;
+        }
+
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .data-table th {
+            background: #f7f8fa;
+            padding: 12px 16px;
+            text-align: left;
+            font-weight: 500;
+            color: #4e5969;
+            border-bottom: 1px solid #e5e6eb;
+            font-size: 13px;
+        }
+
+        .data-table td {
+            padding: 12px 16px;
+            border-bottom: 1px solid #e5e6eb;
+            vertical-align: top;
+        }
+
+        .data-table tr:hover {
+            background: #f7f8fa;
+        }
+
+        .log-type-badge {
+            display: inline-block;
+            padding: 2px 8px;
+            border-radius: 2px;
+            font-size: 12px;
+            font-weight: 500;
+        }
+
+        .log-type-verify {
+            background: #e8f3ff;
+            color: #3370ff;
+        }
+
+        .log-type-order {
+            background: #e3f9e5;
+            color: #00b42a;
+        }
+
+        .log-type-cancel {
+            background: #ffe4e1;
+            color: #f53f3f;
+        }
+
+        .log-type-query {
+            background: #fff7e8;
+            color: #ff7d00;
+        }
+
+        .status-badge {
+            display: inline-block;
+            padding: 2px 8px;
+            border-radius: 2px;
+            font-size: 12px;
+        }
+
+        .status-success {
+            background: #e3f9e5;
+            color: #00b42a;
+        }
+
+        .status-error {
+            background: #ffe4e1;
+            color: #f53f3f;
+        }
+
+        .status-warning {
+            background: #fff7e8;
+            color: #ff7d00;
+        }
+
+        .log-content {
+            font-family: 'Courier New', monospace;
+            font-size: 12px;
+            background: #f7f8fa;
+            padding: 8px;
+            border-radius: 4px;
+            max-width: 400px;
+            max-height: 100px;
+            overflow-y: auto;
+            white-space: pre-wrap;
+            word-break: break-all;
+        }
+
+        .action-link {
+            color: #3370ff;
+            cursor: pointer;
+            text-decoration: none;
+        }
+
+        .action-link:hover {
+            text-decoration: underline;
+        }
+
+        /* 分页 */
+        .pagination {
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+            gap: 8px;
+            padding: 16px 20px;
+            border-top: 1px solid #e5e6eb;
+        }
+
+        .pagination-info {
+            color: #86909c;
+            font-size: 13px;
+        }
+
+        .pagination-btn {
+            width: 28px;
+            height: 28px;
+            border: 1px solid #c9cdd4;
+            border-radius: 4px;
+            background: #fff;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 13px;
+        }
+
+        .pagination-btn:hover {
+            border-color: #3370ff;
+            color: #3370ff;
+        }
+
+        .pagination-btn.active {
+            background: #3370ff;
+            border-color: #3370ff;
+            color: #fff;
+        }
+
+        .pagination-btn:disabled {
+            background: #f2f3f5;
+            color: #c9cdd4;
+            cursor: not-allowed;
+        }
+
+        /* 日志详情弹窗 */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.5);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+        }
+
+        .modal-overlay.active {
+            display: flex;
+        }
+
+        .modal {
+            background: #fff;
+            border-radius: 8px;
+            width: 800px;
+            max-height: 80vh;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .modal-header {
+            padding: 16px 20px;
+            border-bottom: 1px solid #e5e6eb;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .modal-title {
+            font-size: 16px;
+            font-weight: 600;
+        }
+
+        .modal-close {
+            width: 24px;
+            height: 24px;
+            border: none;
+            background: transparent;
+            cursor: pointer;
+            color: #86909c;
+            font-size: 18px;
+        }
+
+        .modal-close:hover {
+            color: #4e5969;
+        }
+
+        .modal-body {
+            padding: 20px;
+            overflow-y: auto;
+            flex: 1;
+        }
+
+        .log-detail-section {
+            margin-bottom: 20px;
+        }
+
+        .log-detail-label {
+            font-size: 13px;
+            color: #86909c;
+            margin-bottom: 8px;
+        }
+
+        .log-detail-content {
+            font-family: 'Courier New', monospace;
+            font-size: 12px;
+            background: #f7f8fa;
+            padding: 12px;
+            border-radius: 4px;
+            white-space: pre-wrap;
+            word-break: break-all;
+            max-height: 300px;
+            overflow-y: auto;
+        }
+
+        .modal-footer {
+            padding: 16px 20px;
+            border-top: 1px solid #e5e6eb;
+            display: flex;
+            justify-content: flex-end;
+            gap: 8px;
+        }
+
+        /* 空状态 */
+        .empty-state {
+            padding: 60px 20px;
+            text-align: center;
+            color: #86909c;
+        }
+
+        .empty-state-icon {
+            font-size: 48px;
+            margin-bottom: 16px;
+        }
+
+        .empty-state-text {
+            font-size: 14px;
+        }
+
+        /* 错误提示 */
+        .error-message {
+            background: #fff2f0;
+            border: 1px solid #ffccc7;
+            border-radius: 4px;
+            padding: 12px 16px;
+            color: #f53f3f;
+            font-size: 13px;
+            display: none;
+            margin-bottom: 16px;
+        }
+
+        .error-message.show {
+            display: block;
+        }
+
+        /* 链路追踪 */
+        .chain-trace {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 12px;
+            background: #f7f8fa;
+            border-radius: 4px;
+            margin-bottom: 16px;
+        }
+
+        .chain-node {
+            padding: 6px 12px;
+            background: #fff;
+            border: 1px solid #c9cdd4;
+            border-radius: 4px;
+            font-size: 12px;
+        }
+
+        .chain-node.active {
+            background: #e8f3ff;
+            border-color: #3370ff;
+            color: #3370ff;
+        }
+
+        .chain-arrow {
+            color: #86909c;
+        }
+
+        .chain-status {
+            margin-left: auto;
+            font-size: 12px;
+        }
+    </style>
+</head>
+<body>
+    <!-- 顶部导航 -->
+    <header class="header">
+        <div class="header-left">
+            <div class="logo">🐬 道旅</div>
+            <div class="breadcrumb">
+                <span>运营工具</span>
+                <span class="breadcrumb-separator">/</span>
+                <span>渠道日志系统</span>
+            </div>
+        </div>
+        <div class="header-right">
+            <div class="user-avatar">T</div>
+        </div>
+    </header>
+
+    <!-- 主体内容 -->
+    <div class="main-container">
+        <!-- 左侧导航 -->
+        <aside class="sidebar">
+            <div class="nav-item">
+                <span>📊</span>
+                <span>通用调价</span>
+            </div>
+            <div class="nav-item">
+                <span>🏷️</span>
+                <span>资源包配置</span>
+            </div>
+            <div class="nav-item">
+                <span>💰</span>
+                <span>特殊调价</span>
+            </div>
+            <div class="nav-item">
+                <span>🔍</span>
+                <span>调价查询</span>
+            </div>
+            <div class="nav-item active">
+                <span>📝</span>
+                <span>渠道日志</span>
+            </div>
+            <div class="nav-item">
+                <span>⚙️</span>
+                <span>运营工具</span>
+            </div>
+        </aside>
+
+        <!-- 右侧内容区 -->
+        <main class="content">
+            <!-- 查询条件面板 -->
+            <div class="search-panel">
+                <div class="search-title">
+                    <span></span>
+                    <span>查询条件</span>
+                </div>
+
+                <!-- 错误提示 -->
+                <div class="error-message" id="errorMessage">
+                    ️ 订单号不存在，请检查后重试
+                </div>
+
+                <!-- 查询方式选择 -->
+                <div class="query-mode">
+                    <label class="query-mode-item">
+                        <input type="radio" name="queryMode" value="orderNumber" checked>
+                        <span>按订单号查询</span>
+                    </label>
+                    <label class="query-mode-item">
+                        <input type="radio" name="queryMode" value="dateRange">
+                        <span>按日期范围查询</span>
+                    </label>
+                    <label class="query-mode-item">
+                        <input type="radio" name="queryMode" value="advanced">
+                        <span>高级筛选</span>
+                    </label>
+                </div>
+
+                <!-- 查询表单 -->
+                <div class="search-form">
+                    <div class="form-row">
+                        <label class="form-label">订单号</label>
+                        <input type="text" class="form-input" placeholder="请输入订单号" id="orderNumber">
+                    </div>
+
+                    <div class="form-row">
+                        <label class="form-label required">日期范围</label>
+                        <div class="date-range-picker">
+                            <input type="date" class="form-input" id="startDate" value="2026-09-22">
+                            <span class="date-range-separator">至</span>
+                            <input type="date" class="form-input" id="endDate" value="2026-09-29">
+                        </div>
+                        <div class="quick-date-options">
+                            <button class="quick-date-btn" onclick="setDateRange(7)">近 7 天</button>
+                            <button class="quick-date-btn" onclick="setDateRange(30)">近 30 天</button>
+                            <button class="quick-date-btn active" onclick="setDateRange(60)">近 60 天</button>
+                            <button class="quick-date-btn" onclick="setDateRange(90)">近 90 天</button>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <label class="form-label">日志类型</label>
+                        <select class="form-select" id="logType">
+                            <option value="">全部</option>
+                            <option value="verify">验价</option>
+                            <option value="order">下单</option>
+                            <option value="cancel">取消</option>
+                            <option value="query">查单</option>
+                        </select>
+                    </div>
+
+                    <div class="form-row">
+                        <label class="form-label">错误码 (errorCode)</label>
+                        <input type="text" class="form-input" placeholder="可选">
+                    </div>
+
+                    <div class="form-row">
+                        <label class="form-label">ClientID</label>
+                        <input type="text" class="form-input" placeholder="可选">
+                    </div>
+
+                    <div class="form-row">
+                        <label class="form-label">SupplierID</label>
+                        <input type="text" class="form-input" placeholder="可选">
+                    </div>
+
+                    <div class="form-row">
+                        <label class="form-label">DidaHotelID</label>
+                        <input type="text" class="form-input" placeholder="可选">
+                    </div>
+
+                    <div class="form-row">
+                        <label class="form-label">RatePlanID</label>
+                        <input type="text" class="form-input" placeholder="可选">
+                    </div>
+                </div>
+
+                <!-- 按钮组 -->
+                <div class="btn-group">
+                    <button class="btn btn-default" onclick="resetForm()">
+                        <span>🔄</span>
+                        <span>重置</span>
+                    </button>
+                    <button class="btn btn-default" onclick="shareLink()">
+                        <span>🔗</span>
+                        <span>分享链接</span>
+                    </button>
+                    <button class="btn btn-primary" onclick="searchLogs()">
+                        <span>🔍</span>
+                        <span>搜索</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- 结果面板 -->
+            <div class="result-panel">
+                <div class="result-header">
+                    <div class="result-title">
+                        查询结果
+                        <span style="font-size: 13px; color: #86909c; font-weight: normal; margin-left: 8px;">
+                            共找到 156 条日志
+                        </span>
+                    </div>
+                    <div class="result-actions">
+                        <button class="btn btn-default" onclick="exportLogs('single')">
+                            <span></span>
+                            <span>导出选中</span>
+                        </button>
+                        <button class="btn btn-default" onclick="exportLogs('batch')">
+                            <span></span>
+                            <span>批量导出</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- 链路追踪示意 -->
+                <div class="chain-trace">
+                    <span style="font-size: 13px; color: #86909c;">链路追踪:</span>
+                    <div class="chain-node active">渠道</div>
+                    <span class="chain-arrow">→</span>
+                    <div class="chain-node active">SS</div>
+                    <span class="chain-arrow">→</span>
+                    <div class="chain-node active">供应商</div>
+                    <span class="chain-status">
+                        <span class="status-badge status-success">✓ 链路完整</span>
+                    </span>
+                </div>
+
+                <!-- 数据表格 -->
+                <div class="table-container">
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th width="60">选择</th>
+                                <th width="100">日志类型</th>
+                                <th width="180">订单号</th>
+                                <th width="120">ClientID</th>
+                                <th width="120">SupplierID</th>
+                                <th width="180">时间</th>
+                                <th width="100">状态</th>
+                                <th>日志内容</th>
+                                <th width="120">操作</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><input type="checkbox"></td>
+                                <td><span class="log-type-badge log-type-order">下单</span></td>
+                                <td>18851164372</td>
+                                <td>PhoentrixTPX</td>
+                                <td>DCTLLincoln</td>
+                                <td>2026-09-29 09:59:54</td>
+                                <td><span class="status-badge status-success">成功</span></td>
+                                <td>
+                                    <div class="log-content">Request: {"bookingNumber":"18851164372","action":"confirm"}
+Response: {"success":true,"confirmationNumber":"DEB260929095952750"}</div>
+                                </td>
+                                <td>
+                                    <div style="display: flex; flex-direction: column; gap: 4px;">
+                                        <a class="action-link" onclick="viewDetail(1)">查看详情</a>
+                                        <a class="action-link" onclick="copyLink()">复制链接</a>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><input type="checkbox"></td>
+                                <td><span class="log-type-badge log-type-verify">验价</span></td>
+                                <td>18851164371</td>
+                                <td>PhoentrixTPX</td>
+                                <td>DCTLLincoln</td>
+                                <td>2026-09-29 09:58:32</td>
+                                <td><span class="status-badge status-success">成功</span></td>
+                                <td>
+                                    <div class="log-content">Request: {"hotelId":"H123456","checkIn":"2026-10-01"}
+Response: {"price":500,"currency":"USD","available":true}</div>
+                                </td>
+                                <td>
+                                    <div style="display: flex; flex-direction: column; gap: 4px;">
+                                        <a class="action-link" onclick="viewDetail(2)">查看详情</a>
+                                        <a class="action-link" onclick="copyLink()">复制链接</a>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><input type="checkbox"></td>
+                                <td><span class="log-type-badge log-type-cancel">取消</span></td>
+                                <td>18851164370</td>
+                                <td>PhoentrixTPX</td>
+                                <td>DCTLLincoln</td>
+                                <td>2026-09-29 09:55:18</td>
+                                <td><span class="status-badge status-error">失败</span></td>
+                                <td>
+                                    <div class="log-content">Request: {"bookingNumber":"18851164370","action":"cancel"}
+Response: {"success":false,"errorCode":"CANCEL_NOT_ALLOWED","message":"Cannot cancel after check-in"}</div>
+                                </td>
+                                <td>
+                                    <div style="display: flex; flex-direction: column; gap: 4px;">
+                                        <a class="action-link" onclick="viewDetail(3)">查看详情</a>
+                                        <a class="action-link" onclick="copyLink()">复制链接</a>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><input type="checkbox"></td>
+                                <td><span class="log-type-badge log-type-query">查单</span></td>
+                                <td>18851164369</td>
+                                <td>PhoentrixTPX</td>
+                                <td>DCTLLincoln</td>
+                                <td>2026-09-29 09:52:05</td>
+                                <td><span class="status-badge status-warning">超时</span></td>
+                                <td>
+                                    <div class="log-content">Request: {"bookingNumber":"18851164369"}
+Response: {"timeout":true,"message":"Request timeout after 30s"}</div>
+                                </td>
+                                <td>
+                                    <div style="display: flex; flex-direction: column; gap: 4px;">
+                                        <a class="action-link" onclick="viewDetail(4)">查看详情</a>
+                                        <a class="action-link" onclick="copyLink()">复制链接</a>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><input type="checkbox"></td>
+                                <td><span class="log-type-badge log-type-order">下单</span></td>
+                                <td>18851164368</td>
+                                <td>PhoentrixTPX</td>
+                                <td>DCTLLincoln</td>
+                                <td>2026-09-29 09:48:42</td>
+                                <td><span class="status-badge status-success">成功</span></td>
+                                <td>
+                                    <div class="log-content">Request: {"hotelId":"H123456","roomType":"RT1","checkIn":"2026-10-01"}
+Response: {"success":true,"bookingNumber":"2104752975137345536"}</div>
+                                </td>
+                                <td>
+                                    <div style="display: flex; flex-direction: column; gap: 4px;">
+                                        <a class="action-link" onclick="viewDetail(5)">查看详情</a>
+                                        <a class="action-link" onclick="copyLink()">复制链接</a>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- 分页 -->
+                <div class="pagination">
+                    <span class="pagination-info">共 156 条，每页 10 条，共 16 页</span>
+                    <button class="pagination-btn" disabled>&lt;</button>
+                    <button class="pagination-btn active">1</button>
+                    <button class="pagination-btn">2</button>
+                    <button class="pagination-btn">3</button>
+                    <button class="pagination-btn">4</button>
+                    <button class="pagination-btn">5</button>
+                    <button class="pagination-btn">...</button>
+                    <button class="pagination-btn">16</button>
+                    <button class="pagination-btn">&gt;</button>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- 日志详情弹窗 -->
+    <div class="modal-overlay" id="detailModal">
+        <div class="modal">
+            <div class="modal-header">
+                <div class="modal-title">📋 日志详情 - 订单号：<span id="modalOrderNumber">18851164372</span></div>
+                <button class="modal-close" onclick="closeModal()">×</button>
+            </div>
+            <div class="modal-body">
+                <!-- 链路追踪 -->
+                <div class="chain-trace">
+                    <span style="font-size: 13px; color: #86909c;">完整链路:</span>
+                    <div class="chain-node active">渠道 (PhoentrixTPX)</div>
+                    <span class="chain-arrow">→</span>
+                    <div class="chain-node active">SS</div>
+                    <span class="chain-arrow">→</span>
+                    <div class="chain-node active">供应商 (DCTLLincoln)</div>
+                    <span class="chain-status">
+                        <span class="status-badge status-success">✓ 链路完整</span>
+                    </span>
+                </div>
+
+                <div class="log-detail-section">
+                    <div class="log-detail-label">Request 原始报文</div>
+                    <div class="log-detail-content">{
+  "bookingNumber": "18851164372",
+  "action": "confirm",
+  "hotelId": "H123456",
+  "roomType": "RT1",
+  "checkIn": "2026-10-01",
+  "checkOut": "2026-10-03",
+  "guests": 2,
+  "clientID": "PhoentrixTPX",
+  "timestamp": "2026-09-29T09:59:50+08:00"
+}</div>
+                </div>
+
+                <div class="log-detail-section">
+                    <div class="log-detail-label">Response 原始报文</div>
+                    <div class="log-detail-content">{
+  "success": true,
+  "confirmationNumber": "DEB260929095952750",
+  "supplierID": "749",
+  "supplierName": "DCTLLincoln",
+  "status": "Confirmed",
+  "timestamp": "2026-09-29T09:59:54+08:00",
+  "processingTime": "6.13s"
+}</div>
+                </div>
+
+                <div class="log-detail-section">
+                    <div class="log-detail-label">核心字段</div>
+                    <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px;">
+                        <div>
+                            <div class="log-detail-label">ClientID</div>
+                            <div style="font-family: monospace; font-size: 13px;">PhoentrixTPX</div>
+                        </div>
+                        <div>
+                            <div class="log-detail-label">SupplierID</div>
+                            <div style="font-family: monospace; font-size: 13px;">749 (DCTLLincoln)</div>
+                        </div>
+                        <div>
+                            <div class="log-detail-label">SessionID</div>
+                            <div style="font-family: monospace; font-size: 13px;">sess_abc123def456</div>
+                        </div>
+                        <div>
+                            <div class="log-detail-label">处理时长</div>
+                            <div style="font-family: monospace; font-size: 13px;">6.13 秒</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="log-detail-section">
+                    <div class="log-detail-label">AI 分析结论</div>
+                    <div style="background: #e8f3ff; border: 1px solid #3370ff; border-radius: 4px; padding: 12px;">
+                        <div style="font-size: 13px; line-height: 1.6;">
+                            <strong>【订单概述】</strong> 订单已正常确认，没有发现异常。<br>
+                            <strong>【链路状态】</strong> 渠道→SS→供应商 链路完整，各环节处理正常。<br>
+                            <strong>【处理建议】</strong> 当前没有待办事项，无需继续跟进。
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-default" onclick="copyLink()"> 复制链接</button>
+                <button class="btn btn-default" onclick="exportLogs('single')">📦 导出日志</button>
+                <button class="btn btn-primary" onclick="closeModal()">关闭</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // 设置日期范围
+        function setDateRange(days) {
+            const today = new Date();
+            const startDate = new Date(today.getTime() - days * 24 * 60 * 60 * 1000);
+            
+            document.getElementById('startDate').value = startDate.toISOString().split('T')[0];
+            document.getElementById('endDate').value = today.toISOString().split('T')[0];
+            
+            // 更新按钮状态
+            document.querySelectorAll('.quick-date-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            event.target.classList.add('active');
+        }
+
+        // 重置表单
+        function resetForm() {
+            document.getElementById('orderNumber').value = '';
+            document.getElementById('logType').value = '';
+            document.querySelectorAll('.form-input:not([type="date"])').forEach(input => {
+                if (input.id !== 'orderNumber') input.value = '';
+            });
+            document.getElementById('errorMessage').classList.remove('show');
+            setDateRange(60);
+        }
+
+        // 搜索日志
+        function searchLogs() {
+            const orderNumber = document.getElementById('orderNumber').value;
+            const startDate = document.getElementById('startDate').value;
+            const endDate = document.getElementById('endDate').value;
+            
+            // 校验逻辑
+            if (!orderNumber && (!startDate || !endDate)) {
+                showError('请输入订单号或选择日期范围');
+                return;
+            }
+            
+            // 模拟搜索
+            alert('🔍 正在搜索日志...\n\n订单号：' + (orderNumber || '未填写') + '\n日期范围：' + startDate + ' 至 ' + endDate);
+        }
+
+        // 显示错误
+        function showError(message) {
+            const errorEl = document.getElementById('errorMessage');
+            errorEl.textContent = '⚠️ ' + message;
+            errorEl.classList.add('show');
+            setTimeout(() => {
+                errorEl.classList.remove('show');
+            }, 5000);
+        }
+
+        // 查看详情
+        function viewDetail(rowId) {
+            const modal = document.getElementById('detailModal');
+            modal.classList.add('active');
+        }
+
+        // 关闭弹窗
+        function closeModal() {
+            const modal = document.getElementById('detailModal');
+            modal.classList.remove('active');
+        }
+
+        // 复制链接
+        function copyLink() {
+            const fakeLink = 'http://log.didaadmin.com/channel-log?order=18851164372&type=order&token=abc123';
+            navigator.clipboard.writeText(fakeLink).then(() => {
+                alert('✅ 链接已复制到剪贴板\n\n链接 1 小时后失效，请勿转发给他人');
+            });
+        }
+
+        // 分享链接
+        function shareLink() {
+            const currentUrl = window.location.href + '?orderNumber=' + document.getElementById('orderNumber').value;
+            navigator.clipboard.writeText(currentUrl).then(() => {
+                alert('✅ 分享链接已复制\n\n包含当前所有查询条件');
+            });
+        }
+
+        // 导出日志
+        function exportLogs(type) {
+            if (type === 'single') {
+                alert('📦 正在导出选中的日志...\n\n格式：订单号+Log.txt\n包含：Request/Response/ClientID/SupplierID');
+            } else {
+                alert('📥 正在批量导出日志...\n\n格式：多个 zip 打包\n每个订单一个 zip 文件');
+            }
+        }
+
+        // 点击弹窗外部关闭
+        document.getElementById('detailModal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeModal();
+            }
+        });
+
+        // 查询方式切换
+        document.querySelectorAll('input[name="queryMode"]').forEach(radio => {
+            radio.addEventListener('change', function() {
+                if (this.value === 'orderNumber') {
+                    document.querySelector('.form-label[for="orderNumber"]').classList.add('required');
+                } else {
+                    // 高级筛选模式显示更多字段
+                }
+            });
+        });
+    </script>
+</body>
+</html>
