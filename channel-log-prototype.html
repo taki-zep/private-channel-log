@@ -1714,6 +1714,11 @@
             renderTable();
             renderPagination();
             updateResultCount();
+
+            // 如果是按单号查询且只有一个结果，自动打开详情弹窗
+            if (orderId && filteredOrders.length === 1) {
+                viewDetail(filteredOrders[0].oid);
+            }
         }
 
         function renderTable() {
@@ -1892,7 +1897,7 @@
             const resJson = side === 'client' ? buildClientResponse(log) : buildSupplierResponse(log);
 
             return `
-                <div class="log-card">
+                <div class="log-card expanded">
                     <div class="log-card-header">
                         <span class="log-card-toggle">▶</span>
                         <span class="log-card-type ${log.lt}">${ltInfo.label}</span>
@@ -1954,7 +1959,7 @@
                     step1Res = JSON.stringify({ Error: { ErrorCode: log.ec || "ERR_UNKNOWN", ErrorMsg: "Cancel request failed" } }, null, 2);
                     // 失败时第二步不会发生
                     return `
-                        <div class="log-card">
+                        <div class="log-card expanded">
                             <div class="log-card-header">
                                 <span class="log-card-toggle">▶</span>
                                 <span class="log-card-type cancel">${ltInfo.label}</span>
@@ -1979,7 +1984,7 @@
                 if (log.st === 'fail') {
                     step1Res = JSON.stringify({ success: false, errorCode: log.ec || "SUPPLIER_ERROR", errorMsg: "Supplier cancel failed" }, null, 2);
                     return `
-                        <div class="log-card">
+                        <div class="log-card expanded">
                             <div class="log-card-header">
                                 <span class="log-card-toggle">▶</span>
                                 <span class="log-card-type cancel">${ltInfo.label}</span>
@@ -2000,7 +2005,7 @@
             }
 
             return `
-                <div class="log-card">
+                <div class="log-card expanded">
                     <div class="log-card-header">
                         <span class="log-card-toggle">▶</span>
                         <span class="log-card-type cancel">${ltInfo.label}</span>
