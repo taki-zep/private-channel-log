@@ -2657,9 +2657,10 @@
         }
 
         renderCalendar();
+        updateLogTypeDisplay();
 
-        // Only auto-search if URL params contain search criteria
-        if (urlParams.toString()) {
+        // Only auto-search if URL params contain explicit search criteria (orderNumber or dateStart/End or logTypes)
+        if (urlParams.has('orderNumber') || urlParams.has('dateStart') || urlParams.has('logTypes')) {
             searchLogs();
         }
     </script>
