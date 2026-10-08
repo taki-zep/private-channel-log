@@ -1844,8 +1844,16 @@
 
             document.getElementById('detailInfoBar').innerHTML = `
                 <div class="detail-info-item">
-                    <span class="detail-info-label">单号:</span>
-                    <span class="detail-info-value">${order.coid || order.oid || '-'}</span>
+                    <span class="detail-info-label">渠道单号:</span>
+                    <span class="detail-info-value">${order.coid || '-'}</span>
+                </div>
+                <div class="detail-info-item">
+                    <span class="detail-info-label">道旅单号:</span>
+                    <span class="detail-info-value">${order.oid || '-'}</span>
+                </div>
+                <div class="detail-info-item">
+                    <span class="detail-info-label">供应商单号:</span>
+                    <span class="detail-info-value">${order.soid || '-'}</span>
                 </div>
                 <div class="detail-info-item">
                     <span class="detail-info-label">订单状态:</span>
