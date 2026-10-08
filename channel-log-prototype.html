@@ -698,10 +698,9 @@
 
         .modal {
             background: #fff;
-            border-radius: 12px;
-            width: 95vw;
-            max-width: 1600px;
-            height: 88vh;
+            border-radius: 0;
+            width: 100vw;
+            height: 100vh;
             overflow: hidden;
             display: flex;
             flex-direction: column;
@@ -909,6 +908,20 @@
             display: flex;
             align-items: center;
             justify-content: space-between;
+            cursor: pointer;
+            user-select: none;
+        }
+        .log-card-section-title .section-toggle {
+            font-size: 10px;
+            color: #8F959E;
+            transition: transform 0.2s;
+        }
+        .log-card-section.collapsed .section-toggle {
+            transform: rotate(-90deg);
+        }
+        .log-card-section.collapsed .log-card-json,
+        .log-card-section.collapsed .log-card-session {
+            display: none;
         }
         .log-card-section-title .copy-btn {
             font-size: 11px;
@@ -1184,12 +1197,12 @@
                         <div class="multi-select" id="logTypeMultiSelect">
                             <div class="multi-select-trigger" id="logTypeTrigger" onclick="toggleLogTypeDropdown()">全部</div>
                             <div class="multi-select-dropdown" id="logTypeDropdown">
-                                <label><input type="checkbox" id="logTypeAllCheck" checked onchange="toggleAllLogTypes(this.checked)"> 全选</label>
+                                <label><input type="checkbox" id="logTypeAllCheck" onchange="toggleAllLogTypes(this.checked)"> 全选</label>
                                 <div class="ms-divider"></div>
-                                <label><input type="checkbox" name="logType" value="verify" checked onchange="updateLogTypeDisplay()"> 验价</label>
-                                <label><input type="checkbox" name="logType" value="order" checked onchange="updateLogTypeDisplay()"> 下单</label>
-                                <label><input type="checkbox" name="logType" value="cancel" checked onchange="updateLogTypeDisplay()"> 取消</label>
-                                <label><input type="checkbox" name="logType" value="query" checked onchange="updateLogTypeDisplay()"> 查单</label>
+                                <label><input type="checkbox" name="logType" value="verify" onchange="updateLogTypeDisplay()"> 验价</label>
+                                <label><input type="checkbox" name="logType" value="order" onchange="updateLogTypeDisplay()"> 下单</label>
+                                <label><input type="checkbox" name="logType" value="cancel" onchange="updateLogTypeDisplay()"> 取消</label>
+                                <label><input type="checkbox" name="logType" value="query" onchange="updateLogTypeDisplay()"> 查单</label>
                             </div>
                         </div>
                     </div>
@@ -1289,7 +1302,7 @@
                     </div>
                     <div class="detail-column">
                         <div class="detail-column-header">
-                            <span class="col-icon">📤</span> Dida → 供应商
+                            <span class="col-icon">📤</span> SS → 真实供应商
                         </div>
                         <div class="detail-column-body" id="supplierLogs"></div>
                     </div>
@@ -1905,7 +1918,7 @@
             const resJson = side === 'client' ? buildClientResponse(log) : buildSupplierResponse(log);
 
             return `
-                <div class="log-card expanded">
+                <div class="log-card">
                     <div class="log-card-header">
                         <span class="log-card-toggle">▶</span>
                         <span class="log-card-type ${log.lt}">${ltInfo.label}</span>
@@ -1915,15 +1928,23 @@
                     </div>
                     <div class="log-card-body">
                         <div class="log-card-section">
-                            <div class="log-card-section-title">Session ID</div>
+                            <div class="log-card-section-title" onclick="this.parentElement.classList.toggle('collapsed')">
+                                <span><span class="section-toggle">▼</span> Session ID</span>
+                            </div>
                             <span class="log-card-session">${log.ss || '-'}</span>
                         </div>
                         <div class="log-card-section">
-                            <div class="log-card-section-title">Request <span class="copy-btn" onclick="copyJson(this)">📋 Copy</span></div>
+                            <div class="log-card-section-title" onclick="this.parentElement.classList.toggle('collapsed')">
+                                <span><span class="section-toggle">▼</span> Request</span>
+                                <span class="copy-btn" onclick="event.stopPropagation(); copyJson(this)">📋 Copy</span>
+                            </div>
                             <div class="log-card-json">${reqJson}</div>
                         </div>
                         <div class="log-card-section">
-                            <div class="log-card-section-title">Response <span class="copy-btn" onclick="copyJson(this)">📋 Copy</span></div>
+                            <div class="log-card-section-title" onclick="this.parentElement.classList.toggle('collapsed')">
+                                <span><span class="section-toggle">▼</span> Response</span>
+                                <span class="copy-btn" onclick="event.stopPropagation(); copyJson(this)">📋 Copy</span>
+                            </div>
                             <div class="log-card-json">${resJson}</div>
                         </div>
                     </div>
@@ -1967,7 +1988,7 @@
                     step1Res = JSON.stringify({ Error: { ErrorCode: log.ec || "ERR_UNKNOWN", ErrorMsg: "Cancel request failed" } }, null, 2);
                     // 失败时第二步不会发生
                     return `
-                        <div class="log-card expanded">
+                        <div class="log-card">
                             <div class="log-card-header">
                                 <span class="log-card-toggle">▶</span>
                                 <span class="log-card-type cancel">${ltInfo.label}</span>
@@ -1976,9 +1997,9 @@
                                 <span class="log-card-time">${log.t}</span>
                             </div>
                             <div class="log-card-body">
-                                <div class="log-card-section"><div class="log-card-section-title">Session ID</div><span class="log-card-session">${log.ss}</span></div>
-                                <div class="log-card-section"><div class="log-card-section-title">Step 1: HotelBookingCancel — Request <span class="copy-btn" onclick="copyJson(this)">📋 Copy</span></div><div class="log-card-json">${step1Req}</div></div>
-                                <div class="log-card-section"><div class="log-card-section-title">Step 1: HotelBookingCancel — Response <span class="copy-btn" onclick="copyJson(this)">📋 Copy</span></div><div class="log-card-json">${step1Res}</div></div>
+                                <div class="log-card-section"><div class="log-card-section-title" onclick="this.parentElement.classList.toggle('collapsed')"><span><span class="section-toggle">▼</span> Session ID</span></div><span class="log-card-session">${log.ss}</span></div>
+                                <div class="log-card-section"><div class="log-card-section-title" onclick="this.parentElement.classList.toggle('collapsed')"><span><span class="section-toggle">▼</span> Step 1: HotelBookingCancel — Request</span><span class="copy-btn" onclick="event.stopPropagation(); copyJson(this)">📋 Copy</span></div><div class="log-card-json">${step1Req}</div></div>
+                                <div class="log-card-section"><div class="log-card-section-title" onclick="this.parentElement.classList.toggle('collapsed')"><span><span class="section-toggle">▼</span> Step 1: HotelBookingCancel — Response</span><span class="copy-btn" onclick="event.stopPropagation(); copyJson(this)">📋 Copy</span></div><div class="log-card-json">${step1Res}</div></div>
                             </div>
                         </div>`;
                 }
@@ -1992,7 +2013,7 @@
                 if (log.st === 'fail') {
                     step1Res = JSON.stringify({ success: false, errorCode: log.ec || "SUPPLIER_ERROR", errorMsg: "Supplier cancel failed" }, null, 2);
                     return `
-                        <div class="log-card expanded">
+                        <div class="log-card">
                             <div class="log-card-header">
                                 <span class="log-card-toggle">▶</span>
                                 <span class="log-card-type cancel">${ltInfo.label}</span>
@@ -2001,9 +2022,9 @@
                                 <span class="log-card-time">${log.t}</span>
                             </div>
                             <div class="log-card-body">
-                                <div class="log-card-section"><div class="log-card-section-title">Session ID</div><span class="log-card-session">${log.ss}</span></div>
-                                <div class="log-card-section"><div class="log-card-section-title">Supplier Cancel — Request <span class="copy-btn" onclick="copyJson(this)">📋 Copy</span></div><div class="log-card-json">${step1Req}</div></div>
-                                <div class="log-card-section"><div class="log-card-section-title">Supplier Cancel — Response <span class="copy-btn" onclick="copyJson(this)">📋 Copy</span></div><div class="log-card-json">${step1Res}</div></div>
+                                <div class="log-card-section"><div class="log-card-section-title" onclick="this.parentElement.classList.toggle('collapsed')"><span><span class="section-toggle">▼</span> Session ID</span></div><span class="log-card-session">${log.ss}</span></div>
+                                <div class="log-card-section"><div class="log-card-section-title" onclick="this.parentElement.classList.toggle('collapsed')"><span><span class="section-toggle">▼</span> Supplier Cancel — Request</span><span class="copy-btn" onclick="event.stopPropagation(); copyJson(this)">📋 Copy</span></div><div class="log-card-json">${step1Req}</div></div>
+                                <div class="log-card-section"><div class="log-card-section-title" onclick="this.parentElement.classList.toggle('collapsed')"><span><span class="section-toggle">▼</span> Supplier Cancel — Response</span><span class="copy-btn" onclick="event.stopPropagation(); copyJson(this)">📋 Copy</span></div><div class="log-card-json">${step1Res}</div></div>
                             </div>
                         </div>`;
                 }
@@ -2013,7 +2034,7 @@
             }
 
             return `
-                <div class="log-card expanded">
+                <div class="log-card">
                     <div class="log-card-header">
                         <span class="log-card-toggle">▶</span>
                         <span class="log-card-type cancel">${ltInfo.label}</span>
@@ -2021,11 +2042,11 @@
                         <span class="log-card-time">${log.t}</span>
                     </div>
                     <div class="log-card-body">
-                        <div class="log-card-section"><div class="log-card-section-title">Session ID</div><span class="log-card-session">${log.ss}</span></div>
-                        <div class="log-card-section"><div class="log-card-section-title">Step 1: ${side === 'client' ? 'HotelBookingCancel' : 'Supplier Pre-Cancel'} — Request <span class="copy-btn" onclick="copyJson(this)">📋 Copy</span></div><div class="log-card-json">${step1Req}</div></div>
-                        <div class="log-card-section"><div class="log-card-section-title">Step 1: ${side === 'client' ? 'HotelBookingCancel' : 'Supplier Pre-Cancel'} — Response <span class="copy-btn" onclick="copyJson(this)">📋 Copy</span></div><div class="log-card-json">${step1Res}</div></div>
-                        <div class="log-card-section"><div class="log-card-section-title">Step 2: ${side === 'client' ? 'HotelBookingCancelConfirm' : 'Supplier Confirm Cancel'} — Request <span class="copy-btn" onclick="copyJson(this)">📋 Copy</span></div><div class="log-card-json">${step2Req}</div></div>
-                        <div class="log-card-section"><div class="log-card-section-title">Step 2: ${side === 'client' ? 'HotelBookingCancelConfirm' : 'Supplier Confirm Cancel'} — Response <span class="copy-btn" onclick="copyJson(this)">📋 Copy</span></div><div class="log-card-json">${step2Res}</div></div>
+                        <div class="log-card-section"><div class="log-card-section-title" onclick="this.parentElement.classList.toggle('collapsed')"><span><span class="section-toggle">▼</span> Session ID</span></div><span class="log-card-session">${log.ss}</span></div>
+                        <div class="log-card-section"><div class="log-card-section-title" onclick="this.parentElement.classList.toggle('collapsed')"><span><span class="section-toggle">▼</span> Step 1: ${side === 'client' ? 'HotelBookingCancel' : 'Supplier Pre-Cancel'} — Request</span><span class="copy-btn" onclick="event.stopPropagation(); copyJson(this)">📋 Copy</span></div><div class="log-card-json">${step1Req}</div></div>
+                        <div class="log-card-section"><div class="log-card-section-title" onclick="this.parentElement.classList.toggle('collapsed')"><span><span class="section-toggle">▼</span> Step 1: ${side === 'client' ? 'HotelBookingCancel' : 'Supplier Pre-Cancel'} — Response</span><span class="copy-btn" onclick="event.stopPropagation(); copyJson(this)">📋 Copy</span></div><div class="log-card-json">${step1Res}</div></div>
+                        <div class="log-card-section"><div class="log-card-section-title" onclick="this.parentElement.classList.toggle('collapsed')"><span><span class="section-toggle">▼</span> Step 2: ${side === 'client' ? 'HotelBookingCancelConfirm' : 'Supplier Confirm Cancel'} — Request</span><span class="copy-btn" onclick="event.stopPropagation(); copyJson(this)">📋 Copy</span></div><div class="log-card-json">${step2Req}</div></div>
+                        <div class="log-card-section"><div class="log-card-section-title" onclick="this.parentElement.classList.toggle('collapsed')"><span><span class="section-toggle">▼</span> Step 2: ${side === 'client' ? 'HotelBookingCancelConfirm' : 'Supplier Confirm Cancel'} — Response</span><span class="copy-btn" onclick="event.stopPropagation(); copyJson(this)">📋 Copy</span></div><div class="log-card-json">${step2Res}</div></div>
                     </div>
                 </div>
             `;
@@ -2493,7 +2514,7 @@
             }
         }
 
-        // 构建单个订单的 zip（每个日志类型一个 txt）
+        // 构建单个订单的 zip（仅包含客户到Dida的请求日志）
         function buildOrderZip(order) {
             const zip = new JSZip();
 
@@ -2530,19 +2551,9 @@
                     content += 'SessionID: ' + (log.ss || '-') + '\n';
                     content += '═══════════════════════════════════════════════════════\n\n';
 
-                    // 机构客户→Dida
-                    content += '─────── 机构客户 → Dida ───────\n\n';
-                    content += '[Request]\n';
+                    // 仅包含机构客户→Dida的请求
+                    content += '─────── 机构客户 → Dida (Request) ───────\n\n';
                     content += buildClientRequest(log) + '\n\n';
-                    content += '[Response]\n';
-                    content += buildClientResponse(log) + '\n\n';
-
-                    // Dida→供应商
-                    content += '─────── Dida → 供应商 ───────\n\n';
-                    content += '[Request]\n';
-                    content += buildSupplierRequest(log) + '\n\n';
-                    content += '[Response]\n';
-                    content += buildSupplierResponse(log) + '\n\n';
                 });
 
                 zip.file(label + '.txt', content);
@@ -2647,8 +2658,10 @@
 
         renderCalendar();
 
-        // Auto-search on page load to show initial data
-        searchLogs();
+        // Only auto-search if URL params contain search criteria
+        if (urlParams.toString()) {
+            searchLogs();
+        }
     </script>
 </body>
 </html>
