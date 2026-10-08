@@ -928,9 +928,11 @@
             font-size: 10px;
             color: #8F959E;
             transition: transform 0.2s;
-        }
-        .log-card-section.collapsed .section-toggle {
+            display: inline-block;
             transform: rotate(-90deg);
+        }
+        .log-card-section:not(.collapsed) .section-toggle {
+            transform: rotate(0deg);
         }
         .log-card-section.collapsed .log-card-json,
         .log-card-section.collapsed .log-card-session {
@@ -1941,21 +1943,21 @@
                     </div>
                     <div class="log-card-body">
                         <div class="log-card-section">
-                            <div class="log-card-section-title" onclick="this.parentElement.classList.toggle('collapsed')">
-                                <span><span class="section-toggle">▼</span> Session ID</span>
+                            <div class="log-card-section-title" style="cursor:default">
+                                <span>Session ID</span>
                             </div>
                             <span class="log-card-session">${log.ss || '-'}</span>
                         </div>
                         <div class="log-card-section">
                             <div class="log-card-section-title" onclick="this.parentElement.classList.toggle('collapsed')">
-                                <span><span class="section-toggle">▼</span> Request</span>
+                                <span><span class="section-toggle">▶</span> Request</span>
                                 <span class="copy-btn" onclick="event.stopPropagation(); copyJson(this)">📋 Copy</span>
                             </div>
                             <div class="log-card-json">${reqJson}</div>
                         </div>
                         <div class="log-card-section">
                             <div class="log-card-section-title" onclick="this.parentElement.classList.toggle('collapsed')">
-                                <span><span class="section-toggle">▼</span> Response</span>
+                                <span><span class="section-toggle">▶</span> Response</span>
                                 <span class="copy-btn" onclick="event.stopPropagation(); copyJson(this)">📋 Copy</span>
                             </div>
                             <div class="log-card-json">${resJson}</div>
@@ -2010,9 +2012,9 @@
                                 <span class="log-card-time">${log.t}</span>
                             </div>
                             <div class="log-card-body">
-                                <div class="log-card-section"><div class="log-card-section-title" onclick="this.parentElement.classList.toggle('collapsed')"><span><span class="section-toggle">▼</span> Session ID</span></div><span class="log-card-session">${log.ss}</span></div>
-                                <div class="log-card-section"><div class="log-card-section-title" onclick="this.parentElement.classList.toggle('collapsed')"><span><span class="section-toggle">▼</span> Step 1: HotelBookingCancel — Request</span><span class="copy-btn" onclick="event.stopPropagation(); copyJson(this)">📋 Copy</span></div><div class="log-card-json">${step1Req}</div></div>
-                                <div class="log-card-section"><div class="log-card-section-title" onclick="this.parentElement.classList.toggle('collapsed')"><span><span class="section-toggle">▼</span> Step 1: HotelBookingCancel — Response</span><span class="copy-btn" onclick="event.stopPropagation(); copyJson(this)">📋 Copy</span></div><div class="log-card-json">${step1Res}</div></div>
+                                <div class="log-card-section"><div class="log-card-section-title" style="cursor:default"><span>Session ID</span></div><span class="log-card-session">${log.ss}</span></div>
+                                <div class="log-card-section"><div class="log-card-section-title" onclick="this.parentElement.classList.toggle('collapsed')"><span><span class="section-toggle">▶</span> Step 1: HotelBookingCancel — Request</span><span class="copy-btn" onclick="event.stopPropagation(); copyJson(this)">📋 Copy</span></div><div class="log-card-json">${step1Req}</div></div>
+                                <div class="log-card-section"><div class="log-card-section-title" onclick="this.parentElement.classList.toggle('collapsed')"><span><span class="section-toggle">▶</span> Step 1: HotelBookingCancel — Response</span><span class="copy-btn" onclick="event.stopPropagation(); copyJson(this)">📋 Copy</span></div><div class="log-card-json">${step1Res}</div></div>
                             </div>
                         </div>`;
                 }
@@ -2035,9 +2037,9 @@
                                 <span class="log-card-time">${log.t}</span>
                             </div>
                             <div class="log-card-body">
-                                <div class="log-card-section"><div class="log-card-section-title" onclick="this.parentElement.classList.toggle('collapsed')"><span><span class="section-toggle">▼</span> Session ID</span></div><span class="log-card-session">${log.ss}</span></div>
-                                <div class="log-card-section"><div class="log-card-section-title" onclick="this.parentElement.classList.toggle('collapsed')"><span><span class="section-toggle">▼</span> Supplier Cancel — Request</span><span class="copy-btn" onclick="event.stopPropagation(); copyJson(this)">📋 Copy</span></div><div class="log-card-json">${step1Req}</div></div>
-                                <div class="log-card-section"><div class="log-card-section-title" onclick="this.parentElement.classList.toggle('collapsed')"><span><span class="section-toggle">▼</span> Supplier Cancel — Response</span><span class="copy-btn" onclick="event.stopPropagation(); copyJson(this)">📋 Copy</span></div><div class="log-card-json">${step1Res}</div></div>
+                                <div class="log-card-section"><div class="log-card-section-title" style="cursor:default"><span>Session ID</span></div><span class="log-card-session">${log.ss}</span></div>
+                                <div class="log-card-section"><div class="log-card-section-title" onclick="this.parentElement.classList.toggle('collapsed')"><span><span class="section-toggle">▶</span> Supplier Cancel — Request</span><span class="copy-btn" onclick="event.stopPropagation(); copyJson(this)">📋 Copy</span></div><div class="log-card-json">${step1Req}</div></div>
+                                <div class="log-card-section"><div class="log-card-section-title" onclick="this.parentElement.classList.toggle('collapsed')"><span><span class="section-toggle">▶</span> Supplier Cancel — Response</span><span class="copy-btn" onclick="event.stopPropagation(); copyJson(this)">📋 Copy</span></div><div class="log-card-json">${step1Res}</div></div>
                             </div>
                         </div>`;
                 }
@@ -2055,11 +2057,11 @@
                         <span class="log-card-time">${log.t}</span>
                     </div>
                     <div class="log-card-body">
-                        <div class="log-card-section"><div class="log-card-section-title" onclick="this.parentElement.classList.toggle('collapsed')"><span><span class="section-toggle">▼</span> Session ID</span></div><span class="log-card-session">${log.ss}</span></div>
-                        <div class="log-card-section"><div class="log-card-section-title" onclick="this.parentElement.classList.toggle('collapsed')"><span><span class="section-toggle">▼</span> Step 1: ${side === 'client' ? 'HotelBookingCancel' : 'Supplier Pre-Cancel'} — Request</span><span class="copy-btn" onclick="event.stopPropagation(); copyJson(this)">📋 Copy</span></div><div class="log-card-json">${step1Req}</div></div>
-                        <div class="log-card-section"><div class="log-card-section-title" onclick="this.parentElement.classList.toggle('collapsed')"><span><span class="section-toggle">▼</span> Step 1: ${side === 'client' ? 'HotelBookingCancel' : 'Supplier Pre-Cancel'} — Response</span><span class="copy-btn" onclick="event.stopPropagation(); copyJson(this)">📋 Copy</span></div><div class="log-card-json">${step1Res}</div></div>
-                        <div class="log-card-section"><div class="log-card-section-title" onclick="this.parentElement.classList.toggle('collapsed')"><span><span class="section-toggle">▼</span> Step 2: ${side === 'client' ? 'HotelBookingCancelConfirm' : 'Supplier Confirm Cancel'} — Request</span><span class="copy-btn" onclick="event.stopPropagation(); copyJson(this)">📋 Copy</span></div><div class="log-card-json">${step2Req}</div></div>
-                        <div class="log-card-section"><div class="log-card-section-title" onclick="this.parentElement.classList.toggle('collapsed')"><span><span class="section-toggle">▼</span> Step 2: ${side === 'client' ? 'HotelBookingCancelConfirm' : 'Supplier Confirm Cancel'} — Response</span><span class="copy-btn" onclick="event.stopPropagation(); copyJson(this)">📋 Copy</span></div><div class="log-card-json">${step2Res}</div></div>
+                        <div class="log-card-section"><div class="log-card-section-title" style="cursor:default"><span>Session ID</span></div><span class="log-card-session">${log.ss}</span></div>
+                        <div class="log-card-section"><div class="log-card-section-title" onclick="this.parentElement.classList.toggle('collapsed')"><span><span class="section-toggle">▶</span> Step 1: ${side === 'client' ? 'HotelBookingCancel' : 'Supplier Pre-Cancel'} — Request</span><span class="copy-btn" onclick="event.stopPropagation(); copyJson(this)">📋 Copy</span></div><div class="log-card-json">${step1Req}</div></div>
+                        <div class="log-card-section"><div class="log-card-section-title" onclick="this.parentElement.classList.toggle('collapsed')"><span><span class="section-toggle">▶</span> Step 1: ${side === 'client' ? 'HotelBookingCancel' : 'Supplier Pre-Cancel'} — Response</span><span class="copy-btn" onclick="event.stopPropagation(); copyJson(this)">📋 Copy</span></div><div class="log-card-json">${step1Res}</div></div>
+                        <div class="log-card-section"><div class="log-card-section-title" onclick="this.parentElement.classList.toggle('collapsed')"><span><span class="section-toggle">▶</span> Step 2: ${side === 'client' ? 'HotelBookingCancelConfirm' : 'Supplier Confirm Cancel'} — Request</span><span class="copy-btn" onclick="event.stopPropagation(); copyJson(this)">📋 Copy</span></div><div class="log-card-json">${step2Req}</div></div>
+                        <div class="log-card-section"><div class="log-card-section-title" onclick="this.parentElement.classList.toggle('collapsed')"><span><span class="section-toggle">▶</span> Step 2: ${side === 'client' ? 'HotelBookingCancelConfirm' : 'Supplier Confirm Cancel'} — Response</span><span class="copy-btn" onclick="event.stopPropagation(); copyJson(this)">📋 Copy</span></div><div class="log-card-json">${step2Res}</div></div>
                     </div>
                 </div>
             `;
