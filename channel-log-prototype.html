@@ -888,12 +888,25 @@
             display: none;
             border-top: 1px solid #E8EAEF;
             background: #F7F8FA;
+            flex: 1;
+            display: none;
+            flex-direction: column;
         }
         .log-card.expanded .log-card-body {
-            display: block;
+            display: flex;
         }
         .log-card-section {
             padding: 10px 12px;
+            flex-shrink: 0;
+        }
+        .log-card-section:last-child {
+            flex: 1;
+            min-height: 0;
+        }
+        .log-card-section:last-child .log-card-json {
+            flex: 1;
+            max-height: none;
+            min-height: 200px;
         }
         .log-card-section + .log-card-section {
             border-top: 1px solid #E8EAEF;
