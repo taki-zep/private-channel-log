@@ -315,7 +315,6 @@
 
 1. 获取当前订单的日志数据
 2. 构建 ZIP 文件：
-   - `meta.txt`：订单元信息（三端单号、状态、ClientID、SupplierID、最新时间）
    - `验价.txt` / `下单.txt` / `取消.txt` / `查单.txt`：按日志类型分文件
 3. 每个类型文件内容包含 **Client→Dida 的 Request + Response 报文**（不包含 SS→Supplier 侧数据）
 4. 文件命名：`{coid 或 oid}.zip`
@@ -336,7 +335,6 @@
 
 | 内容 | 单订单导出 | 批量导出 |
 |------|-----------|---------|
-| meta.txt（元信息） | ✅ | ✅（每个子ZIP） |
 | Client→Dida Request | ✅ | ✅ |
 | Client→Dida Response | ✅ | ✅ |
 | SS→Supplier Request | ❌ | ❌ |

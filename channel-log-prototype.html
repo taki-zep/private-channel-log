@@ -2704,19 +2704,6 @@
         function buildOrderZip(order) {
             const zip = new JSZip();
 
-            // 添加订单元信息
-            const meta = [
-                'ClientOrderID: ' + (order.coid || '-'),
-                'DidaOrderID: ' + (order.oid || '-'),
-                'SupplierOrderID: ' + (order.soid || '-'),
-                'Status: ' + order.status,
-                'ClientID: ' + (order.clientId || '-'),
-                'SupplierID: ' + (order.supplierId || '-'),
-                'LastUpdateTime: ' + (order.time || '-'),
-                ''
-            ].join('\n');
-            zip.file('meta.txt', meta);
-
             // 按日志类型分组
             const groupedLogs = {};
             order.logs.forEach(log => {
