@@ -1561,16 +1561,19 @@
             document.querySelectorAll('.form-input').forEach(input => {
                 if (!input.readOnly) input.value = '';
             });
-            // Reset log type: select all
-            document.getElementById('logTypeAllCheck').checked = true;
-            document.querySelectorAll('input[name="logType"]').forEach(cb => { cb.checked = true; });
-            document.getElementById('logTypeTrigger').textContent = '全部';
+            // Reset log type: default = verify + order + cancel
+            const defaultTypes = ['verify', 'order', 'cancel'];
+            document.querySelectorAll('input[name="logType"]').forEach(cb => {
+                cb.checked = defaultTypes.includes(cb.value);
+            });
+            document.getElementById('logTypeAllCheck').checked = false;
+            document.getElementById('logTypeTrigger').textContent = '验价, 下单, 取消';
             document.getElementById('errorMessage').classList.remove('show');
 
             const today = new Date();
             today.setHours(0, 0, 0, 0);
             const startDate = new Date(today);
-            startDate.setDate(startDate.getDate() - 59);
+            startDate.setDate(startDate.getDate() - 29);
             selectedStart = startDate;
             selectedEnd = today;
             document.getElementById('dateInputStart').value = formatDate(startDate);
