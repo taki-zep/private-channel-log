@@ -2568,7 +2568,7 @@
                 const dateStr = formatDate(new Date());
 
                 const zipPromises = selectedOrders.map(order => {
-                    const zipName = (order.coid || order.oid || 'unknown') + '.zip';
+                    const zipName = (order.coid || order.oid || 'unknown') + '+Log.zip';
                     const orderZip = buildOrderZip(order);
                     return orderZip.generateAsync({ type: 'blob' }).then(blob => {
                         masterZip.file(zipName, blob);
@@ -2662,7 +2662,7 @@
                 const dateStr = formatDate(new Date());
 
                 const zipPromises = filteredOrders.map(order => {
-                    const zipName = (order.coid || order.oid || 'unknown') + '.zip';
+                    const zipName = (order.coid || order.oid || 'unknown') + '+Log.zip';
                     const orderZip = buildOrderZip(order);
                     return orderZip.generateAsync({ type: 'blob' }).then(blob => {
                         masterZip.file(zipName, blob);
@@ -2672,7 +2672,7 @@
                 Promise.all(zipPromises).then(() => {
                     return masterZip.generateAsync({ type: 'blob' });
                 }).then(blob => {
-                    downloadBlob(blob, 'channel_logs_' + dateStr + '.zip');
+                    downloadBlob(blob, 'channel_logs_batch_' + dateStr + '.zip');
                 }).catch(err => {
                     alert('❌ 导出失败: ' + err.message);
                 });
@@ -2689,7 +2689,7 @@
             }
             try {
                 const zip = buildOrderZip(order);
-                const fileName = (order.coid || order.oid || 'unknown') + '.zip';
+                const fileName = (order.coid || order.oid || 'unknown') + '+Log.zip';
                 zip.generateAsync({ type: 'blob' }).then(blob => {
                     downloadBlob(blob, fileName);
                 }).catch(err => {
