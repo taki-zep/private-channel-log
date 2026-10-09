@@ -289,17 +289,16 @@
 
 | 交互 | 行为 |
 |------|------|
-| 点击卡片 Header | 展开/折叠整个日志卡片（包含 Session ID + Request + Response） |
-| 点击 Request/Response 标题行 | 展开/折叠该 section；**箭头方向随状态变化**：▶(折叠) ↔ ▼(展开) |
-| 点击 📋 Copy | 复制该 section 的 JSON 内容到剪贴板；按钮变为"✅ Copied"，1.5秒后恢复 |
-| Session ID 行 | 固定显示，不可折叠，cursor 为 default |
-| 取消类型卡片 | 展示两步流程（Step 1: Pre-Cancel → Step 2: Confirm Cancel），每步各有 Request/Response |
+| 点击卡片 Header | 可展开/折叠整个日志卡片 |
+| 点击 Request/Response 标题行 | 可展开/折叠该 section |
+| 点击 Copy | 可复制该 section 的 JSON 内容 |
+| Session ID 行 | 固定显示，不可折叠 |
+| 取消类型卡片 | 展示两步流程（Pre-Cancel / Confirm Cancel），每步各有 Request/Response |
 
 #### 3.3.4 日志卡片默认状态
 
-- 打开详情弹窗时，**日志卡片默认全部展开**，用户可以看到所有日志内容
-- 用户可以点击卡片 Header 折叠不关心的日志
-- 折叠后卡片只显示 Header 行（类型标签 + 状态 + 时间），Session ID、Request、Response 全部隐藏
+- 日志卡片默认全部展开
+- 折叠后只显示 Header 行
 
 #### 3.3.5 弹窗按钮
 
