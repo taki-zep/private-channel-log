@@ -1317,6 +1317,12 @@
                     </div>
                     <div class="detail-column">
                         <div class="detail-column-header">
+                            <span class="col-icon">📤</span> Dida → SS
+                        </div>
+                        <div class="detail-column-body" id="didaSSLogs"></div>
+                    </div>
+                    <div class="detail-column">
+                        <div class="detail-column-header">
                             <span class="col-icon">📤</span> SS → 真实供应商
                         </div>
                         <div class="detail-column-body" id="supplierLogs"></div>
@@ -1897,14 +1903,16 @@
                 </div>
             `;
 
-            // 2. 按日志类型分组，生成左右两栏
+            // 2. 按日志类型分组，生成三栏
             const logs = order.logs.sort((a, b) => a.t.localeCompare(b.t));
 
             // 左栏：机构客户请求Dida（按 log type 分组）
             const clientLogsEl = document.getElementById('clientLogs');
+            const didaSSLogsEl = document.getElementById('didaSSLogs');
             const supplierLogsEl = document.getElementById('supplierLogs');
 
             clientLogsEl.innerHTML = logs.map(log => buildLogCard(log, 'client')).join('') || '<div class="log-card-empty">暂无日志</div>';
+            didaSSLogsEl.innerHTML = logs.map(log => buildLogCard(log, 'didaSS')).join('') || '<div class="log-card-empty">暂无日志</div>';
             supplierLogsEl.innerHTML = logs.map(log => buildLogCard(log, 'supplier')).join('') || '<div class="log-card-empty">暂无日志</div>';
 
             // 3. 绑定展开/折叠事件
@@ -1929,8 +1937,8 @@
                 return buildCancelCard(log, side, ltInfo, statusLabel, statusCls);
             }
 
-            const reqJson = side === 'client' ? buildClientRequest(log) : buildSupplierRequest(log);
-            const resJson = side === 'client' ? buildClientResponse(log) : buildSupplierResponse(log);
+            const reqJson = side === 'client' ? buildClientRequest(log) : (side === 'didaSS' ? buildDidaSSRequest(log) : buildSupplierRequest(log));
+            const resJson = side === 'client' ? buildClientResponse(log) : (side === 'didaSS' ? buildDidaSSResponse(log) : buildSupplierResponse(log));
 
             return `
                 <div class="log-card">
@@ -2022,6 +2030,30 @@
                 // 第二步：HotelBookingCancelConfirm（确认取消）
                 step2Req = JSON.stringify({ Header: header, BookingID: log.oid, ConfirmID: confirmId }, null, 2);
                 step2Res = JSON.stringify({ Success: {}, AuditData: { RequestClientIP: "5.255.253.34", SessionID: log.ss, RequestTime: log.t.replace(' ', 'T') + "+08:00", ResponseTime: log.t.replace(' ', 'T') + "+08:00", ProcessTime: Math.floor(2000 + Math.random() * 6000) } }, null, 2);
+            } else if (side === 'didaSS') {
+                // Dida→SS 侧的取消
+                step1Req = JSON.stringify({ action: "CancelBooking", sessionId: log.ss, didaBookingId: log.oid, supplierBookingId: log.soid, supplierCode: log.sid, phase: "pre-cancel" }, null, 2);
+                if (log.st === 'fail') {
+                    step1Res = JSON.stringify({ success: false, errorCode: log.ec || "SS_ERROR", errorMsg: "SS cancel failed", sessionId: log.ss }, null, 2);
+                    return `
+                        <div class="log-card">
+                            <div class="log-card-header">
+                                <span class="log-card-toggle">▶</span>
+                                <span class="log-card-type cancel">${ltInfo.label}</span>
+                                <span class="log-card-status fail">${statusLabel}</span>
+                                <span class="log-card-status fail">${log.ec}</span>
+                                <span class="log-card-time">${log.t}</span>
+                            </div>
+                            <div class="log-card-body">
+                                <div class="log-card-section"><div class="log-card-section-title" style="cursor:default"><span>Session ID</span></div><span class="log-card-session">${log.ss}</span></div>
+                                <div class="log-card-section"><div class="log-card-section-title" onclick="this.parentElement.classList.toggle('collapsed')"><span><span class="section-toggle">▶</span> SS Cancel — Request</span><span class="copy-btn" onclick="event.stopPropagation(); copyJson(this)">📋 Copy</span></div><div class="log-card-json">${step1Req}</div></div>
+                                <div class="log-card-section"><div class="log-card-section-title" onclick="this.parentElement.classList.toggle('collapsed')"><span><span class="section-toggle">▶</span> SS Cancel — Response</span><span class="copy-btn" onclick="event.stopPropagation(); copyJson(this)">📋 Copy</span></div><div class="log-card-json">${step1Res}</div></div>
+                            </div>
+                        </div>`;
+                }
+                step1Res = JSON.stringify({ success: true, sessionId: log.ss, cancelConfirmId: "SS_CNCL_" + Math.floor(Math.random()*99999999) }, null, 2);
+                step2Req = JSON.stringify({ action: "ConfirmCancel", sessionId: log.ss, didaBookingId: log.oid, supplierBookingId: log.soid, supplierCode: log.sid, confirmId: "SS_CNCL_" + Math.floor(Math.random()*99999999) }, null, 2);
+                step2Res = JSON.stringify({ success: true, sessionId: log.ss, status: "Cancelled", didaBookingId: log.oid, supplierBookingId: log.soid }, null, 2);
             } else {
                 // Dida→供应商侧的取消
                 step1Req = JSON.stringify({ action: "CancelBooking", supplierCode: log.sup, supplierBookingId: log.soid, phase: "pre-cancel" }, null, 2);
@@ -2058,10 +2090,10 @@
                     </div>
                     <div class="log-card-body">
                         <div class="log-card-section"><div class="log-card-section-title" style="cursor:default"><span>Session ID</span></div><span class="log-card-session">${log.ss}</span></div>
-                        <div class="log-card-section"><div class="log-card-section-title" onclick="this.parentElement.classList.toggle('collapsed')"><span><span class="section-toggle">▶</span> Step 1: ${side === 'client' ? 'HotelBookingCancel' : 'Supplier Pre-Cancel'} — Request</span><span class="copy-btn" onclick="event.stopPropagation(); copyJson(this)">📋 Copy</span></div><div class="log-card-json">${step1Req}</div></div>
-                        <div class="log-card-section"><div class="log-card-section-title" onclick="this.parentElement.classList.toggle('collapsed')"><span><span class="section-toggle">▶</span> Step 1: ${side === 'client' ? 'HotelBookingCancel' : 'Supplier Pre-Cancel'} — Response</span><span class="copy-btn" onclick="event.stopPropagation(); copyJson(this)">📋 Copy</span></div><div class="log-card-json">${step1Res}</div></div>
-                        <div class="log-card-section"><div class="log-card-section-title" onclick="this.parentElement.classList.toggle('collapsed')"><span><span class="section-toggle">▶</span> Step 2: ${side === 'client' ? 'HotelBookingCancelConfirm' : 'Supplier Confirm Cancel'} — Request</span><span class="copy-btn" onclick="event.stopPropagation(); copyJson(this)">📋 Copy</span></div><div class="log-card-json">${step2Req}</div></div>
-                        <div class="log-card-section"><div class="log-card-section-title" onclick="this.parentElement.classList.toggle('collapsed')"><span><span class="section-toggle">▶</span> Step 2: ${side === 'client' ? 'HotelBookingCancelConfirm' : 'Supplier Confirm Cancel'} — Response</span><span class="copy-btn" onclick="event.stopPropagation(); copyJson(this)">📋 Copy</span></div><div class="log-card-json">${step2Res}</div></div>
+                        <div class="log-card-section"><div class="log-card-section-title" onclick="this.parentElement.classList.toggle('collapsed')"><span><span class="section-toggle">▶</span> Step 1: ${side === 'client' ? 'HotelBookingCancel' : (side === 'didaSS' ? 'SS Cancel' : 'Supplier Pre-Cancel')} — Request</span><span class="copy-btn" onclick="event.stopPropagation(); copyJson(this)">📋 Copy</span></div><div class="log-card-json">${step1Req}</div></div>
+                        <div class="log-card-section"><div class="log-card-section-title" onclick="this.parentElement.classList.toggle('collapsed')"><span><span class="section-toggle">▶</span> Step 1: ${side === 'client' ? 'HotelBookingCancel' : (side === 'didaSS' ? 'SS Cancel' : 'Supplier Pre-Cancel')} — Response</span><span class="copy-btn" onclick="event.stopPropagation(); copyJson(this)">📋 Copy</span></div><div class="log-card-json">${step1Res}</div></div>
+                        <div class="log-card-section"><div class="log-card-section-title" onclick="this.parentElement.classList.toggle('collapsed')"><span><span class="section-toggle">▶</span> Step 2: ${side === 'client' ? 'HotelBookingCancelConfirm' : (side === 'didaSS' ? 'SS Confirm Cancel' : 'Supplier Confirm Cancel')} — Request</span><span class="copy-btn" onclick="event.stopPropagation(); copyJson(this)">📋 Copy</span></div><div class="log-card-json">${step2Req}</div></div>
+                        <div class="log-card-section"><div class="log-card-section-title" onclick="this.parentElement.classList.toggle('collapsed')"><span><span class="section-toggle">▶</span> Step 2: ${side === 'client' ? 'HotelBookingCancelConfirm' : (side === 'didaSS' ? 'SS Confirm Cancel' : 'Supplier Confirm Cancel')} — Response</span><span class="copy-btn" onclick="event.stopPropagation(); copyJson(this)">📋 Copy</span></div><div class="log-card-json">${step2Res}</div></div>
                     </div>
                 </div>
             `;
@@ -2303,6 +2335,141 @@
                     checkIn: "2026-10-19",
                     checkOut: "2026-10-23",
                     supplierCode: log.sup
+                }, null, 2);
+            }
+        }
+
+        // ====== Dida→SS 的 request 报文 ======
+        function buildDidaSSRequest(log) {
+            if (log.lt === 'verify') {
+                return JSON.stringify({
+                    action: "RateSearch",
+                    sessionId: log.ss,
+                    hotelId: log.dhid,
+                    supplierHotelId: log.shid,
+                    checkIn: "2026-10-19",
+                    checkOut: "2026-10-23",
+                    rooms: [{ adults: 2, children: 0, roomIndex: 1 }],
+                    currency: "USD",
+                    supplierCode: log.sid,
+                    supplierName: log.sup,
+                    ratePlanId: log.rpid || "RP" + Math.floor(Math.random()*99999),
+                    requestId: "REQ_" + log.id + "_" + Date.now()
+                }, null, 2);
+            } else if (log.lt === 'order') {
+                return JSON.stringify({
+                    action: "BookRoom",
+                    sessionId: log.ss,
+                    didaBookingId: log.oid,
+                    clientBookingRef: log.coid,
+                    hotelId: log.dhid,
+                    supplierHotelId: log.shid,
+                    roomId: log.rpid || "RT" + Math.floor(Math.random()*99999),
+                    checkIn: "2026-10-19",
+                    checkOut: "2026-10-23",
+                    guestName: "Zhang Wei",
+                    guestEmail: "guest@dida.travel",
+                    supplierCode: log.sid,
+                    supplierName: log.sup,
+                    paymentMethod: "VCC",
+                    totalAmount: parseFloat((300 + Math.random() * 1500).toFixed(2)),
+                    currency: "USD"
+                }, null, 2);
+            } else if (log.lt === 'cancel') {
+                return JSON.stringify({
+                    action: "CancelBooking",
+                    sessionId: log.ss,
+                    didaBookingId: log.oid,
+                    supplierBookingId: log.soid,
+                    supplierCode: log.sid,
+                    supplierName: log.sup,
+                    reason: "Client requested cancellation",
+                    cancellationFee: 0
+                }, null, 2);
+            } else {
+                return JSON.stringify({
+                    action: "QueryBooking",
+                    sessionId: log.ss,
+                    didaBookingId: log.oid,
+                    supplierBookingId: log.soid,
+                    supplierCode: log.sid,
+                    supplierName: log.sup
+                }, null, 2);
+            }
+        }
+
+        // ====== Dida→SS 的 response 报文 ======
+        function buildDidaSSResponse(log) {
+            if (log.st === 'fail') {
+                return JSON.stringify({
+                    success: false,
+                    errorCode: log.ec || "SS_ERROR",
+                    errorMsg: "SS layer processing failed",
+                    sessionId: log.ss,
+                    supplierCode: log.sid,
+                    timestamp: log.t.replace(' ', 'T') + "+08:00"
+                }, null, 2);
+            }
+            if (log.lt === 'verify') {
+                const rate = (280 + Math.random() * 1400).toFixed(2);
+                return JSON.stringify({
+                    success: true,
+                    available: true,
+                    sessionId: log.ss,
+                    hotelId: log.dhid,
+                    supplierHotelId: log.shid,
+                    roomId: log.rpid || "RT" + Math.floor(Math.random()*99999),
+                    rate: {
+                        currency: "USD",
+                        totalAmount: parseFloat(rate),
+                        dailyRates: [0,1,2,3].map(i => ({ date: `2026-10-${19+i}`, amount: parseFloat((rate/4).toFixed(2)) }))
+                    },
+                    cancellationPolicy: {
+                        freeCancellationBefore: "2026-10-17T23:59:59",
+                        penaltyType: "percentage",
+                        penaltyAmount: 100
+                    },
+                    supplierCode: log.sid,
+                    supplierName: log.sup,
+                    responseTime: Math.floor(150 + Math.random() * 800) + "ms"
+                }, null, 2);
+            } else if (log.lt === 'order') {
+                return JSON.stringify({
+                    success: true,
+                    sessionId: log.ss,
+                    didaBookingId: log.oid,
+                    supplierBookingId: log.soid || "SUP" + Math.floor(Math.random()*99999999),
+                    confirmationNumber: "CONF" + Math.floor(Math.random()*99999999),
+                    status: "Confirmed",
+                    hotelId: log.dhid,
+                    supplierHotelId: log.shid,
+                    supplierCode: log.sid,
+                    supplierName: log.sup,
+                    bookingTime: log.t.replace(' ', 'T') + "+08:00"
+                }, null, 2);
+            } else if (log.lt === 'cancel') {
+                return JSON.stringify({
+                    success: true,
+                    sessionId: log.ss,
+                    didaBookingId: log.oid,
+                    supplierBookingId: log.soid,
+                    status: "Cancelled",
+                    cancellationTime: log.t.replace(' ', 'T') + "+08:00",
+                    supplierCode: log.sid,
+                    supplierName: log.sup
+                }, null, 2);
+            } else {
+                return JSON.stringify({
+                    success: true,
+                    sessionId: log.ss,
+                    didaBookingId: log.oid,
+                    supplierBookingId: log.soid,
+                    status: "Confirmed",
+                    checkIn: "2026-10-19",
+                    checkOut: "2026-10-23",
+                    supplierCode: log.sid,
+                    supplierName: log.sup,
+                    lastUpdated: log.t.replace(' ', 'T') + "+08:00"
                 }, null, 2);
             }
         }
