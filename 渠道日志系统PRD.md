@@ -317,7 +317,7 @@
 2. 构建 ZIP 文件：
    - `meta.txt`：订单元信息（三端单号、状态、ClientID、SupplierID、最新时间）
    - `验价.txt` / `下单.txt` / `取消.txt` / `查单.txt`：按日志类型分文件
-3. 每个类型文件内容仅包含 **Client→Dida 的 Request 报文**（不包含 Response，不包含 SS→Supplier 侧数据）
+3. 每个类型文件内容包含 **Client→Dida 的 Request + Response 报文**（不包含 SS→Supplier 侧数据）
 4. 文件命名：`{coid 或 oid}.zip`
 5. 触发浏览器下载
 
@@ -338,11 +338,11 @@
 |------|-----------|---------|
 | meta.txt（元信息） | ✅ | ✅（每个子ZIP） |
 | Client→Dida Request | ✅ | ✅ |
-| Client→Dida Response | ❌ | ❌ |
+| Client→Dida Response | ✅ | ✅ |
 | SS→Supplier Request | ❌ | ❌ |
-| SS→Supplier Response | ❌ |  |
+| SS→Supplier Response | ❌ | ❌ |
 
-> **设计考量：** 导出仅包含 Client→Dida 请求，因为这是渠道侧需要审计的核心数据；SS→Supplier 侧数据属于内部调度细节，不在导出范围内。
+> **设计考量：** 导出仅包含 Client→Dida 环节报文，因为导出主要服务于运营向客户提供原始日志；SS→Supplier 侧数据属于内部调度细节，不在导出范围内。
 
 #### 3.4.4 命名规范
 

@@ -2737,9 +2737,11 @@
                     content += 'SessionID: ' + (log.ss || '-') + '\n';
                     content += '═══════════════════════════════════════════════════════\n\n';
 
-                    // 仅包含机构客户→Dida的请求
+                    // 仅包含机构客户→Dida的报文（服务于运营向客户提供原始日志）
                     content += '─────── 机构客户 → Dida (Request) ───────\n\n';
                     content += buildClientRequest(log) + '\n\n';
+                    content += '─────── 机构客户 → Dida (Response) ──────\n\n';
+                    content += buildClientResponse(log) + '\n\n';
                 });
 
                 zip.file(label + '.txt', content);
