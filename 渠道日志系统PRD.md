@@ -360,7 +360,7 @@
    - `logTypes`：选中的日志类型（逗号分隔）
    - `clientId` / `supplierId` / `errorCode` / `didaHotelId` / `ratePlanId`：高级筛选值
 2. 序列化为 URL 参数：`?orderNumber=xxx&dateStart=xxx&logTypes=verify,order&...`
-3. 使用 `navigator.clipboard.writeText()` 复制到剪贴板
+3. 复制到剪贴板
 4. Toast 提示"✅ 分享链接已复制"
 5. 接收方打开链接时，自动回填表单并触发查询
 
@@ -369,9 +369,7 @@
 - `logTypes` 仅在非默认值（验价+下单+取消）时携带
 - 高级筛选参数存在时，页面自动展开高级筛选面板
 
-**剪贴板降级策略：**
-- 优先使用 `navigator.clipboard.writeText()`
-- 降级为 `document.execCommand('copy')`
+> **技术备注：** 复制使用 `navigator.clipboard.writeText()`，降级为 `document.execCommand('copy')`。
 
 ### 3.6 批量操作逻辑
 
