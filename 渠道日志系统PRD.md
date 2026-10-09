@@ -64,7 +64,8 @@
 |---------|--------|------|------|------|
 | 订单号 | `orderNumber` | String | 否 | 输入单个渠道/道旅/供应商订单号，支持模糊匹配三端 ID（coid/oid/soid）；**直接查 `channel_core_log` 表**，填了订单号可不填日期 |
 | 日期范围 | `dateStart` / `dateEnd` | Date | 条件必填 | 日志时间范围，默认最近 30 天；未填订单号时必填 |
-| 日志类型 | `logTypes` | String[] | 否 | 枚举值：`verify`(验价)、`order`(下单)、`cancel`(取消)、`query`(查单)；默认勾选验价、下单、取消 |
+| 日志类型 | `logTypes` | String[] | 否 | 枚举值：`verify`(验价)、`order`(下单)、`cancel`(取消)、`query`(查单)、`checkPrice`(查价)；默认勾选验价、下单、取消 |
+| SessionID | `sessionId` | String | 否 | 精确匹配会话 ID |
 | ClientID | `clientId` | String | 否 | 机构 ID 模糊匹配 |
 | SupplierID | `supplierId` | String | 否 | 供应商 ID 模糊匹配 |
 | 错误码 | `errorCode` | String | 否 | 精确匹配 response_code |
@@ -137,7 +138,7 @@
 
 #### 2.2.4 日志类型
 
-系统支持四种日志类型：**验价**、**下单**、**取消**、**查单**。日志类型与底层 `common_biztype` 字段的映射关系由技术侧定义。
+系统支持五种日志类型：**验价**、**下单**、**取消**、**查单**、**查价**。日志类型与底层 `common_biztype` 字段的映射关系由技术侧定义。
 
 #### 2.2.5 全链路日志关联
 
@@ -210,7 +211,8 @@
 |------|------|---------|
 | 订单号输入框 | 文本输入 | 输入渠道/道旅/供应商订单号，支持模糊匹配 |
 | 日期范围选择器 | 双日历面板 | 默认显示最近 30 天；支持快捷选择（今天/近7天/近30天）；点击日期后自动关闭面板 |
-| 日志类型选择器 | 多选下拉 | 默认勾选：验价、下单、取消；查单不勾选；支持全选/取消全选 |
+| 日志类型选择器 | 多选下拉 | 默认勾选：验价、下单、取消；查单、查价不勾选；支持全选/取消全选 |
+| SessionID | 文本输入 | 输入 SessionID，精确匹配 |
 | 高级筛选 | 折叠面板 | 点击"展开更多筛选条件"展开，包含 ClientID、SupplierID、错误码、Dida酒店ID、RatePlanID |
 
 #### 3.1.2 操作按钮
@@ -241,7 +243,7 @@
 | 道旅订单号 | 自适应 | 显示 `oid`，超长时截断显示 |
 | 供应商订单号 | 自适应 | 显示 `soid`，超长时截断显示 |
 | 订单状态 | 100px | 状态标签：已确认(绿)、已取消(橙)、失败(红)、验价中(蓝) |
-| 日志类型 | 自适应 | 类型标签：验价(蓝)、下单(绿)、取消(红)、查单(紫) |
+| 日志类型 | 自适应 | 类型标签：验价(蓝)、下单(绿)、取消(红)、查单(紫)、查价(橙) |
 | 最新日志时间 | 160px | 最新一条日志的时间 |
 | ClientID | 自适应 | 机构ID |
 | SupplierID | 80px | 供应商ID |
@@ -357,6 +359,7 @@
    - `orderNumber`：订单号输入框值
    - `dateStart` / `dateEnd`：日期范围
    - `logTypes`：选中的日志类型（逗号分隔）
+   - `sessionId`：SessionID
    - `clientId` / `supplierId` / `errorCode` / `didaHotelId` / `ratePlanId`：高级筛选值
 2. 序列化为 URL 参数：`?orderNumber=xxx&dateStart=xxx&logTypes=verify,order&...`
 3. 复制到剪贴板
@@ -410,6 +413,7 @@
 | `dateStart` | 日期范围开始 | 设置日历面板开始日期 |
 | `dateEnd` | 日期范围结束 | 设置日历面板结束日期 |
 | `logTypes` | 日志类型多选 | 解析逗号分隔值，勾选对应项 |
+| `sessionId` | SessionID 输入框 | 直接填入文本 |
 | `clientId` | ClientID 输入框 | 直接填入文本 |
 | `supplierId` | SupplierID 输入框 | 直接填入文本 |
 | `errorCode` | 错误码输入框 | 直接填入文本 |
