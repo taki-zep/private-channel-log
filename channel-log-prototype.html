@@ -620,6 +620,7 @@
         .order-status-cancelled { background: #FEF4E6; color: #D97706; border: 1px solid #F0DCBB; }
         .order-status-confirmed { background: #E8F6ED; color: #16A34A; border: 1px solid #C7E8D2; }
         .order-status-failed { background: #FDECEA; color: #CF3A31; border: 1px solid #EFB9B5; }
+        .order-status-placeholder { background: #F5F5F5; color: #9E9E9E; border: 1px solid #E0E0E0; }
 
         .log-content {
             font-family: ui-monospace, 'SF Mono', 'JetBrains Mono', Menlo, Consolas, monospace;
@@ -787,9 +788,9 @@
             padding: 2px 8px;
             border-radius: 4px;
         }
-        .detail-info-value.status-verifying {
-            color: #2E5BE6;
-            background: #EEF3FE;
+        .detail-info-value.status-placeholder {
+            color: #9E9E9E;
+            background: #F5F5F5;
             padding: 2px 8px;
             border-radius: 4px;
         }
@@ -1729,12 +1730,14 @@
                 // Determine order status
                 const hasCancel = logs.some(l => l.lt === 'cancel');
                 const hasOrder = logs.some(l => l.lt === 'order');
-                const hasFailed = logs.some(l => l.st === 'fail');
 
-                let status = '验价中';
-                if (hasCancel) status = '已取消';
-                else if (hasOrder && !hasCancel) status = '已确认';
-                else if (hasFailed) status = '失败';
+                // 有实际单号（非空且非"None"）表示已出单
+                const hasRealOrder = (coid && coid !== 'None') || (soid && soid !== 'None');
+                let status = '-';
+                if (hasRealOrder) {
+                    if (hasCancel) status = '已取消';
+                    else if (hasOrder) status = '已确认';
+                }
 
                 // Collect unique log types
                 const logTypes = [...new Set(logs.map(l => l.lt))];
@@ -1784,6 +1787,7 @@
                 if (order.status === '已取消') statusClass = 'order-status-cancelled';
                 else if (order.status === '已确认') statusClass = 'order-status-confirmed';
                 else if (order.status === '失败') statusClass = 'order-status-failed';
+                else statusClass = 'order-status-placeholder';
 
                 // Log type badges
                 const logTypeBadges = order.logTypes.map(lt => {
@@ -1890,7 +1894,7 @@
             }
 
             // 1. 渲染基本信息
-            let statusClass = 'status-verifying';
+            let statusClass = 'status-placeholder';
             if (order.status === '已确认') statusClass = 'status-confirmed';
             else if (order.status === '已取消') statusClass = 'status-cancelled';
             else if (order.status === '失败') statusClass = 'status-failed';
