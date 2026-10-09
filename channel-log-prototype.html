@@ -1139,7 +1139,7 @@
                 <div class="search-form">
                     <div class="form-row span-2">
                         <label class="form-label">订单号 <span class="search-hint">输入订单号或选择日期范围后点击查询</span></label>
-                        <input type="text" class="form-input" placeholder="渠道/道旅/供应商订单号（支持批量，英文逗号或换行分隔，最多100个）" id="orderNumber" style="min-height:60px;">
+                        <input type="text" class="form-input" placeholder="渠道/道旅/供应商订单号" id="orderNumber">
                     </div>
 
                     <div class="form-row span-2">
@@ -1160,7 +1160,7 @@
                                 <div class="quick-date-options">
                                     <button class="quick-date-btn" onclick="setDateRange(7)">近 7 天</button>
                                     <button class="quick-date-btn" onclick="setDateRange(30)">近 30 天</button>
-                                    <button class="quick-date-btn active" onclick="setDateRange(60)">近 60 天</button>
+                                    <button class="quick-date-btn active" onclick="setDateRange(30)">近 30 天</button>
                                     <button class="quick-date-btn" onclick="setDateRange(90)">近 90 天</button>
                                 </div>
 
@@ -1664,17 +1664,6 @@
             const startDate = document.getElementById('dateInputStart').value.trim();
             const endDate = document.getElementById('dateInputEnd').value.trim();
 
-            // 解析批量订单号（英文逗号或换行分隔，最多100个）
-            const orderNumbers = orderNumberInput
-                ? orderNumberInput.split(/[\n,，]/).map(s => s.trim()).filter(s => s.length > 0).slice(0, 100)
-                : [];
-            if (orderNumberInput && orderNumbers.length === 0) {
-                // 输入了内容但没有有效单号，提示
-                document.getElementById('errorMessage').style.display = 'block';
-                document.getElementById('errorMessage').textContent = '⚠️ 订单号格式不正确，请使用英文逗号或换行分隔';
-                return;
-            }
-
             const selectedLogTypes = getSelectedLogTypes();
             const clientId = document.getElementById('clientId').value.trim();
             const supplierId = document.getElementById('supplierId').value.trim();
@@ -1684,15 +1673,12 @@
 
             // Filter logs first
             const matchedLogs = MOCK_LOGS.filter(log => {
-                // 批量订单号匹配：任意一个单号命中三端 ID 之一即匹配
-                if (orderNumbers.length > 0) {
-                    const matched = orderNumbers.some(on => {
-                        const matchOid = log.oid && log.oid.includes(on);
-                        const matchCoid = log.coid && log.coid.includes(on);
-                        const matchSoid = log.soid && log.soid.includes(on);
-                        return matchOid || matchCoid || matchSoid;
-                    });
-                    if (!matched) return false;
+                // 订单号匹配：三端 ID 任一命中即匹配
+                if (orderNumberInput) {
+                    const matchOid = log.oid && log.oid.includes(orderNumberInput);
+                    const matchCoid = log.coid && log.coid.includes(orderNumberInput);
+                    const matchSoid = log.soid && log.soid.includes(orderNumberInput);
+                    if (!matchOid && !matchCoid && !matchSoid) return false;
                 } else {
                     // 没有订单号时，按日期范围筛选（字符串比较，YYYY-MM-DD 格式天然有序）
                     if (startDate && endDate) {
@@ -1768,7 +1754,7 @@
             updateResultCount();
 
             // 如果是按单号查询且只有一个结果，自动打开详情弹窗
-            if (orderNumbers.length > 0 && filteredOrders.length === 1) {
+            if (orderNumberInput && filteredOrders.length === 1) {
                 viewDetail(filteredOrders[0].oid);
             }
         }
@@ -2629,7 +2615,7 @@
             const endDate = document.getElementById('dateInputEnd').value.trim();
             const logTypes = getSelectedLogTypes().join(',');
 
-            if (orderId) params.set('orderNumbers', orderId);
+            if (orderId) params.set('orderNumber', orderId);
             if (startDate) params.set('dateStart', startDate);
             if (endDate) params.set('dateEnd', endDate);
             if (logTypes && logTypes !== 'verify,order,cancel,query') params.set('logTypes', logTypes);
@@ -2805,7 +2791,7 @@
         const initToday = new Date();
         initToday.setHours(0, 0, 0, 0);
         const initStart = new Date(initToday);
-        initStart.setDate(initStart.getDate() - 59);
+        initStart.setDate(initStart.getDate() - 29);
         selectedStart = initStart;
         selectedEnd = initToday;
         calLeftYear = initStart.getFullYear();
@@ -2828,9 +2814,7 @@
             document.getElementById('dateInputEnd').value = formatDate(initToday);
         }
 
-        if (urlParams.has('orderNumbers')) {
-            document.getElementById('orderNumber').value = urlParams.get('orderNumbers');
-        } else if (urlParams.has('orderNumber')) {
+        if (urlParams.has('orderNumber')) {
             document.getElementById('orderNumber').value = urlParams.get('orderNumber');
         }
 
@@ -2861,8 +2845,8 @@
         renderCalendar();
         updateLogTypeDisplay();
 
-        // Only auto-search if URL params contain explicit search criteria (orderNumbers or dateStart/End or logTypes)
-        if (urlParams.has('orderNumbers') || urlParams.has('orderNumber') || urlParams.has('dateStart') || urlParams.has('logTypes')) {
+        // Only auto-search if URL params contain explicit search criteria (orderNumber or dateStart/End or logTypes)
+        if (urlParams.has('orderNumber') || urlParams.has('dateStart') || urlParams.has('logTypes')) {
             searchLogs();
         }
     </script>
