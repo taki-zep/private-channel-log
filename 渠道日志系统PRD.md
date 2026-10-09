@@ -148,139 +148,35 @@
 1. 在查询结果中关联对应的 Dida→SS 和 SS→供应商侧日志
 2. 将 Client→Dida、Dida→SS、SS→Supplier 三端日志按时间排序后配对返回前端
 
-### 2.3 后端 API 接口定义
+### 2.3 前后端接口
 
-#### 接口 1：查询订单日志列表
-
-```
-GET /api/channel-logs/search
-```
-
-**请求参数：**
-
-| 参数 | 类型 | 必填 | 说明 |
-|------|------|------|------|
-| orderNumber | string | 否 | 订单号（三端 ID 模糊匹配） |
-| dateStart | string | 条件必填 | 开始日期 YYYY-MM-DD |
-| dateEnd | string | 条件必填 | 结束日期 YYYY-MM-DD |
-| logTypes | string | 否 | 逗号分隔的日志类型，如 `verify,order,cancel` |
-| clientId | string | 否 | ClientID 模糊匹配 |
-| supplierId | string | 否 | SupplierID 模糊匹配 |
-| errorCode | string | 否 | 错误码精确匹配 |
-| didaHotelId | string | 否 | 酒店ID精确匹配 |
-| ratePlanId | string | 否 | 价格计划ID精确匹配 |
-| page | int | 否 | 页码，默认 1 |
-| pageSize | int | 否 | 每页条数，默认 10，最大 50 |
-
-**响应结构：**
-
-```json
-{
-  "code": 0,
-  "message": "success",
-  "data": {
-    "total": 106,
-    "pages": 11,
-    "currentPage": 1,
-    "pageSize": 10,
-    "orders": [
-      {
-        "oid": "187910588628",
-        "coid": "T-260923-06583418376384942336",
-        "soid": "322405002",
-        "status": "已确认",
-        "logTypes": ["verify", "order"],
-        "time": "2026-09-29 09:45:00",
-        "clientId": "OzonTravelDirect",
-        "supplierId": "52",
-        "supplier": "Ostrovok",
-        "logs": [
-          {
-            "id": 1,
-            "oid": "187910588628",
-            "coid": "T-260923-06583418376384942336",
-            "soid": "322405002",
-            "lt": "verify",
-            "st": "success",
-            "cid": "OzonTravelDirect",
-            "sid": "52",
-            "sup": "Ostrovok",
-            "ss": "sess_zpqk51fpkh1dnmmj",
-            "dhid": "1671296",
-            "shid": "10950839",
-            "rpid": "",
-            "ec": "",
-            "t": "2026-09-29 09:40:00",
-            "clientRequest": "{...}",
-            "clientResponse": "{...}",
-            "supplierRequest": "{...}",
-            "supplierResponse": "{...}"
-          }
-        ]
-      }
-    ]
-  }
-}
-```
-
-#### 接口 2：获取订单详情（含完整报文）
-
-```
-GET /api/channel-logs/detail/{oid}
-```
-
-返回结构与 search 接口中单个 order 对象一致，但包含完整的 request/response 报文。search 接口可返回报文摘要以减小响应体积，detail 接口返回完整报文内容。
-
-#### 接口 3：导出日志
-
-```
-GET /api/channel-logs/export
-```
-
-**请求参数：** 同 search 接口
-
-**响应：** `application/zip` 文件流
+| 接口 | 作用 |
+|------|------|
+| 查询订单日志列表 | 根据搜索条件返回订单列表及日志摘要，支持分页 |
+| 获取订单详情 | 返回单个订单的完整日志，含三端（Client→Dida、Dida→SS、SS→Supplier）完整请求/响应报文 |
+| 导出日志 | 根据搜索条件导出日志 ZIP 文件 |
 
 ### 2.4 数据返回结构
 
-#### 2.4.1 订单对象（Order）
+**订单列表**包含以下信息：
 
-| 字段 | 类型 | 说明 | 来源字段 |
-|------|------|------|----------|
-| `oid` | string | 道旅订单号 | `dida_booking_number` |
-| `coid` | string | 渠道/机构订单号 | `ext_json` 或业务解析 |
-| `soid` | string | 供应商订单号 | `ext_json` 或业务解析 |
-| `status` | string | 订单状态：已确认/已取消/失败/验价中 | 后端根据日志判定 |
-| `logTypes` | string[] | 日志类型列表 | 去重 `common_biztype` 映射 |
-| `time` | string | 最新日志时间 | MAX(`log_time`) |
-| `clientId` | string | 机构ID | `client_id` |
-| `supplierId` | string | 供应商ID | `supplier_id` |
-| `supplier` | string | 供应商名称 | 配置表映射 |
-| `logs` | Log[] | 日志列表 | 按 `log_time` 升序 |
+| 信息 | 说明 |
+|------|------|
+| 三端订单号 | 渠道单号、道旅单号、供应商单号 |
+| 订单状态 | 已确认/已取消/失败/验价中 |
+| 日志类型 | 该订单涉及的日志类型列表 |
+| 最新日志时间 | 最新一条日志的时间 |
+| ClientID / SupplierID | 机构 ID、供应商 ID |
+| 供应商名称 | 供应商名称 |
 
-#### 2.4.2 日志对象（Log）
+**订单详情**在列表基础上，额外包含每条日志的三端完整报文：
 
-| 字段 | 类型 | 说明 | 来源字段 |
-|------|------|------|----------|
-| `id` | int | 日志ID | 自增主键 |
-| `oid` | string | 道旅订单号 | `dida_booking_number` |
-| `coid` | string | 渠道订单号 | 业务解析 |
-| `soid` | string | 供应商订单号 | 业务解析 |
-| `lt` | string | 日志类型：verify/order/cancel/query | `common_biztype` 映射 |
-| `st` | string | 结果：`success` / `fail` | `success` 字段 |
-| `cid` | string | ClientID | `client_id` |
-| `sid` | string | SupplierID | `supplier_id` |
-| `sup` | string | 供应商名称 | 配置表映射 |
-| `ss` | string | SessionID | `session_id` |
-| `dhid` | string | Dida酒店ID | `ext_json` 或业务解析 |
-| `shid` | string | 供应商酒店ID | `ext_json` 或业务解析 |
-| `rpid` | string | RatePlanID | `ext_json` 或业务解析 |
-| `ec` | string | 错误码 | `response_code` |
-| `t` | string | 日志时间 | `log_time` |
-| `clientRequest` | string | Client→Dida 请求报文 | `request_json` / `request_xml` |
-| `clientResponse` | string | Client→Dida 响应报文 | `response_json` / `response_xml` |
-| `supplierRequest` | string | Dida→Supplier 请求报文 | 关联的 supplier 侧 request |
-| `supplierResponse` | string | Dida→Supplier 响应报文 | 关联的 supplier 侧 response |
+| 信息 | 说明 |
+|------|------|
+| Session ID | 会话标识 |
+| Client→Dida 请求/响应报文 | 机构客户到 Dida 的完整报文 |
+| Dida→SS 请求/响应报文 | Dida 内部到 SS 的完整报文 |
+| SS→Supplier 请求/响应报文 | SS 到真实供应商的完整报文 |
 
 ### 2.5 错误处理与校验
 
